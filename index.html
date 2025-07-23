@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open When You're Ready</title>
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        @keyframes pulse-button {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.toggle-btn.just-clicked {
+  animation: pulse-button 0.5s;
+}
+
+.photo-dots {
+  display: flex;
+  justify-content: center;
+  margin: 15px 0;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background-color: #ffd6e5;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot.active {
+  background-color: #ff85a2;
+  transform: scale(1.2);
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="question-container" id="question">
+            <h2>Open this when you're okay</h2>
+            <div class="buttons">
+                <button id="yes-btn">Open</button>
+                <button id="no-btn">Close</button>
+            </div>
+        </div>
+        <div class="envelope-wrapper" id="envelope" style="display: none;">
+            <div class="envelope">
+                <div class="heart"></div>
+            </div>
+        </div>
+        <div class="letter" style="display: none;">
+            <div class="text">
+                <strong>To my Darling,</strong>
+                <p>Hello love love! Happy happy monthsary to us hehehe. I made this kasi nasa isip ko palagi yung what if gawan ko siya ng website and then naalala ko sinabi mo kahapon na "you have a deadline! i need the website with song! " and ayun HAHAHAH ayos ba ;)</p>
+                <p>I know things have been hard on us lately, but I hope we can work through this neh mahal mahal and I also apologize sa mga pagkukulang ko and sa mga times na napapafeel ko po sayo na I'm not with you :( I want to make it up to you po my love and do know na I am always proud of you and I'm always praying for our success <3</p>
+                <p>Now goodluck sa future quizzes mo and sa quiz mo ngayon hehe KAYANG KAYA MO YAN! I love you very much darling <3</p>
+            </div>
+            <div class="view-memories">
+                <button id="view-photos">View Our Memories ❤️</button>
+                <button id="view-coupon">View Your Gift ✨</button>
+            </div>
+        </div>
+        <!-- Add the photo gallery section -->
+        <div id="photo-gallery" style="display: none;">
+            <div class="gallery-container">
+                <div class="arrow left-arrow">❮</div>
+                <div class="photo-container">
+                    <!-- Replace these with your actual photos and add custom captions -->
+                    <div class="photo active" data-caption="Me making this hehehe">
+                        <img src="images/photo1.jpg" alt="Us together" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+1';">
+                    </div>
+                    <div class="photo" data-caption="I miss your hugs and care mahal ko.">
+                        <img src="images/photo2.jpg" alt="Special day" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+2';">
+                    </div>
+                    <div class="photo" data-caption="Cute naman natin dito HAHAHA">
+                        <img src="images/photo3.jpg" alt="Happy memories" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+3';">
+                    </div>
+                    <div class="photo" data-caption="Ay ang baby ko na yan pakiss kiss pa uy!">
+                        <img src="images/photo4.jpg" alt="Together forever" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+4';">
+                    </div>
+                    <div class="photo" data-caption="Oh eto kiss na rin kita diyan ;P">
+                        <img src="images/photo5.jpg" alt="Our adventures" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+5';">
+                    </div>
+                    <div class="photo" data-caption="Pacute cute pa ang love love ohh">
+                        <img src="images/photo6.jpg" alt="Your beautiful smile" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+6';">
+                    </div>
+                    <div class="photo" data-caption="Let's eat ulit dito nehh mahal ko, gusto ko ulit nung carbonara nilang pang 5 tao HAHAHA">
+                        <img src="images/photo7.jpg" alt="Special occasion" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+7';">
+                    </div>
+                    <div class="photo" data-caption="I miss staying at pampanga with you, soon ulit nehh">
+                        <img src="images/photo8.jpg" alt="Simple joys" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+8';">
+                    </div>
+                    <div class="photo" data-caption="jajajaja pogi! HAHAHAHA">
+                        <img src="images/photo9.jpg" alt="Happy memories" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+9';">
+                    </div>
+                    <div class="photo" data-caption="ETO NAMAN MAGANDA SYEMPRE BAKA MINAMAHAL Q YAN!">
+                        <img src="images/photo10.jpg" alt="Cherished moments" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+10';">
+                    </div>
+                    <div class="photo" data-caption="You're the best thing that's ever happened to me. I Love You Always">
+                        <img src="images/photo11.jpg" alt="Love forever" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+11';">
+                    </div>
+                    <div class="photo" data-caption="Happy Monthsary to my makulit kulit na love love!">
+                      <img src="images/photo12.jpg" alt="Love forever" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+11';">
+                  </div>
+                  <div class="photo" data-caption="and sshhh, everyday is your day :P There's no day wherein you're not special hehe. Mwah">
+                    <img src="images/photo13.jpg" alt="Love forever" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+11';">
+                </div>
+                </div>
+                <div class="arrow right-arrow">❯</div>
+            </div>
+            <div class="gallery-caption">
+                <h3 id="photo-count">Photo 1 of 11</h3>
+                <p id="photo-caption">Our special moments together ❤️</p>
+            </div>
+            <div class="photo-dots">
+                <!-- Will be populated with JavaScript -->
+            </div>
+            <div class="back-button">
+                <button id="back-to-letter">Back to Letter</button>
+            </div>
+        </div>
+        <div id="hugs-container" style="display: none; text-align: center;">
+            <div class="hug-image-container">
+                <img src="hug.gif" alt="Hugs" onerror="this.onerror=null; this.src='hug.png'; if(this.src.includes('png')) this.onerror=null;" style="max-width: 300px; margin-bottom: 20px;">
+            </div>
+            <h3 style="font-family: 'Dancing Script', cursive; font-size: 2rem; color: var(--txt-color);">
+                I understand love, I'm here lang po nehh ❤️   
+            </h3>
+        </div>
+        <div class="floating-icons">
+            <!-- Multiple copies of your images for more floating elements -->
+            <div class="floating-icon"><img src="mariepixel.png" alt="Icon 1"></div>
+            <div class="floating-icon"><img src="mariewalk.png" alt="Icon 2"></div>
+            <div class="floating-icon"><img src="hmp.png" alt="Icon 3"></div>
+            <div class="floating-icon"><img src="cina.png" alt="Icon 4"></div>
+            
+            <div class="floating-icon"><img src="mariepixel.png" alt="Icon 5"></div>
+            <div class="floating-icon"><img src="mariewalk.png" alt="Icon 6"></div>
+            <div class="floating-icon"><img src="hmp.png" alt="Icon 3"></div>
+            <div class="floating-icon"><img src="cina.png" alt="Icon 4"></div>
+            
+            <div class="floating-icon"><img src="mariepixel.png" alt="Icon 1"></div>
+            <div class="floating-icon"><img src="mariewalk.png" alt="Icon 2"></div>
+            <div class="floating-icon"><img src="hmp.png" alt="Icon 3"></div>
+            <div class="floating-icon"><img src="cina.png" alt="Icon 4"></div>
+            
+            <div class="floating-icon"><img src="mariepixel.png" alt="Icon 1"></div>
+            <div class="floating-icon"><img src="mariewalk.png" alt="Icon 2"></div>
+            <div class="floating-icon"><img src="hmp.png" alt="Icon 3"></div>
+            <div class="floating-icon"><img src="cina.png" alt="Icon 4"></div>
+            
+            <div class="floating-icon"><img src="mariepixel.png" alt="Icon 1"></div>
+            <div class="floating-icon"><img src="mariewalk.png" alt="Icon 2"></div>
+            <div class="floating-icon"><img src="hmp.png" alt="Icon 3"></div>
+            <div class="floating-icon"><img src="cina.png" alt="Icon 4"></div>
+        </div>
+
+        <div class="countdown-container">
+          <div class="countdown-toggle">
+            <button id="anniversary-btn" class="toggle-btn active">Anniversary</button>
+            <button id="monthsary-btn" class="toggle-btn">Monthsary</button>
+          </div>
+          
+          <h3 id="countdown-title">Time Until Our Anniversary - May 25th</h3>
+          <div id="countdown">
+            <div class="time-section">
+              <span id="days">00</span>
+              <span class="time-label">Days</span>
+            </div>
+            <div class="time-section">
+              <span id="hours">00</span>
+              <span class="time-label">Hours</span>
+            </div>
+            <div class="time-section">
+              <span id="minutes">00</span>
+              <span class="time-label">Minutes</span>
+            </div>
+            <div class="time-section">
+              <span id="seconds">00</span>
+              <span class="time-label">Seconds</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="love-messages">
+          <div class="love-spot" style="top: 20%; left: 15%;" data-message="You make my heart smile!"></div>
+          <div class="love-spot" style="top: 70%; left: 80%;" data-message="Every moment with you is a blessing"></div>
+          <div class="love-spot" style="top: 40%; left: 75%;" data-message="You're my favorite person"></div>
+          <div class="love-spot" style="top: 80%; left: 30%;" data-message="I love your laugh"></div>
+        </div>
+
+        <div class="coupon" id="love-coupon" style="display: none;">
+          <div class="coupon-inner">
+            <h2>Love Coupon</h2>
+            <p class="coupon-text">This coupon entitles you to:</p>
+            <h3>BeanBean Time</h3>
+            <p class="coupon-note">Redeemable anytime. No expiration.</p>
+            <p class="coupon-signature">Present the screenshot to redeeeeem!</p>
+            <p class="coupon-signature">(Can redeem again and again and again forever)</p>
+            <div class="coupon-hearts"></div>
+          </div>
+          
+          <div class="email-form">
+            <h4>Send this coupon to your email</h4>
+            <div class="form-group">
+              <input type="email" id="recipient-email" placeholder="Enter your email address" required>
+            </div>
+            <button id="send-email-btn" class="send-btn">Email this Coupon</button>
+            <div id="email-status" class="email-status"></div>
+          </div>
+          
+          <div class="back-button">
+            <button id="back-from-coupon">Back to Letter</button>
+          </div>
+        </div>
+    </div>
+    <div class="music-player">
+        <div class="music-controls">
+            <button id="play-pause-btn">
+                <i class="play-icon">♫</i>
+                <i class="pause-icon" style="display:none;">❚❚</i>
+            </button>
+            <div class="song-info">
+                <span class="song-title">I Don't Wanna Be Okay Without You</span>
+                <span class="song-artist">Charlie Burg</span>
+            </div>
+        </div>
+        <audio id="background-music" loop>
+            <source src="Charlie Burg - I Don't Wanna Be Okay Without You.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+    <script>
+        const envelope = document.querySelector('.envelope-wrapper');
+        const letter = document.querySelector('.letter');
+        const photoGallery = document.getElementById('photo-gallery');
+        const viewPhotosBtn = document.getElementById('view-photos');
+        const backToLetterBtn = document.getElementById('back-to-letter');
+        const photos = document.querySelectorAll('.photo');
+        const photoCount = document.getElementById('photo-count');
+        const photoCaption = document.getElementById('photo-caption');
+        let currentPhoto = 0;
+
+        // Show music player after envelope is opened
+        envelope.addEventListener('click', () => {
+            envelope.classList.add('fade-out');
+            setTimeout(() => {
+                envelope.style.display = 'none';
+                letter.style.display = 'block';
+                
+                // Show the elegant music player at the top
+                document.querySelector('.music-player').classList.add('visible');
+                
+                // Make sure countdown is running
+                startCountdown();
+            }, 500);
+        });
+
+        // Start playing when "Open" is clicked
+        document.getElementById('yes-btn').addEventListener('click', () => {
+            document.getElementById('question').style.display = 'none';
+            document.getElementById('envelope').style.display = 'block';
+            
+            // Start playing music when the Open button is clicked
+            const audio = document.getElementById('background-music');
+            
+            // Play the music but keep player hidden until envelope opens
+            audio.play().catch(error => {
+                console.log("Auto-play was prevented. User needs to interact with the page first.");
+            });
+            
+            // Update the player state (but it's still hidden)
+            document.querySelector('.play-icon').style.display = 'none';
+            document.querySelector('.pause-icon').style.display = 'block';
+        });
+        
+        document.getElementById('no-btn').addEventListener('click', () => {
+            document.getElementById('question').style.display = 'none';
+            document.getElementById('hugs-container').style.display = 'block';
+        });
+
+        // Photo gallery navigation
+        viewPhotosBtn.addEventListener('click', () => {
+            letter.style.display = 'none';
+            photoGallery.style.display = 'block';
+        });
+
+        backToLetterBtn.addEventListener('click', () => {
+            photoGallery.style.display = 'none';
+            letter.style.display = 'block';
+        });
+
+        function updatePhotoGallery() {
+            photoCount.textContent = `Photo ${currentPhoto + 1} of ${photos.length}`;
+            
+            // Update each photo's visibility
+            photos.forEach((photo, index) => {
+                photo.classList.toggle('active', index === currentPhoto);
+                
+                // If this is the current photo, update the caption
+                if (index === currentPhoto) {
+                    // Get custom caption from data attribute or use default
+                    const customCaption = photo.getAttribute('data-caption');
+                    photoCaption.textContent = customCaption || 'Our special moments together ❤️';
+                }
+            });
+        }
+
+        document.querySelector('.left-arrow').addEventListener('click', () => {
+            currentPhoto = (currentPhoto > 0) ? currentPhoto - 1 : photos.length - 1;
+            updatePhotoGallery();
+        });
+
+        document.querySelector('.right-arrow').addEventListener('click', () => {
+            currentPhoto = (currentPhoto < photos.length - 1) ? currentPhoto + 1 : 0;
+            updatePhotoGallery();
+        });
+
+        // Initialize photo gallery
+        updatePhotoGallery();
+
+        // Music player functionality
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const playIcon = document.querySelector('.play-icon');
+        const pauseIcon = document.querySelector('.pause-icon');
+        const audio = document.getElementById('background-music');
+        const disc = document.querySelector('.disc');
+
+        playPauseBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                disc.classList.add('playing');
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'block';
+            } else {
+                audio.pause();
+                disc.classList.remove('playing');
+                playIcon.style.display = 'block';
+                pauseIcon.style.display = 'none';
+            }
+        });
+
+        // Optional: Automatically play music when the envelope is opened
+        document.querySelector('.heart').addEventListener('click', () => {
+            // Wait for envelope animation to complete
+            setTimeout(() => {
+                if (audio.paused) {
+                    audio.play();
+                    disc.classList.add('playing');
+                    playIcon.style.display = 'none';
+                    pauseIcon.style.display = 'block';
+                }
+            }, 1000);
+        });
+
+        // Create falling hearts animation
+        function createHearts() {
+          const container = document.getElementById('falling-hearts');
+          const heartCount = 20;
+          
+          for (let i = 0; i < heartCount; i++) {
+            setTimeout(() => {
+              const heart = document.createElement('div');
+              heart.classList.add('heart-animation');
+              
+              // Random position and size
+              heart.style.left = Math.random() * 100 + '%';
+              heart.style.opacity = Math.random() * 0.7 + 0.3;
+              heart.style.fontSize = Math.random() * 15 + 10 + 'px';
+              
+              // Set animation duration randomly
+              heart.style.animationDuration = Math.random() * 3 + 3 + 's';
+              
+              container.appendChild(heart);
+              
+              // Remove heart after animation completes
+              setTimeout(() => {
+                heart.remove();
+              }, 6000);
+            }, i * 300);
+          }
+        }
+
+        // Trigger hearts when envelope is opened
+        envelope.addEventListener('click', () => {
+          setTimeout(() => {
+            createHearts();
+            setInterval(createHearts, 10000); // Create new hearts every 10 seconds
+          }, 500);
+        });
+
+        // Add this inside your script tag
+        const yesBtn = document.getElementById('yes-btn');
+        yesBtn.addEventListener('click', function() {
+          // Create confetti effect
+          createConfetti();
+          
+        });
+
+        function createConfetti() {
+          for (let i = 0; i < 150; i++) {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.animationDelay = Math.random() * 3 + 's';
+            confetti.style.backgroundColor = ['#ff85a2', '#ff9db7', '#ffc1d5', '#ffb6c1', 
+                                             '#ffd6e5'][Math.floor(Math.random() * 5)];
+            document.body.appendChild(confetti);
+            
+            // Remove confetti after animation
+            setTimeout(() => {
+              confetti.remove();
+            }, 6000);
+          }
+        }
+
+        // Countdown timer function with support for Anniversary and Monthsary
+function startCountdown() {
+  let countdownMode = 'anniversary'; // Default mode
+  const countdownTitle = document.getElementById('countdown-title');
+  const anniversaryBtn = document.getElementById('anniversary-btn');
+  const monthsaryBtn = document.getElementById('monthsary-btn');
+  
+  // Get next anniversary (May 25th of current or next year)
+  function getNextAnniversary() {
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    
+    // Create date object for May 25th of current year
+    let nextAnniversary = new Date(currentYear, 4, 25); // Month is 0-indexed (4 = May)
+    
+    // If May 25th has already passed this year, set for next year
+    if (now > nextAnniversary) {
+      nextAnniversary = new Date(currentYear + 1, 4, 25);
+    }
+    
+    return nextAnniversary;
+  }
+  
+  // Get next monthsary (25th of current or next month)
+  function getNextMonthsary() {
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth();
+    
+    // Create date object for 25th of current month
+    let nextMonthsary = new Date(currentYear, currentMonth, 25);
+    
+    // If the 25th has already passed this month, set for next month
+    if (now > nextMonthsary) {
+      // If December, go to January of next year
+      if (currentMonth === 11) {
+        nextMonthsary = new Date(currentYear + 1, 0, 25);
+      } else {
+        nextMonthsary = new Date(currentYear, currentMonth + 1, 25);
+      }
+    }
+    
+    return nextMonthsary;
+  }
+  
+  function getTargetDate() {
+    return countdownMode === 'anniversary' ? getNextAnniversary() : getNextMonthsary();
+  }
+  
+  function updateTitle() {
+    if (countdownMode === 'anniversary') {
+      const targetDate = getNextAnniversary();
+      const year = targetDate.getFullYear();
+      countdownTitle.textContent = `Time Until Our Anniversary - May 25th, ${year}`;
+    } else {
+      const targetDate = getNextMonthsary();
+      const month = targetDate.toLocaleString('default', { month: 'long' });
+      const year = targetDate.getFullYear();
+      countdownTitle.textContent = `Time Until Our Monthsary - ${month} 25th, ${year}`;
+    }
+  }
+  
+  function updateCountdown() {
+    const now = new Date().getTime();
+    let targetDate = getTargetDate().getTime();
+    const distance = targetDate - now;
+    
+    // Time calculations
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+    // Display the result
+    document.getElementById("days").textContent = days.toString().padStart(2, "0");
+    document.getElementById("hours").textContent = hours.toString().padStart(2, "0");
+    document.getElementById("minutes").textContent = minutes.toString().padStart(2, "0");
+    document.getElementById("seconds").textContent = seconds.toString().padStart(2, "0");
+    
+    // If the countdown is finished, display a special message
+    if (distance < 0) {
+      const messageType = countdownMode === 'anniversary' ? 'Anniversary' : 'Monthsary';
+      document.getElementById("countdown").innerHTML = `<p>Happy ${messageType}! 💖</p>`;
+      
+      // Reset the countdown for next day check
+      setTimeout(updateCountdown, 86400000); // Check again in 24 hours
+    }
+  }
+  
+  // Add event listeners for toggle buttons
+  anniversaryBtn.addEventListener('click', function() {
+  if (countdownMode !== 'anniversary') {
+    countdownMode = 'anniversary';
+    anniversaryBtn.classList.add('active');
+    monthsaryBtn.classList.remove('active');
+    updateTitle();
+    updateCountdown();
+    
+    // Add animation class
+    this.classList.add('just-clicked');
+    setTimeout(() => this.classList.remove('just-clicked'), 500);
+  }
+});
+
+monthsaryBtn.addEventListener('click', function() {
+  if (countdownMode !== 'monthsary') {
+    countdownMode = 'monthsary';
+    monthsaryBtn.classList.add('active');
+    anniversaryBtn.classList.remove('active');
+    updateTitle();
+    updateCountdown();
+    
+    // Add animation class
+    this.classList.add('just-clicked');
+    setTimeout(() => this.classList.remove('just-clicked'), 500);
+  }
+});
+  
+  // Initialize title
+  updateTitle();
+  
+  // Update countdown immediately
+  updateCountdown();
+  
+  // Update the countdown every second
+  const countdownTimer = setInterval(updateCountdown, 1000);
+}
+document.querySelectorAll('.love-spot').forEach(spot => {
+  spot.addEventListener('click', function() {
+    const message = document.createElement('div');
+    message.className = 'love-message';
+    message.textContent = this.dataset.message;
+    
+    // Position the message above the spot
+    message.style.top = (parseInt(this.style.top) - 10) + '%';
+    message.style.left = this.style.left;
+    
+    document.querySelector('.love-messages').appendChild(message);
+    
+    // Remove message after animation completes
+    setTimeout(() => {
+      message.remove();
+    }, 2000);
+  });
+});
+
+
+        // Initialize the countdown right away
+        startCountdown();
+
+        // Coupon functionality
+const viewCouponBtn = document.getElementById('view-coupon');
+const couponDiv = document.getElementById('love-coupon');
+const backFromCouponBtn = document.getElementById('back-from-coupon');
+const sendEmailBtn = document.getElementById('send-email-btn');
+const recipientEmail = document.getElementById('recipient-email');
+const emailStatus = document.getElementById('email-status');
+
+// Show coupon when button is clicked
+viewCouponBtn.addEventListener('click', () => {
+    letter.style.display = 'none';
+    couponDiv.style.display = 'block';  
+});
+
+// Return to letter from coupon
+backFromCouponBtn.addEventListener('click', () => {
+    couponDiv.style.display = 'none';
+    letter.style.display = 'block';
+});
+
+// Send email with coupon
+sendEmailBtn.addEventListener('click', () => {
+    const email = recipientEmail.value.trim();
+    if (!email) {
+        emailStatus.textContent = 'Please enter your email address';
+        emailStatus.className = 'email-status error';
+        return;
+    }
+    
+    // Disable button while processing
+    sendEmailBtn.disabled = true;
+    sendEmailBtn.textContent = 'Sending...';
+    emailStatus.textContent = '';
+    
+    // Create form data
+    const formData = new FormData();
+    formData.append('email', email);
+    
+    // Send AJAX request
+    fetch('send-coupon.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            emailStatus.textContent = data.message;
+            emailStatus.className = 'email-status success';
+            recipientEmail.value = '';
+        } else {
+            emailStatus.textContent = data.message;
+            emailStatus.className = 'email-status error';
+        }
+    })
+    .catch(error => {
+        emailStatus.textContent = 'An error occurred. Please try again.';
+        emailStatus.className = 'email-status error';
+        console.error('Error:', error);
+    })
+    .finally(() => {
+        // Re-enable button
+        sendEmailBtn.disabled = false;
+        sendEmailBtn.textContent = 'Email this Coupon';
+    });
+});
+// Create dots for navigation
+function createDots() {
+  const dotContainer = document.querySelector('.photo-dots');
+  if (dotContainer) {
+    dotContainer.innerHTML = ''; // Clear existing dots
+    
+    for (let i = 0; i < photos.length; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'dot' + (i === currentPhoto ? ' active' : '');
+      dot.addEventListener('click', () => {
+        currentPhoto = i;
+        updatePhotoGallery();
+      });
+      dotContainer.appendChild(dot);
+    }
+  }
+}
+
+// Update this function to also update the dots
+function updatePhotoGallery() {
+  photoCount.textContent = `Photo ${currentPhoto + 1} of ${photos.length}`;
+  
+  // Update each photo's visibility
+  photos.forEach((photo, index) => {
+    photo.classList.toggle('active', index === currentPhoto);
+    
+    // If this is the current photo, update the caption
+    if (index === currentPhoto) {
+      // Get custom caption from data attribute or use default
+      const customCaption = photo.getAttribute('data-caption');
+      photoCaption.textContent = customCaption || 'Our special moments together ❤️';
+    }
+  });
+  
+  // Update the dots
+  document.querySelectorAll('.dot').forEach((dot, index) => {
+    dot.classList.toggle('active', index === currentPhoto);
+  });
+}
+
+// Call this after you initialize your photo gallery
+createDots();
+    </script>
+</body>
+</html>

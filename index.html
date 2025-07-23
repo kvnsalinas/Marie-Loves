@@ -208,7 +208,7 @@
           </div>
           
           <div class="email-form">
-            <h4>Send this coupon to your email</h4>
+            <h4>Send this coupon to your email</h4>>
             <div class="form-group">
               <input type="email" id="recipient-email" placeholder="Enter your email address" required>
             </div>
@@ -575,9 +575,6 @@ document.querySelectorAll('.love-spot').forEach(spot => {
 const viewCouponBtn = document.getElementById('view-coupon');
 const couponDiv = document.getElementById('love-coupon');
 const backFromCouponBtn = document.getElementById('back-from-coupon');
-const sendEmailBtn = document.getElementById('send-email-btn');
-const recipientEmail = document.getElementById('recipient-email');
-const emailStatus = document.getElementById('email-status');
 
 // Show coupon when button is clicked
 viewCouponBtn.addEventListener('click', () => {
@@ -591,52 +588,47 @@ backFromCouponBtn.addEventListener('click', () => {
     letter.style.display = 'block';
 });
 
-// Send email with coupon
+// Initialize EmailJS
+emailjs.init('service_8tdg7sm'); // Replace with your EmailJS User ID
+
+const sendEmailBtn = document.getElementById('send-email-btn');
+const recipientEmail = document.getElementById('recipient-email');
+const emailStatus = document.getElementById('email-status');
+
 sendEmailBtn.addEventListener('click', () => {
-    const email = recipientEmail.value.trim();
-    if (!email) {
-        emailStatus.textContent = 'Please enter your email address';
-        emailStatus.className = 'email-status error';
-        return;
-    }
-    
-    // Disable button while processing
-    sendEmailBtn.disabled = true;
-    sendEmailBtn.textContent = 'Sending...';
-    emailStatus.textContent = '';
-    
-    // Create form data
-    const formData = new FormData();
-    formData.append('email', email);
-    
-    // Send AJAX request
-    fetch('send-coupon.php', {
-        method: 'POST',
-        body: formData
+  const email = recipientEmail.value.trim();
+  if (!email) {
+    emailStatus.textContent = 'Please enter your email address';
+    emailStatus.className = 'email-status error';
+    return;
+  }
+
+  // Disable button while processing
+  sendEmailBtn.disabled = true;
+  sendEmailBtn.textContent = 'Sending...';
+  emailStatus.textContent = '';
+
+  // Send email using EmailJS
+  emailjs
+    .send('service_8tdg7sm', 'template_y0jsw5j', {
+      to_email: email, // Pass the recipient's email
     })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            emailStatus.textContent = data.message;
-            emailStatus.className = 'email-status success';
-            recipientEmail.value = '';
-        } else {
-            emailStatus.textContent = data.message;
-            emailStatus.className = 'email-status error';
-        }
+    .then(() => {
+      emailStatus.textContent = 'Email sent successfully!';
+      emailStatus.className = 'email-status success';
+      recipientEmail.value = '';
     })
-    .catch(error => {
-        emailStatus.textContent = 'An error occurred. Please try again.';
-        emailStatus.className = 'email-status error';
-        console.error('Error:', error);
+    .catch(() => {
+      emailStatus.textContent = 'Failed to send email. Please try again.';
+      emailStatus.className = 'email-status error';
     })
     .finally(() => {
-        // Re-enable button
-        sendEmailBtn.disabled = false;
-        sendEmailBtn.textContent = 'Email this Coupon';
+      // Re-enable button
+      sendEmailBtn.disabled = false;
+      sendEmailBtn.textContent = 'Email this Coupon';
     });
 });
-// Create dots for navigation
+        // Create dots for navigation
 function createDots() {
   const dotContainer = document.querySelector('.photo-dots');
   if (dotContainer) {

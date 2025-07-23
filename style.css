@@ -92,6 +92,31 @@ body {
   background-color: #f9f9f9;
 }
 
+/* Style for the "Open" and "Gusto ko ng Hug" buttons */
+#yes-btn, #no-btn {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    background-color: #ff85a2;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#yes-btn:hover, #no-btn:hover {
+    background-color: #ff6b8d;
+    transform: scale(1.05);
+}
+
+#yes-btn:active, #no-btn:active {
+    background-color: #ff4f73;
+    transform: scale(0.95);
+}
+
 /* Envelope styles */
 .container > .envelope-wrapper {
   background: transparent; /* Remove plain background */
@@ -1197,4 +1222,29 @@ body {
   #photo-gallery {
     padding: 10px;
   }
+}
+
+#falling-hearts {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.heart-animation {
+    position: absolute;
+    color: red;
+    animation: fall 6s linear infinite;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(100vh);
+    }
 }

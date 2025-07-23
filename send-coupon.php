@@ -48,8 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <p style="color: #8b5d77;">This coupon entitles you to:</p>
                 <h3 style="font-family: cursive; color: #ff85a2; font-size: 24px; margin: 20px 0;">Unlimited Special Date Night</h3>
                 <p style="font-style: italic; font-size: 14px; color: #8b5d77;">Redeemable anytime. No expiration.</p>
-                <p><img src="cid:mariepixel" alt="marie" style="height: 20px; vertical-align: middle;"> <style="color: #8b5d77; margin-top: 15px;">Just present your screenshot anytime <img src="cid:mariepixel" alt="marie" style="height: 20px; vertical-align: middle;"></p>
-                <p style="font-family: cursive; font-size: 18px; color: #e75480; margin-top: 25px;">Use this for special occasions (Example: Movie Night or Game Night)</p>
+                <p style="font-style: italic; font-size: 14px; color: #8b5d77;">Just present your screenshot anytime.</p> 
+                <p style="font-style: italic; font-size: 14px; color: #8b5d77;">Use this for special occasions (Example: Movie Night or Game Night)
+</p> 
             </div>
             
             <p style="text-align: center; color: #666;">This coupon was sent to you by someone who cares about you very much.</p>

@@ -61,6 +61,232 @@
   background-color: #ff85a2;
   transform: scale(1.2);
 }
+
+/* Add this to your existing style section */
+.messages-container {
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        padding: 20px;
+        max-width: 600px;
+        margin: 0 auto;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .message-form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+    
+    #message-author {
+        padding: 8px;
+        border: 2px solid #ffd6e5;
+        border-radius: 5px;
+        width: 100px;
+    }
+    
+    #message-text {
+        padding: 10px;
+        border: 2px solid #ffd6e5;
+        border-radius: 5px;
+        min-height: 80px;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    #send-message {
+        background-color: #ff85a2;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Dancing Script', cursive;
+        font-size: 1.2rem;
+    }
+    
+    #send-message:hover {
+        background-color: #ff6b8d;
+        transform: scale(1.05);
+    }
+    
+    .message-item {
+        margin-bottom: 15px;
+        padding: 10px 15px;
+        border-radius: 10px;
+        position: relative;
+    }
+    
+    .message-kevin {
+        background-color: #e3f2fd;
+        margin-left: 20px;
+        margin-right: 60px;
+    }
+    
+    .message-marie {
+        background-color: #ffeef5;
+        margin-right: 20px;
+        margin-left: 60px;
+        text-align: right;
+    }
+    
+    .message-author {
+        font-weight: bold;
+        margin-bottom: 5px;
+        font-family: 'Dancing Script', cursive;
+        font-size: 1.2rem;
+    }
+    
+    .message-time {
+        font-size: 0.8rem;
+        color: #888;
+        margin-top: 5px;
+    }
+    
+    #messages-list {
+        max-height: 400px;
+        overflow-y: auto;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: rgba(255, 255, 255, 0.7);
+    }
+
+    .messages-tabs {
+        display: flex;
+        margin-bottom: 20px;
+        gap: 10px;
+    }
+    
+    .tab-btn {
+        padding: 8px 16px;
+        background-color: #ffd6e5;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        font-family: 'Dancing Script', cursive;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+    
+    .tab-btn.active {
+        background-color: #ff85a2;
+        color: white;
+    }
+    
+    #messages-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-height: 300px;
+        overflow-y: auto;
+        margin-bottom: 20px;
+    }
+    
+    .message-card {
+        padding: 15px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+    
+    .message-card:hover {
+        transform: scale(1.02);
+    }
+    
+    .message-card.kevin {
+        background-color: #e3f2fd;
+        border-left: 4px solid #2196f3;
+    }
+    
+    .message-card.marie {
+        background-color: #ffeef5;
+        border-left: 4px solid #ff85a2;
+    }
+    
+    .message-card-title {
+        font-weight: bold;
+        margin-bottom: 5px;
+        font-family: 'Dancing Script', cursive;
+        font-size: 1.2rem;
+    }
+    
+    .message-card-meta {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.8rem;
+        color: #666;
+    }
+    
+    .create-message-form {
+        background-color: #f9f9f9;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+    
+    .create-message-form h3 {
+        margin-top: 0;
+        font-family: 'Dancing Script', cursive;
+    }
+    
+    #message-title {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 2px solid #ffd6e5;
+        border-radius: 5px;
+    }
+    
+    #message-content {
+        width: 100%;
+        min-height: 100px;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 2px solid #ffd6e5;
+        border-radius: 5px;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    .form-buttons {
+        display: flex;
+        justify-content: flex-end;
+    }
+    
+    .message-detail-container {
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        padding: 20px;
+        max-width: 600px;
+        margin: 0 auto;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .message-meta {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        font-size: 0.9rem;
+        color: #666;
+    }
+    
+    .message-content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        min-height: 200px;
+        margin-bottom: 20px;
+        white-space: pre-wrap;
+    }
+    
+    .detail-buttons {
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    #delete-message {
+        background-color: #ff4f73;
+    }
     </style>
 </head>
 <body>
@@ -87,6 +313,7 @@
             <div class="view-memories">
                 <button id="view-photos">View Our Memories ❤️</button>
                 <button id="view-coupon">View Your Gift ✨</button>
+                <button id="view-messages">Our Messages 💌</button>
             </div>
         </div>
         <!-- Add the photo gallery section -->
@@ -235,6 +462,52 @@
             <button id="back-from-coupon">Back to Letter</button>
           </div>
         </div>
+
+        <div id="messages-section" style="display: none;" class="messages-container">
+    <h2>Our Messages</h2>
+    
+    <div class="messages-tabs">
+        <button class="tab-btn active" data-author="all">All Messages</button>
+        <button class="tab-btn" data-author="Kevin">Kevin's Messages</button>
+        <button class="tab-btn" data-author="Marie">Marie's Messages</button>
+    </div>
+    
+    <div id="messages-list">
+        <!-- Messages will be displayed here -->
+    </div>
+    
+    <div class="create-message-form">
+        <h3>Create New Message</h3>
+        <input type="text" id="message-title" placeholder="Message Title">
+        <select id="message-author">
+            <option value="Kevin">Kevin</option>
+            <option value="Marie">Marie</option>
+        </select>
+        <textarea id="message-content" placeholder="Write your message here..."></textarea>
+        <div class="form-buttons">
+            <button id="send-message">Send Message ❤️</button>
+        </div>
+    </div>
+    
+    <div class="back-button">
+        <button id="back-from-messages">Back to Letter</button>
+    </div>
+</div>
+
+<div id="message-detail" style="display: none;" class="message-detail-container">
+    <h3 id="detail-title">Message Title</h3>
+    <div class="message-meta">
+        <span id="detail-author">Author</span>
+        <span id="detail-date">Date</span>
+    </div>
+    <div id="detail-content" class="message-content">
+        Message content goes here
+    </div>
+    <div class="detail-buttons">
+        <button id="delete-message">Delete</button>
+        <button id="back-to-messages">Back to Messages</button>
+    </div>
+</div>
     </div>
     <div class="music-player">
         <div class="music-controls">
@@ -336,29 +609,28 @@
         const playIcon = document.querySelector('.play-icon');
         const pauseIcon = document.querySelector('.pause-icon');
         const audio = document.getElementById('background-music');
-        const disc = document.querySelector('.disc');
-
+        // The disc variable is referenced but not defined - let's remove these references
+        
         playPauseBtn.addEventListener('click', () => {
             if (audio.paused) {
                 audio.play();
-                disc.classList.add('playing');
+                // Remove this line: disc.classList.add('playing');
                 playIcon.style.display = 'none';
                 pauseIcon.style.display = 'block';
             } else {
                 audio.pause();
-                disc.classList.remove('playing');
+                // Remove this line: disc.classList.remove('playing');
                 playIcon.style.display = 'block';
                 pauseIcon.style.display = 'none';
             }
         });
 
         // Optional: Automatically play music when the envelope is opened
-        document.querySelector('.heart').addEventListener('click', () => {
+        document.querySelector('.heart')?.addEventListener('click', () => {
             // Wait for envelope animation to complete
             setTimeout(() => {
                 if (audio.paused) {
                     audio.play();
-                    disc.classList.add('playing');
                     playIcon.style.display = 'none';
                     pauseIcon.style.display = 'block';
                 }
@@ -597,102 +869,52 @@ backFromCouponBtn.addEventListener('click', () => {
 });
 
 // Send email with coupon
-sendEmailBtn.addEventListener('click', () => {
-    const email = recipientEmail.value.trim();
-    if (!email) {
-        emailStatus.textContent = 'Please enter your email address';
-        emailStatus.className = 'email-status error';
-        return;
-    }
-    
-    // Disable button while processing
-    sendEmailBtn.disabled = true;
-    sendEmailBtn.textContent = 'Sending...';
-    emailStatus.textContent = '';
-    
-    // Create form data
-    const formData = new FormData();
-    formData.append('email', email);
-    
-    // Send AJAX request
-    fetch('send-coupon.php', {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            emailStatus.textContent = data.message;
-            emailStatus.className = 'email-status success';
-            recipientEmail.value = '';
-        } else {
-            emailStatus.textContent = data.message;
+if (sendEmailBtn) {
+    sendEmailBtn.addEventListener('click', () => {
+        const email = recipientEmail?.value.trim();
+        if (!email) {
+            emailStatus.textContent = 'Please enter your email address';
             emailStatus.className = 'email-status error';
+            return;
         }
-    })
-    .catch(error => {
-        emailStatus.textContent = 'An error occurred. Please try again.';
-        emailStatus.className = 'email-status error';
-        console.error('Error:', error);
-    })
-    .finally(() => {
-        // Re-enable button
-        sendEmailBtn.disabled = false;
-        sendEmailBtn.textContent = 'Email this Coupon';
-    });
-});
-
-// Fix for Kevin and Marie messages
-function loadMessages() {
-  const messageSection = document.querySelector('.kevin-marie-messages');
-  
-  if (!messageSection) return; // Skip if section doesn't exist yet
-  
-  const messageContent = messageSection.querySelector('.message-content');
-  messageContent.innerHTML = '<div class="loading-messages">Loading messages...</div>';
-  
-  // Fetch messages from server or local storage
-  fetch('messages.json')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
-    .then(data => {
-      // Clear loading message
-      messageContent.innerHTML = '';
-      
-      // Add each message to the container
-      data.forEach(msg => {
-        const messageItem = document.createElement('div');
-        messageItem.className = `message-item ${msg.sender.toLowerCase()}`;
-        messageItem.innerHTML = `
-          <span class="message-sender">${msg.sender}</span>
-          <p>${msg.text}</p>
-        `;
-        messageContent.appendChild(messageItem);
-      });
-    })
-    .catch(error => {
-      console.error('Error loading messages:', error);
-      // Replace loading with a retry button instead of error message
-      messageContent.innerHTML = `
-        <div class="message-error">
-          <button class="retry-messages-btn">Click to load messages</button>
-        </div>
-      `;
-      
-      // Add event listener to retry button
-      const retryBtn = messageContent.querySelector('.retry-messages-btn');
-      if (retryBtn) {
-        retryBtn.addEventListener('click', loadMessages);
-      }
+        
+        // Disable button while processing
+        sendEmailBtn.disabled = true;
+        sendEmailBtn.textContent = 'Sending...';
+        emailStatus.textContent = '';
+        
+        // Create form data
+        const formData = new FormData();
+        formData.append('email', email);
+        
+        // Send AJAX request
+        fetch('send-coupon.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                emailStatus.textContent = data.message;
+                emailStatus.className = 'email-status success';
+                recipientEmail.value = '';
+            } else {
+                emailStatus.textContent = data.message;
+                emailStatus.className = 'email-status error';
+            }
+        })
+        .catch(error => {
+            emailStatus.textContent = 'An error occurred. Please try again.';
+            emailStatus.className = 'email-status error';
+            console.error('Error:', error);
+        })
+        .finally(() => {
+            // Re-enable button
+            sendEmailBtn.disabled = false;
+            sendEmailBtn.textContent = 'Email this Coupon';
+        });
     });
 }
-
-// Call message loading function when page is ready
-document.addEventListener('DOMContentLoaded', loadMessages);
 
 // Create dots for navigation
 function createDots() {
@@ -738,16 +960,237 @@ function updatePhotoGallery() {
 createDots();
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Move your initialization code here if needed
+    
+    // For example:
     const backToQuestionBtn = document.getElementById('back-to-question');
     const questionContainer = document.getElementById('question');
     const hugsContainer = document.getElementById('hugs-container');
 
-    backToQuestionBtn.addEventListener('click', function() {
-        console.log('Back to question button clicked!'); // For debugging
-        hugsContainer.style.display = 'none';
-        questionContainer.style.display = 'block';
+    if (backToQuestionBtn) {
+        backToQuestionBtn.addEventListener('click', function() {
+            console.log('Back to question button clicked!'); // For debugging
+            hugsContainer.style.display = 'none';
+            questionContainer.style.display = 'block';
+        });
+    }
+    
+    // Initialize the messages functionality only if elements exist
+    if (viewMessagesBtn && messagesSection) {
+        viewMessagesBtn.addEventListener('click', () => {
+            letter.style.display = 'none';
+            messagesSection.style.display = 'block';
+            loadMessages();
+        });
+    }
+    
+    // Initialize other features...
+});
+
+// Messages functionality with Firebase
+const viewMessagesBtn = document.getElementById('view-messages');
+const messagesSection = document.getElementById('messages-section');
+const messageDetail = document.getElementById('message-detail');
+const backFromMessagesBtn = document.getElementById('back-from-messages');
+const sendMessageBtn = document.getElementById('send-message');
+const messageAuthor = document.getElementById('message-author');
+const messageTitle = document.getElementById('message-title');
+const messageContent = document.getElementById('message-content');
+const messagesList = document.getElementById('messages-list');
+const tabButtons = document.querySelectorAll('.tab-btn');
+const deleteMessageBtn = document.getElementById('delete-message');
+const backToMessagesBtn = document.getElementById('back-to-messages');
+
+let currentFilter = 'all';
+let currentMessageId = null;
+
+// Show messages section
+viewMessagesBtn.addEventListener('click', () => {
+    letter.style.display = 'none';
+    messagesSection.style.display = 'block';
+    messageDetail.style.display = 'none';
+    loadMessages();
+});
+
+// Back to letter from messages
+backFromMessagesBtn.addEventListener('click', () => {
+    messagesSection.style.display = 'none';
+    messageDetail.style.display = 'none';
+    letter.style.display = 'block';
+});
+
+// Back to messages list from detail view
+backToMessagesBtn.addEventListener('click', () => {
+    messageDetail.style.display = 'none';
+    messagesSection.style.display = 'block';
+});
+
+// Tab filtering
+tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        currentFilter = button.getAttribute('data-author');
+        loadMessages();
     });
 });
+
+// Send a new message
+sendMessageBtn.addEventListener('click', () => {
+    const author = messageAuthor.value;
+    const title = messageTitle.value.trim();
+    const content = messageContent.value.trim();
+    
+    if (!title || !content) {
+        alert('Please enter both a title and message content.');
+        return;
+    }
+    
+    const message = {
+        author: author,
+        title: title,
+        content: content,
+        date: new Date().toISOString().split('T')[0], // YYYY-MM-DD format
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    };
+    
+    // Save message to Firestore
+    db.collection('messages').add(message)
+        .then(() => {
+            // Clear input fields
+            messageTitle.value = '';
+            messageContent.value = '';
+            
+            // Reload messages display
+            loadMessages();
+        })
+        .catch(error => {
+            console.error('Error adding message: ', error);
+            alert('Error saving message: ' + error.message);
+        });
+});
+
+// Delete a message
+deleteMessageBtn.addEventListener('click', () => {
+    if (!currentMessageId) return;
+    
+    const confirmDelete = confirm('Are you sure you want to delete this message?');
+    if (!confirmDelete) return;
+    
+    db.collection('messages').doc(currentMessageId).delete()
+        .then(() => {
+            messageDetail.style.display = 'none';
+            messagesSection.style.display = 'block';
+            loadMessages();
+        })
+        .catch(error => {
+            console.error('Error deleting message: ', error);
+            alert('Error deleting message: ' + error.message);
+        });
+});
+
+// Load and display messages
+function loadMessages() {
+    let query = db.collection('messages').orderBy('timestamp', 'desc');
+    
+    if (currentFilter !== 'all') {
+        query = query.where('author', '==', currentFilter);
+    }
+    
+    query.get()
+        .then(querySnapshot => {
+            messagesList.innerHTML = '';
+            
+            if (querySnapshot.empty) {
+                messagesList.innerHTML = '<p class="no-messages">No messages yet. Be the first to leave a sweet note!</p>';
+                return;
+            }
+            
+            querySnapshot.forEach(doc => {
+                const message = doc.data();
+                const messageCard = document.createElement('div');
+                messageCard.className = `message-card ${message.author.toLowerCase()}`;
+                messageCard.dataset.id = doc.id;
+                
+                const titleDiv = document.createElement('div');
+                titleDiv.className = 'message-card-title';
+                titleDiv.textContent = message.title;
+                
+                const metaDiv = document.createElement('div');
+                metaDiv.className = 'message-card-meta';
+                
+                const authorSpan = document.createElement('span');
+                authorSpan.textContent = message.author;
+                
+                const dateSpan = document.createElement('span');
+                dateSpan.textContent = message.date;
+                
+                metaDiv.appendChild(authorSpan);
+                metaDiv.appendChild(dateSpan);
+                
+                messageCard.appendChild(titleDiv);
+                messageCard.appendChild(metaDiv);
+                
+                // Add click event to view message details
+                messageCard.addEventListener('click', () => {
+                    showMessageDetail(doc.id);
+                });
+                
+                messagesList.appendChild(messageCard);
+            });
+        })
+        .catch(error => {
+            console.error('Error loading messages: ', error);
+            messagesList.innerHTML = '<p class="error">Error loading messages. Please try again later.</p>';
+        });
+}
+
+// Show message detail view
+function showMessageDetail(messageId) {
+    currentMessageId = messageId;
+    
+    db.collection('messages').doc(messageId).get()
+        .then(doc => {
+            if (doc.exists) {
+                const message = doc.data();
+                document.getElementById('detail-title').textContent = message.title;
+                document.getElementById('detail-author').textContent = message.author;
+                document.getElementById('detail-date').textContent = message.date;
+                document.getElementById('detail-content').textContent = message.content;
+                
+                messagesSection.style.display = 'none';
+                messageDetail.style.display = 'block';
+            } else {
+                alert('Message not found!');
+            }
+        })
+        .catch(error => {
+            console.error('Error getting message: ', error);
+            alert('Error loading message: ' + error.message);
+        });
+}
     </script>
+<!-- Firebase App (the core Firebase SDK) -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<!-- Firebase Firestore -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+<script>
+// Your Firebase configuration (you'll get this from Firebase console)
+const firebaseConfig = {
+  apiKey: "AIzaSyDeUJgPeP4hFdZk5Esfqx0iV6-_4EzaVrA",
+  authDomain: "marie-kevin-messages.firebaseapp.com",
+  databaseURL: "https://marie-kevin-messages-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "marie-kevin-messages",
+  storageBucket: "marie-kevin-messages.firebasestorage.app",
+  messagingSenderId: "994244523164",
+  appId: "1:994244523164:web:2445e9a0df367dd33e6959",
+  measurementId: "G-L6H87ZWC70"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+</script>
 </body>
 </html>

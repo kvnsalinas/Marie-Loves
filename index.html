@@ -188,105 +188,79 @@
         border-radius: 10px;
         cursor: pointer;
         transition: transform 0.2s;
+        position: relative;
+        background-color: #fff;
+        border-left: 4px solid #ff85a2;
+        margin-bottom: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
     
     .message-card:hover {
         transform: scale(1.02);
+        box-shadow: 0 3px 8px rgba(0,0,0,0.15);
     }
     
-    .message-card.kevin {
-        background-color: #e3f2fd;
-        border-left: 4px solid #2196f3;
-    }
-    
-    .message-card.marie {
-        background-color: #ffeef5;
-        border-left: 4px solid #ff85a2;
-    }
-    
-    .message-card-title {
+    .message-card.unread {
+        background-color: #ffebf4;
         font-weight: bold;
-        margin-bottom: 5px;
-        font-family: 'Dancing Script', cursive;
+    }
+    
+    .message-card.read {
+        background-color: #fff;
+        opacity: 0.85;
+    }
+    
+    .message-status {
+        position: absolute;
+        top: 10px;
+        right: 10px;
         font-size: 1.2rem;
     }
     
-    .message-card-meta {
-        display: flex;
-        justify-content: space-between;
-        font-size: 0.8rem;
-        color: #666;
-    }
-    
-    .create-message-form {
-        background-color: #f9f9f9;
-        padding: 15px;
-        border-radius: 10px;
-        margin-bottom: 20px;
-    }
-    
-    .create-message-form h3 {
-        margin-top: 0;
-        font-family: 'Dancing Script', cursive;
-    }
-    
-    #message-title {
-        width: 100%;
-        padding: 8px;
-        margin-bottom: 10px;
-        border: 2px solid #ffd6e5;
-        border-radius: 5px;
-    }
-    
-    #message-content {
-        width: 100%;
-        min-height: 100px;
-        padding: 10px;
-        margin-bottom: 10px;
-        border: 2px solid #ffd6e5;
-        border-radius: 5px;
-        font-family: 'Poppins', sans-serif;
-    }
-    
-    .form-buttons {
-        display: flex;
-        justify-content: flex-end;
-    }
-    
-    .message-detail-container {
-        background-color: rgba(255, 255, 255, 0.9);
-        border-radius: 15px;
-        padding: 20px;
-        max-width: 600px;
-        margin: 0 auto;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    }
-    
-    .message-meta {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 20px;
+    .message-preview {
+        margin: 5px 0;
         font-size: 0.9rem;
         color: #666;
+        line-height: 1.3;
     }
     
-    .message-content {
-        background-color: #fff;
+    .no-messages {
+        text-align: center;
+        color: #999;
         padding: 20px;
-        border-radius: 10px;
-        min-height: 200px;
+        font-style: italic;
+    }
+    
+    #messages-section h2 {
+        font-family: 'Dancing Script', cursive;
+        color: #ff85a2;
+        text-align: center;
         margin-bottom: 20px;
-        white-space: pre-wrap;
+        font-size: 2.2rem;
     }
     
-    .detail-buttons {
-        display: flex;
-        justify-content: space-between;
-    }
-    
-    #delete-message {
-        background-color: #ff4f73;
-    }
+    /* Message Detail Paper Style */
+.message-content {
+    background-color: #fff;
+    background-image: linear-gradient(#f2f2f2 1px, transparent 1px);
+    background-size: 100% 25px;
+    line-height: 25px;
+    padding: 0 20px 0;
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    color: #444;
+}
+
+.message-content::after {
+    content: '';
+    position: absolute;
+    width: 3px;
+    top: 0;
+    bottom: 0;
+    left: 30px;
+    background-color: rgba(255, 133, 162, 0.3);
+}
     </style>
 </head>
 <body>
@@ -464,25 +438,23 @@
         </div>
 
         <div id="messages-section" style="display: none;" class="messages-container">
-    <h2>Our Messages</h2>
+    <h2>Marie's Inbox 💌</h2>
     
+    <!-- Simplified tabs - just inbox view -->
     <div class="messages-tabs">
         <button class="tab-btn active" data-author="all">All Messages</button>
-        <button class="tab-btn" data-author="Kevin">Kevin's Messages</button>
-        <button class="tab-btn" data-author="Marie">Marie's Messages</button>
+        <button class="tab-btn" data-author="unread">Unread</button>
+        <button class="tab-btn" data-author="read">Read</button>
     </div>
     
     <div id="messages-list">
         <!-- Messages will be displayed here -->
     </div>
     
-    <div class="create-message-form">
-        <h3>Create New Message</h3>
+    <!-- Only visible for Kevin when authenticated -->
+    <div class="create-message-form" id="kevin-message-form" style="display: none;">
+        <h3>Send a Message to Marie</h3>
         <input type="text" id="message-title" placeholder="Message Title">
-        <select id="message-author">
-            <option value="Kevin">Kevin</option>
-            <option value="Marie">Marie</option>
-        </select>
         <textarea id="message-content" placeholder="Write your message here..."></textarea>
         <div class="form-buttons">
             <button id="send-message">Send Message ❤️</button>
@@ -497,15 +469,14 @@
 <div id="message-detail" style="display: none;" class="message-detail-container">
     <h3 id="detail-title">Message Title</h3>
     <div class="message-meta">
-        <span id="detail-author">Author</span>
+        <span id="detail-from">From Kevin</span>
         <span id="detail-date">Date</span>
     </div>
     <div id="detail-content" class="message-content">
         Message content goes here
     </div>
     <div class="detail-buttons">
-        <button id="delete-message">Delete</button>
-        <button id="back-to-messages">Back to Messages</button>
+        <button id="back-to-messages">Back to Inbox</button>
     </div>
 </div>
     </div>
@@ -993,13 +964,12 @@ const messagesSection = document.getElementById('messages-section');
 const messageDetail = document.getElementById('message-detail');
 const backFromMessagesBtn = document.getElementById('back-from-messages');
 const sendMessageBtn = document.getElementById('send-message');
-const messageAuthor = document.getElementById('message-author');
 const messageTitle = document.getElementById('message-title');
 const messageContent = document.getElementById('message-content');
 const messagesList = document.getElementById('messages-list');
 const tabButtons = document.querySelectorAll('.tab-btn');
-const deleteMessageBtn = document.getElementById('delete-message');
 const backToMessagesBtn = document.getElementById('back-to-messages');
+const kevinMessageForm = document.getElementById('kevin-message-form');
 
 let currentFilter = 'all';
 let currentMessageId = null;
@@ -1023,6 +993,14 @@ backFromMessagesBtn.addEventListener('click', () => {
 backToMessagesBtn.addEventListener('click', () => {
     messageDetail.style.display = 'none';
     messagesSection.style.display = 'block';
+    // Mark message as read when returning to inbox
+    if (currentMessageId) {
+        db.collection('messages').doc(currentMessageId).update({
+            read: true
+        }).catch(error => {
+            console.error('Error marking message as read: ', error);
+        });
+    }
 });
 
 // Tab filtering
@@ -1035,9 +1013,28 @@ tabButtons.forEach(button => {
     });
 });
 
-// Send a new message
+// Check if it's Kevin accessing the page (simplified auth)
+function isKevin() {
+    // For a real app, you'd use proper authentication
+    // This is a simplified approach for demo purposes
+    const isKevinKey = localStorage.getItem('isKevin');
+    return isKevinKey === 'true';
+}
+
+// Toggle message form visibility based on "user"
+function checkUserAndShowForm() {
+    if (isKevin()) {
+        kevinMessageForm.style.display = 'block';
+    } else {
+        kevinMessageForm.style.display = 'none';
+    }
+}
+
+// Call this when page loads
+document.addEventListener('DOMContentLoaded', checkUserAndShowForm);
+
+// Send a new message (Kevin only)
 sendMessageBtn.addEventListener('click', () => {
-    const author = messageAuthor.value;
     const title = messageTitle.value.trim();
     const content = messageContent.value.trim();
     
@@ -1047,11 +1044,13 @@ sendMessageBtn.addEventListener('click', () => {
     }
     
     const message = {
-        author: author,
+        from: "Kevin",
+        to: "Marie",
         title: title,
         content: content,
         date: new Date().toISOString().split('T')[0], // YYYY-MM-DD format
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        read: false
     };
     
     // Save message to Firestore
@@ -1060,32 +1059,14 @@ sendMessageBtn.addEventListener('click', () => {
             // Clear input fields
             messageTitle.value = '';
             messageContent.value = '';
+            alert('Message sent to Marie! ❤️');
             
             // Reload messages display
             loadMessages();
         })
         .catch(error => {
             console.error('Error adding message: ', error);
-            alert('Error saving message: ' + error.message);
-        });
-});
-
-// Delete a message
-deleteMessageBtn.addEventListener('click', () => {
-    if (!currentMessageId) return;
-    
-    const confirmDelete = confirm('Are you sure you want to delete this message?');
-    if (!confirmDelete) return;
-    
-    db.collection('messages').doc(currentMessageId).delete()
-        .then(() => {
-            messageDetail.style.display = 'none';
-            messagesSection.style.display = 'block';
-            loadMessages();
-        })
-        .catch(error => {
-            console.error('Error deleting message: ', error);
-            alert('Error deleting message: ' + error.message);
+            alert('Error sending message: ' + error.message);
         });
 });
 
@@ -1093,8 +1074,11 @@ deleteMessageBtn.addEventListener('click', () => {
 function loadMessages() {
     let query = db.collection('messages').orderBy('timestamp', 'desc');
     
-    if (currentFilter !== 'all') {
-        query = query.where('author', '==', currentFilter);
+    // Filter messages based on the selected tab
+    if (currentFilter === 'unread') {
+        query = query.where('read', '==', false);
+    } else if (currentFilter === 'read') {
+        query = query.where('read', '==', true);
     }
     
     query.get()
@@ -1102,15 +1086,19 @@ function loadMessages() {
             messagesList.innerHTML = '';
             
             if (querySnapshot.empty) {
-                messagesList.innerHTML = '<p class="no-messages">No messages yet. Be the first to leave a sweet note!</p>';
+                messagesList.innerHTML = '<p class="no-messages">No messages yet. Kevin will send you sweet notes here!</p>';
                 return;
             }
             
             querySnapshot.forEach(doc => {
                 const message = doc.data();
                 const messageCard = document.createElement('div');
-                messageCard.className = `message-card ${message.author.toLowerCase()}`;
+                messageCard.className = `message-card ${message.read ? 'read' : 'unread'}`;
                 messageCard.dataset.id = doc.id;
+                
+                const statusIcon = document.createElement('div');
+                statusIcon.className = 'message-status';
+                statusIcon.innerHTML = message.read ? '📖' : '🆕';
                 
                 const titleDiv = document.createElement('div');
                 titleDiv.className = 'message-card-title';
@@ -1119,16 +1107,20 @@ function loadMessages() {
                 const metaDiv = document.createElement('div');
                 metaDiv.className = 'message-card-meta';
                 
-                const authorSpan = document.createElement('span');
-                authorSpan.textContent = message.author;
-                
                 const dateSpan = document.createElement('span');
                 dateSpan.textContent = message.date;
                 
-                metaDiv.appendChild(authorSpan);
+                const previewSpan = document.createElement('div');
+                previewSpan.className = 'message-preview';
+                previewSpan.textContent = message.content.length > 50 
+                    ? message.content.substring(0, 50) + '...' 
+                    : message.content;
+                
                 metaDiv.appendChild(dateSpan);
                 
+                messageCard.appendChild(statusIcon);
                 messageCard.appendChild(titleDiv);
+                messageCard.appendChild(previewSpan);
                 messageCard.appendChild(metaDiv);
                 
                 // Add click event to view message details
@@ -1154,9 +1146,16 @@ function showMessageDetail(messageId) {
             if (doc.exists) {
                 const message = doc.data();
                 document.getElementById('detail-title').textContent = message.title;
-                document.getElementById('detail-author').textContent = message.author;
+                document.getElementById('detail-from').textContent = "From Kevin";
                 document.getElementById('detail-date').textContent = message.date;
                 document.getElementById('detail-content').textContent = message.content;
+                
+                // Mark as read when opened
+                db.collection('messages').doc(messageId).update({
+                    read: true
+                }).catch(error => {
+                    console.error('Error marking message as read: ', error);
+                });
                 
                 messagesSection.style.display = 'none';
                 messageDetail.style.display = 'block';
@@ -1169,6 +1168,9 @@ function showMessageDetail(messageId) {
             alert('Error loading message: ' + error.message);
         });
 }
+
+
+
     </script>
 <!-- Firebase App (the core Firebase SDK) -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -1191,6 +1193,19 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
+</script>
+<!-- Kevin's secret toggle - can be hidden better in a real app -->
+<div id="admin-toggle" style="position: fixed; bottom: 10px; right: 10px; font-size: 10px; opacity: 0.3;">
+  <button id="toggle-kevin" onclick="toggleKevin()" style="background: none; border: none; color: #999;">⚙️</button>
+</div>
+
+<script>
+function toggleKevin() {
+  const isKevinNow = localStorage.getItem('isKevin') === 'true';
+  localStorage.setItem('isKevin', !isKevinNow);
+  checkUserAndShowForm();
+  alert(isKevinNow ? 'Now viewing as Marie' : 'Now viewing as Kevin');
+}
 </script>
 </body>
 </html>

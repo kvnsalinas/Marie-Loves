@@ -2,78 +2,136 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Message Detail</title>
+    <title>Message from Kevin</title>
     <link rel="stylesheet" href="./style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
     <style>
+        body {
+            background-color: #ffebf4;
+            font-family: 'Poppins', sans-serif;
+        }
+        
         .letter {
-            background: #fff;
+            /* Copy letter styles from main page */
+            background-color: #fff;
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             max-width: 600px;
             margin: 40px auto;
             padding: 30px;
-            font-family: 'Poppins', sans-serif;
+            position: relative;
         }
-        .letter strong {
+        
+        .text {
+            margin-bottom: 30px;
+        }
+        
+        .text strong {
             font-family: 'Dancing Script', cursive;
             font-size: 2rem;
             color: #ff85a2;
+            display: block;
+            margin-bottom: 20px;
         }
+        
         .back-button {
             text-align: center;
-            margin-top: 30px;
+            margin-top: 20px;
+        }
+        
+        .back-button button {
+            background-color: #ff85a2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .back-button button:hover {
+            background-color: #ff6b8d;
+            transform: scale(1.05);
         }
     </style>
 </head>
 <body>
-    <div class="letter" id="message-letter">
-        <strong id="msg-title">Message Title</strong>
-        <p id="msg-content">Loading...</p>
+    <div class="letter">
+        <div class="text">
+            <strong id="msg-title">Message Title</strong>
+            <div id="msg-meta" style="margin-bottom: 20px; color: #888;"></div>
+            <div id="msg-content">Loading message...</div>
+        </div>
         <div class="back-button">
             <button onclick="window.location.href='index.html'">Back to Inbox</button>
         </div>
     </div>
-    <!-- Firebase SDKs -->
+
+    <!-- Firebase scripts -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
     <script>
-    // Firebase config (same as index.html)
-    const firebaseConfig = {
-      apiKey: "AIzaSyDeUJgPeP4hFdZk5Esfqx0iV6-_4EzaVrA",
-      authDomain: "marie-kevin-messages.firebaseapp.com",
-      databaseURL: "https://marie-kevin-messages-default-rtdb.asia-southeast1.firebasedatabase.app",
-      projectId: "marie-kevin-messages",
-      storageBucket: "marie-kevin-messages.firebasestorage.app",
-      messagingSenderId: "994244523164",
-      appId: "1:994244523164:web:2445e9a0df367dd33e6959",
-      measurementId: "G-L6H87ZWC70"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-
-    // Get message ID from URL
-    function getMessageId() {
-        const params = new URLSearchParams(window.location.search);
-        return params.get('id');
-    }
-
-    // Fetch and display message
-    const msgId = getMessageId();
-    if (msgId) {
-        db.collection('messages').doc(msgId).get().then(doc => {
-            if (doc.exists) {
-                const msg = doc.data();
-                document.getElementById('msg-title').textContent = msg.title;
-                document.getElementById('msg-content').textContent = msg.content;
-            } else {
-                document.getElementById('msg-content').textContent = 'Message not found.';
+        // Firebase config
+        const firebaseConfig = {
+            apiKey: "AIzaSyDeUJgPeP4hFdZk5Esfqx0iV6-_4EzaVrA",
+            authDomain: "marie-kevin-messages.firebaseapp.com",
+            projectId: "marie-kevin-messages",
+            storageBucket: "marie-kevin-messages.firebasestorage.app",
+            messagingSenderId: "994244523164",
+            appId: "1:994244523164:web:2445e9a0df367dd33e6959"
+        };
+        
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        
+        // Get message ID from URL
+        function getMessageId() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+        
+        // Load and display message
+        function loadMessage() {
+            const messageId = getMessageId();
+            
+            if (!messageId) {
+                document.getElementById('msg-content').textContent = 'No message selected.';
+                return;
             }
-        }).catch(err => {
-            document.getElementById('msg-content').textContent = 'Error loading message.';
-        });
-    } else {
-        document.getElementById('msg-content').textContent = 'No message selected.';
-    }
+            
+            db.collection('messages').doc(messageId).get()
+                .then(doc => {
+                    if (doc.exists) {
+                        const message = doc.data();
+                        
+                        // Display message details
+                        document.getElementById('msg-title').textContent = message.title;
+                        document.getElementById('msg-meta').textContent = `From: ${message.from} • ${message.date}`;
+                        document.getElementById('msg-content').textContent = message.content;
+                        
+                        // Mark as read
+                        db.collection('messages').doc(messageId).update({
+                            read: true
+                        }).catch(error => {
+                            console.error('Error marking message as read:', error);
+                        });
+                    } else {
+                        document.getElementById('msg-content').textContent = 'Message not found.';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading message:', error);
+                    document.getElementById('msg-content').textContent = 'Error loading message.';
+                });
+        }
+        
+        // Run when page loads
+        document.addEventListener('DOMContentLoaded', loadMessage);
     </script>
 </body>
 </html>

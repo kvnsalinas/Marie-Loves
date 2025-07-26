@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Message Detail</title>
+    <link rel="stylesheet" href="./style.css">
+    <style>
+        .letter {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 30px;
+            font-family: 'Poppins', sans-serif;
+        }
+        .letter strong {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: #ff85a2;
+        }
+        .back-button {
+            text-align: center;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="letter" id="message-letter">
+        <strong id="msg-title">Message Title</strong>
+        <p id="msg-content">Loading...</p>
+        <div class="back-button">
+            <button onclick="window.location.href='index.html'">Back to Inbox</button>
+        </div>
+    </div>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script>
+    // Firebase config (same as index.html)
+    const firebaseConfig = {
+      apiKey: "AIzaSyDeUJgPeP4hFdZk5Esfqx0iV6-_4EzaVrA",
+      authDomain: "marie-kevin-messages.firebaseapp.com",
+      databaseURL: "https://marie-kevin-messages-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "marie-kevin-messages",
+      storageBucket: "marie-kevin-messages.firebasestorage.app",
+      messagingSenderId: "994244523164",
+      appId: "1:994244523164:web:2445e9a0df367dd33e6959",
+      measurementId: "G-L6H87ZWC70"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // Get message ID from URL
+    function getMessageId() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get('id');
+    }
+
+    // Fetch and display message
+    const msgId = getMessageId();
+    if (msgId) {
+        db.collection('messages').doc(msgId).get().then(doc => {
+            if (doc.exists) {
+                const msg = doc.data();
+                document.getElementById('msg-title').textContent = msg.title;
+                document.getElementById('msg-content').textContent = msg.content;
+            } else {
+                document.getElementById('msg-content').textContent = 'Message not found.';
+            }
+        }).catch(err => {
+            document.getElementById('msg-content').textContent = 'Error loading message.';
+        });
+    } else {
+        document.getElementById('msg-content').textContent = 'No message selected.';
+    }
+    </script>
+</body>
+</html>

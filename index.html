@@ -956,7 +956,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Initialize other features...
+    // Check URL parameters to see if we should show a specific section
+    const urlParams = new URLSearchParams(window.location.search);
+    const section = urlParams.get('section');
+    
+    if (section === 'messages') {
+        // Hide the initial question and show the messages section
+        document.getElementById('question').style.display = 'none';
+        document.getElementById('messages-section').style.display = 'block';
+        
+        // Load the messages
+        loadMessages();
+    }
+    
+    // Your existing DOMContentLoaded code...
 });
 
 // Messages functionality with Firebase

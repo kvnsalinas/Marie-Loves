@@ -571,7 +571,7 @@ body {
 .floating-icon {
   position: absolute;
   bottom: -50px; /* Start below the screen */
-  opacity: 0.8;
+  opacity: 1;
   animation-name: float-ascending;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
@@ -625,6 +625,7 @@ body {
   width: auto;
   height: 50px;
   filter: drop-shadow(0 0 3px rgba(255, 182, 193, 0.5));
+  opacity: 1;
 }
 
 /* Create special horizontal animation for cina.png */
@@ -658,6 +659,7 @@ body {
   height: 50px; /* Increased from the standard 30px */
   transform: scale(1.2); /* Additional scaling for emphasis */
   filter: drop-shadow(0 0 5px rgba(255, 182, 193, 0.7)); /* Enhanced glow effect */
+  opacity: 1;
 }
 
 /* Position cina.png elements for horizontal movement at different heights */

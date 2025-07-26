@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message from Kevin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #ffeef7;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('hearts-bg.png');
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 700px;
+            width: 90%;
+            margin: 40px auto;
+        }
+        
+        .message-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .message-header {
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            color: #ff85a2;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .message-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        /* Paper effect styling */
+        .message-content {
+            background-color: #fff;
+            background-image: linear-gradient(#f2f2f2 1px, transparent 1px);
+            background-size: 100% 25px;
+            line-height: 25px;
+            padding: 15px 30px 20px 50px;
+            position: relative;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            color: #444;
+            min-height: 400px;
+            border-radius: 5px;
+        }
+        
+        .message-content::after {
+            content: '';
+            position: absolute;
+            width: 3px;
+            top: 0;
+            bottom: 0;
+            left: 30px;
+            background-color: rgba(255, 133, 162, 0.3);
+        }
+        
+        .back-button {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .back-button button {
+            background-color: #ff85a2;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            font-family: 'Dancing Script', cursive;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .back-button button:hover {
+            background-color: #ff6b8d;
+            transform: scale(1.05);
+        }
+        
+        .floating-icon {
+            position: fixed;
+            pointer-events: none;
+            animation: float 8s infinite ease-in-out;
+            opacity: 0.7;
+            z-index: -1;
+        }
+        
+        .floating-icon img {
+            width: 50px;
+            height: 50px;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+            100% { transform: translateY(0) rotate(0deg); }
+        }
+
+        /* Music player styles */
+        .music-player {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        #play-pause-btn {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .play-icon, .pause-icon {
+            font-size: 1.5rem;
+            color: #ff85a2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="message-container">
+            <div class="message-header">
+                <h1 id="message-title">Message Title</h1>
+                <div class="message-meta">
+                    <span id="message-from">From Kevin with love</span>
+                    <span id="message-date">Date: July 26, 2025</span>
+                </div>
+            </div>
+            
+            <div id="message-content" class="message-content">
+                Loading message...
+            </div>
+            
+            <div class="back-button">
+                <button id="back-to-inbox">Back to Inbox</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Floating icons (optional) -->
+    <div class="floating-icons">
+        <div class="floating-icon" style="top: 20%; left: 15%;">
+            <img src="mariepixel.png" alt="Icon">
+        </div>
+        <div class="floating-icon" style="top: 70%; left: 80%;">
+            <img src="mariewalk.png" alt="Icon">
+        </div>
+        <div class="floating-icon" style="top: 40%; left: 75%;">
+            <img src="hmp.png" alt="Icon">
+        </div>
+    </div>
+
+    <!-- Music player -->
+    <div class="music-player">
+        <audio id="background-music" src="music.mp3" autoplay loop></audio>
+        <button id="play-pause-btn">
+            <span class="play-icon">▶️</span>
+            <span class="pause-icon" style="display:none;">⏸️</span>
+        </button>
+    </div>
+
+    <!-- Firebase scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyDeUJgPeP4hFdZk5Esfqx0iV6-_4EzaVrA",
+          authDomain: "marie-kevin-messages.firebaseapp.com",
+          databaseURL: "https://marie-kevin-messages-default-rtdb.asia-southeast1.firebasedatabase.app",
+          projectId: "marie-kevin-messages",
+          storageBucket: "marie-kevin-messages.firebasestorage.app",
+          messagingSenderId: "994244523164",
+          appId: "1:994244523164:web:2445e9a0df367dd33e6959",
+          measurementId: "G-L6H87ZWC70"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        
+        // Get message ID from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const messageId = urlParams.get('id');
+        
+        // Back button handler
+        document.getElementById('back-to-inbox').addEventListener('click', () => {
+            window.location.href = 'index.html';
+        });
+        
+        // Load message details
+        function loadMessageDetail() {
+            if (!messageId) {
+                document.getElementById('message-content').textContent = 'No message specified';
+                return;
+            }
+            
+            db.collection('messages').doc(messageId).get()
+                .then(doc => {
+                    if (doc.exists) {
+                        const message = doc.data();
+                        document.getElementById('message-title').textContent = message.title;
+                        document.getElementById('message-from').textContent = 'From Kevin with love';
+                        document.getElementById('message-date').textContent = 'Date: ' + message.date;
+                        document.getElementById('message-content').textContent = message.content;
+                        
+                        // Mark as read
+                        db.collection('messages').doc(messageId).update({
+                            read: true
+                        }).catch(error => {
+                            console.error('Error marking message as read: ', error);
+                        });
+                        
+                        // Update page title
+                        document.title = message.title + ' - Message from Kevin';
+                    } else {
+                        document.getElementById('message-content').textContent = 'Message not found!';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading message: ', error);
+                    document.getElementById('message-content').textContent = 'Error loading message: ' + error.message;
+                });
+        }
+        
+        // Load the message when page loads
+        document.addEventListener('DOMContentLoaded', loadMessageDetail);
+
+        // Music player script
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const playIcon = document.querySelector('.play-icon');
+        const pauseIcon = document.querySelector('.pause-icon');
+        const audio = document.getElementById('background-music');
+
+        playPauseBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'inline';
+            } else {
+                audio.pause();
+                playIcon.style.display = 'inline';
+                pauseIcon.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

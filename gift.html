@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Gift</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="music-player">
+        <audio id="background-music" src="music.mp3" autoplay loop></audio>
+        <button id="play-pause-btn">
+            <span class="play-icon">▶️</span>
+            <span class="pause-icon" style="display:none;">⏸️</span>
+        </button>
+    </div>
+    <div class="coupon" id="love-coupon">
+        <!-- Place your coupon HTML here (copy from index.html) -->
+    </div>
+    <a href="envelope.html"><button>Back to Letter</button></a>
+    <script src="js/gift.js"></script>
+    <script>
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const playIcon = document.querySelector('.play-icon');
+        const pauseIcon = document.querySelector('.pause-icon');
+        const audio = document.getElementById('background-music');
+
+        playPauseBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'inline';
+            } else {
+                audio.pause();
+                playIcon.style.display = 'inline';
+                pauseIcon.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

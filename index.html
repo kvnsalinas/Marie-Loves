@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open When You're Free</title>
+    <link rel="stylesheet" href="./style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <style>
+        @keyframes pulse-button {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.toggle-btn.just-clicked {
+  animation: pulse-button 0.5s;
+}
+
+.photo-dots {
+  display: flex;
+  justify-content: center;
+  margin: 15px 0;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+/* Style for the "Back to Question" button */
+#back-to-question {
+    background-color: #ff85a2;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-family: 'Dancing Script', cursive;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#back-to-question:hover {
+    background-color: #ff6b8d;
+    transform: scale(1.05);
+}
+
+#back-to-question:active {
+    background-color: #ff4f73;
+    transform: scale(0.95);
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  background-color: #ffd6e5;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot.active {
+  background-color: #ff85a2;
+  transform: scale(1.2);
+}
+
+/* Add this to your existing style section */
+.messages-container {
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 15px;
+        padding: 20px;
+        max-width: 600px;
+        margin: 0 auto;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .message-form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+    
+    #message-author {
+        padding: 8px;
+        border: 2px solid #ffd6e5;
+        border-radius: 5px;
+        width: 100px;
+    }
+    
+    #message-text {
+        padding: 10px;
+        border: 2px solid #ffd6e5;
+        border-radius: 5px;
+        min-height: 80px;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    #send-message {
+        background-color: #ff85a2;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: 'Dancing Script', cursive;
+        font-size: 1.2rem;
+    }
+    
+    #send-message:hover {
+        background-color: #ff6b8d;
+        transform: scale(1.05);
+    }
+    
+    .message-item {
+        margin-bottom: 15px;
+        padding: 10px 15px;
+        border-radius: 10px;
+        position: relative;
+    }
+    
+    .message-kevin {
+        background-color: #e3f2fd;
+        margin-left: 20px;
+        margin-right: 60px;
+    }
+    
+    .message-marie {
+        background-color: #ffeef5;
+        margin-right: 20px;
+        margin-left: 60px;
+        text-align: right;
+    }
+    
+    .message-author {
+        font-weight: bold;
+        margin-bottom: 5px;
+        font-family: 'Dancing Script', cursive;
+        font-size: 1.2rem;
+    }
+    
+    .message-time {
+        font-size: 0.8rem;
+        color: #888;
+        margin-top: 5px;
+    }
+    
+    #messages-list {
+        max-height: 400px;
+        overflow-y: auto;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: rgba(255, 255, 255, 0.7);
+    }
+
+    .messages-tabs {
+        display: flex;
+        margin-bottom: 20px;
+        gap: 10px;
+    }
+    
+    .tab-btn {
+        padding: 8px 16px;
+        background-color: #ffd6e5;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        font-family: 'Dancing Script', cursive;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+    
+    .tab-btn.active {
+        background-color: #ff85a2;
+        color: white;
+    }
+    
+    #messages-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        max-height: 300px;
+        overflow-y: auto;
+        margin-bottom: 20px;
+    }
+    
+    .message-card {
+        padding: 15px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: transform 0.2s;
+        position: relative;
+        background-color: #fff;
+        border-left: 4px solid #ff85a2;
+        margin-bottom: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .message-card:hover {
+        transform: scale(1.02);
+        box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    }
+    
+    .message-card.unread {
+        background-color: #ffebf4;
+        font-weight: bold;
+    }
+    
+    .message-card.read {
+        background-color: #fff;
+        opacity: 0.85;
+    }
+    
+    .message-status {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 1.2rem;
+    }
+    
+    .message-preview {
+        margin: 5px 0;
+        font-size: 0.9rem;
+        color: #666;
+        line-height: 1.3;
+    }
+    
+    .no-messages {
+        text-align: center;
+        color: #999;
+        padding: 20px;
+        font-style: italic;
+    }
+    
+    #messages-section h2 {
+        font-family: 'Dancing Script', cursive;
+        color: #ff85a2;
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 2.2rem;
+    }
+    
+    /* Message Detail Paper Style */
+.message-content {
+    background-color: #fff;
+    background-image: linear-gradient(#f2f2f2 1px, transparent 1px);
+    background-size: 100% 25px;
+    line-height: 25px;
+    padding: 0 20px 0;
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    color: #444;
+}
+
+.message-content::after {
+    content: '';
+    position: absolute;
+    width: 3px;
+    top: 0;
+    bottom: 0;
+    left: 30px;
+    background-color: rgba(255, 133, 162, 0.3);
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="question-container" id="question">
+            <h2>Open this when you're okay</h2>
+            <div class="buttons">
+                <button id="yes-btn">Open</button>
+                <button id="no-btn">Gusto ko ng Hug</button>
+            </div>
+        </div>
+        <div class="envelope-wrapper" id="envelope" style="display: none;">
+            <div class="envelope">
+                <div class="heart"></div>
+            </div>
+        </div>
+        <div class="letter" style="display: none;">
+            <div class="text">
+                <strong>To my Darling,</strong>
+                <p>Hello love love! Happy happy monthsary to us hehehe. I made this kasi nasa isip ko palagi yung what if gawan ko siya ng website and then naalala ko sinabi mo kahapon na "you have a deadline! i need the website with song! " and ayun HAHAHAH ayos ba ;)</p>
+                <p>I know things have been hard on us lately, but I hope we can work through this neh mahal mahal and I also apologize sa mga pagkukulang ko and sa mga times na napapafeel ko po sayo na I'm not with you :( I want to make it up to you po my love and do know na I am always proud of you and I'm always praying for our success <3</p>
+                <p>Now goodluck sa future quizzes mo and sa quiz mo ngayon hehe KAYANG KAYA MO YAN! I love you very much darling <3</p>
+            </div>
+            <div class="view-memories">
+                <button id="view-photos">View Our Memories ❤️</button>
+                <button id="view-coupon">View Your Gift ✨</button>
+                <button id="view-messages">Our Messages 💌</button>
+            </div>
+        </div>
+        <!-- Add the photo gallery section -->
+        <div id="photo-gallery" style="display: none;">
+            <div class="gallery-container">
+                <div class="arrow left-arrow">❮</div>
+                <div class="photo-container">
+                    <!-- Replace these with your actual photos and add custom captions -->
+                    <div class="photo active" data-caption="Me making this hehehe">
+                        <img src="images/photo1.jpg" alt="Us together" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+1';">
+                    </div>
+                    <div class="photo" data-caption="I miss your hugs and care mahal ko.">
+                        <img src="images/photo2.jpg" alt="Special day" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+2';">
+                    </div>
+                    <div class="photo" data-caption="Cute naman natin dito HAHAHA">
+                        <img src="images/photo3.jpg" alt="Happy memories" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+3';">
+                    </div>
+                    <div class="photo" data-caption="Ay ang baby ko na yan pakiss kiss pa uy!">
+                        <img src="images/photo4.jpg" alt="Together forever" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+4';">
+                    </div>
+                    <div class="photo" data-caption="Oh eto kiss na rin kita diyan ;P">
+                        <img src="images/photo5.jpg" alt="Our adventures" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+5';">
+                    </div>
+                    <div class="photo" data-caption="Pacute cute pa ang love love ohh">
+                        <img src="images/photo6.jpg" alt="Your beautiful smile" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+6';">
+                    </div>
+                    <div class="photo" data-caption="Let's eat ulit dito nehh mahal ko, gusto ko ulit nung carbonara nilang pang 5 tao HAHAHA">
+                        <img src="images/photo7.jpg" alt="Special occasion" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+7';">
+                    </div>
+                    <div class="photo" data-caption="I miss staying at pampanga with you, soon ulit nehh">
+                        <img src="images/photo8.jpg" alt="Simple joys" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+8';">
+                    </div>
+                    <div class="photo" data-caption="jajajaja pogi! HAHAHAHA">
+                        <img src="images/photo9.jpg" alt="Happy memories" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+9';">
+                    </div>
+                    <div class="photo" data-caption="ETO NAMAN MAGANDA SYEMPRE BAKA MINAMAHAL Q YAN!">
+                        <img src="images/photo10.jpg" alt="Cherished moments" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+10';">
+                    </div>
+                    <div class="photo" data-caption="You're the best thing that's ever happened to me. I Love You Always">
+                        <img src="images/photo11.jpg" alt="Love forever" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+11';">
+                    </div>
+                    <div class="photo" data-caption="Happy Monthsary to my makulit kulit na love love!">
+                      <img src="images/photo12.jpg" alt="Love forever" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+11';">
+                  </div>
+                  <div class="photo" data-caption="and sshhh, everyday is your day :P There's no day wherein you're not special hehe. Mwah">
+                    <img src="images/photo13.jpg" alt="Love forever" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+11';">
+                </div>
+                </div>
+                <div class="arrow right-arrow">❯</div>
+            </div>
+            <div class="gallery-caption">
+                <h3 id="photo-count">Photo 1 of 11</h3>
+                <p id="photo-caption">Our special moments together ❤️</p>
+            </div>
+            <div class="photo-dots">
+                <!-- Will be populated with JavaScript -->
+            </div>
+            <div class="back-button">
+                <button id="back-to-letter">Back to Letter</button>
+            </div>
+        </div>
+        <div id="hugs-container" style="display: none; text-align: center;">
+            <div class="hug-image-container">
+                <img src="hug.gif" alt="Hugs" onerror="this.onerror=null; this.src='hug.png'; if(this.src.includes('png')) this.onerror=null;" style="max-width: 300px; margin-bottom: 20px;">
+            </div>
+            <h3 style="font-family: 'Dancing Script', cursive; font-size: 2rem; color: var(--txt-color);">
+                Yakap mahigpit mahal! I'm here lang po nehh ❤️   
+            </h3>
+            <button id="back-to-question" style="margin-top: 20px;" onclick="window.location.reload();">Ready kana mahal?</button>
+        </div>
+        <div class="floating-icons">
+            <!-- Multiple copies of your images for more floating elements -->
+            <div class="floating-icon"><img src="mariepixel.png" alt="Icon 1"></div>
+            <div class="floating-icon"><img src="mariewalk.png" alt="Icon 2"></div>
+            <div class="floating-icon"><img src="hmp.png" alt="Icon 3"></div>
+            <div class="floating-icon"><img src="cina.png" alt="Icon 4"></div>
+            
+            <div class="floating-icon"><img src="mariepixel.png" alt="Icon 5"></div>
+            <div class="floating-icon"><img src="mariewalk.png" alt="Icon 6"></div>
+            <div class="floating-icon"><img src="hmp.png" alt="Icon 3"></div>
+            <div class="floating-icon"><img src="cina.png" alt="Icon 4"></div>
+            
+            <div class="floating-icon"><img src="mariepixel.png" alt="Icon 1"></div>
+            <div class="floating-icon"><img src="mariewalk.png" alt="Icon 2"></div>
+            <div class="floating-icon"><img src="hmp.png" alt="Icon 3"></div>
+            <div class="floating-icon"><img src="cina.png" alt="Icon 4"></div>
+            
+            <div class="floating-icon"><img src="mariepixel.png" alt="Icon 1"></div>
+            <div class="floating-icon"><img src="mariewalk.png" alt="Icon 2"></div>
+            <div class="floating-icon"><img src="hmp.png" alt="Icon 3"></div>
+            <div class="floating-icon"><img src="cina.png" alt="Icon 4"></div>
+            
+            <div class="floating-icon"><img src="mariepixel.png" alt="Icon 1"></div>
+            <div class="floating-icon"><img src="mariewalk.png" alt="Icon 2"></div>
+            <div class="floating-icon"><img src="hmp.png" alt="Icon 3"></div>
+            <div class="floating-icon"><img src="cina.png" alt="Icon 4"></div>
+        </div>
+
+        <div class="countdown-container" style="display: none;">
+          <div class="countdown-toggle">
+            <button id="anniversary-btn" class="toggle-btn active">Anniversary</button>
+            <button id="monthsary-btn" class="toggle-btn">Monthsary</button>
+          </div>
+          
+          <h3 id="countdown-title">Time Until Our Anniversary - May 25th</h3>
+          <div id="countdown">
+            <div class="time-section">
+              <span id="days">00</span>
+              <span class="time-label">Days</span>
+            </div>
+            <div class="time-section">
+              <span id="hours">00</span>
+              <span class="time-label">Hours</span>
+            </div>
+            <div class="time-section">
+              <span id="minutes">00</span>
+              <span class="time-label">Minutes</span>
+            </div>
+            <div class="time-section">
+              <span id="seconds">00</span>
+              <span class="time-label">Seconds</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="love-messages">
+          <div class="love-spot" style="top: 20%; left: 15%;" data-message="You make my heart smile!"></div>
+          <div class="love-spot" style="top: 70%; left: 80%;" data-message="Every moment with you is a blessing"></div>
+          <div class="love-spot" style="top: 40%; left: 75%;" data-message="You're my favorite person"></div>
+          <div class="love-spot" style="top: 80%; left: 30%;" data-message="I love your laugh"></div>
+        </div>
+
+        <div class="coupon" id="love-coupon" style="display: none;">
+          <div class="coupon-inner">
+            <h2>Love Coupon</h2>
+            <p class="coupon-text">This coupon entitles you to:</p>
+            <h3>BeanBean Time</h3>
+            <p class="coupon-note">Redeemable anytime. No expiration.</p>
+            <p class="coupon-signature">Present the screenshot to redeeeeem!</p>
+            <p class="coupon-signature">(Can redeem again and again and again forever)</p>
+            <div class="coupon-hearts"></div>
+          </div>
+          
+          
+          <div class="back-button">
+            <button id="back-from-coupon">Back to Letter</button>
+          </div>
+        </div>
+
+        <div id="messages-section" style="display: none;" class="messages-container">
+    <h2>Marie's Inbox 💌</h2>
+    
+    <!-- Simplified tabs - just inbox view -->
+    <div class="messages-tabs">
+        <button class="tab-btn active" data-author="all">All Messages</button>
+        <button class="tab-btn" data-author="unread">Unread</button>
+        <button class="tab-btn" data-author="read">Read</button>
+    </div>
+    
+    <div id="messages-list">
+        <!-- Messages will be displayed here -->
+    </div>
+    
+    <!-- Only visible for Kevin when authenticated -->
+    <div class="create-message-form" id="kevin-message-form" style="display: none;">
+        <h3>Send a Message to Marie</h3>
+        <input type="text" id="message-title" placeholder="Message Title">
+        <textarea id="message-content" placeholder="Write your message here..."></textarea>
+        <div class="form-buttons">
+            <button id="send-message">Send Message ❤️</button>
+        </div>
+    </div>
+    
+    <div class="back-button">
+        <button id="back-from-messages">Back to Letter</button>
+    </div>
+</div>
+
+<div id="message-detail" style="display: none;" class="message-detail-container">
+    <h3 id="detail-title">Message Title</h3>
+    <div class="message-meta">
+        <span id="detail-from">From Kevin</span>
+        <span id="detail-date">Date</span>
+    </div>
+    <div id="detail-content" class="message-content">
+        Message content goes here
+    </div>
+    <div class="detail-buttons">
+        <button id="back-to-messages">Back to Inbox</button>
+    </div>
+</div>
+    </div>
+    <div class="music-player">
+        <div class="music-controls">
+            <button id="play-pause-btn">
+                <i class="play-icon">♫</i>
+                <i class="pause-icon" style="display:none;">❚❚</i>
+            </button>
+            <div class="song-info">
+                <span class="song-title">I Don't Wanna Be Okay Without You</span>
+                <span class="song-artist">Charlie Burg</span>
+            </div>
+        </div>
+        <audio id="background-music" loop>
+            <source src="Charlie Burg - I Don't Wanna Be Okay Without You.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+    <div id="falling-hearts"></div>
+    <script>
+        const envelope = document.querySelector('.envelope-wrapper');
+        const letter = document.querySelector('.letter');
+        const photoGallery = document.getElementById('photo-gallery');
+        const viewPhotosBtn = document.getElementById('view-photos');
+        const backToLetterBtn = document.getElementById('back-to-letter');
+        const photos = document.querySelectorAll('.photo');
+        const photoCount = document.getElementById('photo-count');
+        const photoCaption = document.getElementById('photo-caption');
+        let currentPhoto = 0;
+
+        // Show music player after envelope is opened
+        envelope.addEventListener('click', () => {
+            envelope.classList.add('fade-out');
+            setTimeout(() => {
+                envelope.style.display = 'none';
+                letter.style.display = 'block';
+                
+                // Show the elegant music player at the top
+                document.querySelector('.music-player').classList.add('visible');
+                
+                // Make sure countdown is running
+                startCountdown();
+            }, 500);
+        });
+
+        // Start playing when "Open" is clicked
+        document.getElementById('yes-btn').addEventListener('click', () => {
+            document.getElementById('question').style.display = 'none'; // Hide the first page
+    document.getElementById('envelope').style.display = 'block'; // Show the envelope
+    document.querySelector('.countdown-container').style.display = 'block'; // Show the countdown
+        });
+        
+        document.getElementById('no-btn').addEventListener('click', () => {
+            document.getElementById('question').style.display = 'none';
+            document.getElementById('hugs-container').style.display = 'block';
+        });
+
+        // Photo gallery navigation
+        viewPhotosBtn.addEventListener('click', () => {
+            letter.style.display = 'none';
+            photoGallery.style.display = 'block';
+        });
+
+        backToLetterBtn.addEventListener('click', () => {
+            photoGallery.style.display = 'none';
+            letter.style.display = 'block';
+        });
+
+        function updatePhotoGallery() {
+            photoCount.textContent = `Photo ${currentPhoto + 1} of ${photos.length}`;
+            
+            // Update each photo's visibility
+            photos.forEach((photo, index) => {
+                photo.classList.toggle('active', index === currentPhoto);
+                
+                // If this is the current photo, update the caption
+                if (index === currentPhoto) {
+                    // Get custom caption from data attribute or use default
+                    const customCaption = photo.getAttribute('data-caption');
+                    photoCaption.textContent = customCaption || 'Our special moments together ❤️';
+                }
+            });
+        }
+
+        document.querySelector('.left-arrow').addEventListener('click', () => {
+            currentPhoto = (currentPhoto > 0) ? currentPhoto - 1 : photos.length - 1;
+            updatePhotoGallery();
+        });
+
+        document.querySelector('.right-arrow').addEventListener('click', () => {
+            currentPhoto = (currentPhoto < photos.length - 1) ? currentPhoto + 1 : 0;
+            updatePhotoGallery();
+        });
+
+        // Initialize photo gallery
+        updatePhotoGallery();
+
+        // Music player functionality
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const playIcon = document.querySelector('.play-icon');
+        const pauseIcon = document.querySelector('.pause-icon');
+        const audio = document.getElementById('background-music');
+        // The disc variable is referenced but not defined - let's remove these references
+        
+        playPauseBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                // Remove this line: disc.classList.add('playing');
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'block';
+            } else {
+                audio.pause();
+                // Remove this line: disc.classList.remove('playing');
+                playIcon.style.display = 'block';
+                pauseIcon.style.display = 'none';
+            }
+        });
+
+        // Optional: Automatically play music when the envelope is opened
+        document.querySelector('.heart')?.addEventListener('click', () => {
+            // Wait for envelope animation to complete
+            setTimeout(() => {
+                if (audio.paused) {
+                    audio.play();
+                    playIcon.style.display = 'none';
+                    pauseIcon.style.display = 'block';
+                }
+            }, 1000);
+        });
+
+        // Create falling hearts animation
+        function createHearts() {
+    const container = document.getElementById('falling-hearts');
+    const heartCount = 20;
+
+    for (let i = 0; i < heartCount; i++) {
+        setTimeout(() => {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-animation');
+
+            // Random position and size
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.opacity = Math.random() * 0.7 + 0.3;
+            heart.style.fontSize = Math.random() * 15 + 10 + 'px';
+
+            // Set animation duration randomly
+            heart.style.animationDuration = Math.random() * 3 + 3 + 's';
+
+            container.appendChild(heart);
+
+            // Remove heart after animation completes
+            setTimeout(() => {
+                heart.remove();
+            }, 6000);
+        }, i * 300);
+    }
+}
+
+        // Trigger hearts when envelope is opened
+        envelope.addEventListener('click', () => {
+          setTimeout(() => {
+            createHearts();
+            setInterval(createHearts, 10000); // Create new hearts every 10 seconds
+          }, 500);
+        });
+
+        // Add this inside your script tag
+        const yesBtn = document.getElementById('yes-btn');
+        yesBtn.addEventListener('click', function() {
+          // Create confetti effect
+          createConfetti();
+          
+        });
+
+        function createConfetti() {
+          for (let i = 0; i < 150; i++) {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.animationDelay = Math.random() * 3 + 's';
+            confetti.style.backgroundColor = ['#ff85a2', '#ff9db7', '#ffc1d5', '#ffb6c1', 
+                                             '#ffd6e5'][Math.floor(Math.random() * 5)];
+            document.body.appendChild(confetti);
+            
+            // Remove confetti after animation
+            setTimeout(() => {
+              confetti.remove();
+            }, 6000);
+          }
+        }
+
+        // Countdown timer function with support for Anniversary and Monthsary
+function startCountdown() {
+  let countdownMode = 'anniversary'; // Default mode
+  const countdownTitle = document.getElementById('countdown-title');
+  const anniversaryBtn = document.getElementById('anniversary-btn');
+  const monthsaryBtn = document.getElementById('monthsary-btn');
+  
+  // Get next anniversary (May 25th of current or next year)
+  function getNextAnniversary() {
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    
+    // Create date object for May 25th of current year
+    let nextAnniversary = new Date(currentYear, 4, 25); // Month is 0-indexed (4 = May)
+    
+    // If May 25th has already passed this year, set for next year
+    if (now > nextAnniversary) {
+      nextAnniversary = new Date(currentYear + 1, 4, 25);
+    }
+    
+    return nextAnniversary;
+  }
+  
+  // Get next monthsary (25th of current or next month)
+  function getNextMonthsary() {
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth();
+    
+    // Create date object for 25th of current month
+    let nextMonthsary = new Date(currentYear, currentMonth, 25);
+    
+    // If the 25th has already passed this month, set for next month
+    if (now > nextMonthsary) {
+      // If December, go to January of next year
+      if (currentMonth === 11) {
+        nextMonthsary = new Date(currentYear + 1, 0, 25);
+      } else {
+        nextMonthsary = new Date(currentYear, currentMonth + 1, 25);
+      }
+    }
+    
+    return nextMonthsary;
+  }
+  
+  function getTargetDate() {
+    return countdownMode === 'anniversary' ? getNextAnniversary() : getNextMonthsary();
+  }
+  
+  function updateTitle() {
+    if (countdownMode === 'anniversary') {
+      const targetDate = getNextAnniversary();
+      const year = targetDate.getFullYear();
+      countdownTitle.textContent = `Time Until Our Anniversary - May 25th, ${year}`;
+    } else {
+      const targetDate = getNextMonthsary();
+      const month = targetDate.toLocaleString('default', { month: 'long' });
+      const year = targetDate.getFullYear();
+      countdownTitle.textContent = `Time Until Our Monthsary - ${month} 25th, ${year}`;
+    }
+  }
+  
+  function updateCountdown() {
+    const now = new Date().getTime();
+    let targetDate = getTargetDate().getTime();
+    const distance = targetDate - now;
+    
+    // Time calculations
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+    // Display the result
+    document.getElementById("days").textContent = days.toString().padStart(2, "0");
+    document.getElementById("hours").textContent = hours.toString().padStart(2, "0");
+    document.getElementById("minutes").textContent = minutes.toString().padStart(2, "0");
+    document.getElementById("seconds").textContent = seconds.toString().padStart(2, "0");
+    
+    // If the countdown is finished, display a special message
+    if (distance < 0) {
+      const messageType = countdownMode === 'anniversary' ? 'Anniversary' : 'Monthsary';
+      document.getElementById("countdown").innerHTML = `<p>Happy ${messageType}! 💖</p>`;
+      
+      // Reset the countdown for next day check
+      setTimeout(updateCountdown, 86400000); // Check again in 24 hours
+    }
+  }
+  
+  // Add event listeners for toggle buttons
+  anniversaryBtn.addEventListener('click', function() {
+  if (countdownMode !== 'anniversary') {
+    countdownMode = 'anniversary';
+    anniversaryBtn.classList.add('active');
+    monthsaryBtn.classList.remove('active');
+    updateTitle();
+    updateCountdown();
+    
+    // Add animation class
+    this.classList.add('just-clicked');
+    setTimeout(() => this.classList.remove('just-clicked'), 500);
+  }
+});
+
+monthsaryBtn.addEventListener('click', function() {
+  if (countdownMode !== 'monthsary') {
+    countdownMode = 'monthsary';
+    monthsaryBtn.classList.add('active');
+    anniversaryBtn.classList.remove('active');
+    updateTitle();
+    updateCountdown();
+    
+    // Add animation class
+    this.classList.add('just-clicked');
+    setTimeout(() => this.classList.remove('just-clicked'), 500);
+  }
+});
+  
+  // Initialize title
+  updateTitle();
+  
+  // Update countdown immediately
+  updateCountdown();
+  
+  // Update the countdown every second
+  const countdownTimer = setInterval(updateCountdown, 1000);
+}
+document.querySelectorAll('.love-spot').forEach(spot => {
+  spot.addEventListener('click', function() {
+    const message = document.createElement('div');
+    message.className = 'love-message';
+    message.textContent = this.dataset.message;
+    
+    // Position the message above the spot
+    message.style.top = (parseInt(this.style.top) - 10) + '%';
+    message.style.left = this.style.left;
+    
+    document.querySelector('.love-messages').appendChild(message);
+    
+    // Remove message after animation completes
+    setTimeout(() => {
+      message.remove();
+    }, 2000);
+  });
+});
+
+
+        // Initialize the countdown right away
+        startCountdown();
+
+        // Coupon functionality
+const viewCouponBtn = document.getElementById('view-coupon');
+const couponDiv = document.getElementById('love-coupon');
+const backFromCouponBtn = document.getElementById('back-from-coupon');
+const sendEmailBtn = document.getElementById('send-email-btn');
+const recipientEmail = document.getElementById('recipient-email');
+const emailStatus = document.getElementById('email-status');
+
+// Show coupon when button is clicked
+viewCouponBtn.addEventListener('click', () => {
+    letter.style.display = 'none';
+    couponDiv.style.display = 'block';  
+});
+
+// Return to letter from coupon
+backFromCouponBtn.addEventListener('click', () => {
+    couponDiv.style.display = 'none';
+    letter.style.display = 'block';
+});
+
+// Send email with coupon
+if (sendEmailBtn) {
+    sendEmailBtn.addEventListener('click', () => {
+        const email = recipientEmail?.value.trim();
+        if (!email) {
+            emailStatus.textContent = 'Please enter your email address';
+            emailStatus.className = 'email-status error';
+            return;
+        }
+        
+        // Disable button while processing
+        sendEmailBtn.disabled = true;
+        sendEmailBtn.textContent = 'Sending...';
+        emailStatus.textContent = '';
+        
+        // Create form data
+        const formData = new FormData();
+        formData.append('email', email);
+        
+        // Send AJAX request
+        fetch('send-coupon.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                emailStatus.textContent = data.message;
+                emailStatus.className = 'email-status success';
+                recipientEmail.value = '';
+            } else {
+                emailStatus.textContent = data.message;
+                emailStatus.className = 'email-status error';
+            }
+        })
+        .catch(error => {
+            emailStatus.textContent = 'An error occurred. Please try again.';
+            emailStatus.className = 'email-status error';
+            console.error('Error:', error);
+        })
+        .finally(() => {
+            // Re-enable button
+            sendEmailBtn.disabled = false;
+            sendEmailBtn.textContent = 'Email this Coupon';
+        });
+    });
+}
+
+// Create dots for navigation
+function createDots() {
+  const dotContainer = document.querySelector('.photo-dots');
+  if (dotContainer) {
+    dotContainer.innerHTML = ''; // Clear existing dots
+    
+    for (let i = 0; i < photos.length; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'dot' + (i === currentPhoto ? ' active' : '');
+      dot.addEventListener('click', () => {
+        currentPhoto = i;
+        updatePhotoGallery();
+      });
+      dotContainer.appendChild(dot);
+    }
+  }
+}
+
+// Update this function to also update the dots
+function updatePhotoGallery() {
+  photoCount.textContent = `Photo ${currentPhoto + 1} of ${photos.length}`;
+  
+  // Update each photo's visibility
+  photos.forEach((photo, index) => {
+    photo.classList.toggle('active', index === currentPhoto);
+    
+    // If this is the current photo, update the caption
+    if (index === currentPhoto) {
+      // Get custom caption from data attribute or use default
+      const customCaption = photo.getAttribute('data-caption');
+      photoCaption.textContent = customCaption || 'Our special moments together ❤️';
+    }
+  });
+  
+  // Update the dots
+  document.querySelectorAll('.dot').forEach((dot, index) => {
+    dot.classList.toggle('active', index === currentPhoto);
+  });
+}
+
+// Call this after you initialize your photo gallery
+createDots();
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Move your initialization code here if needed
+    
+    // For example:
+    const backToQuestionBtn = document.getElementById('back-to-question');
+    const questionContainer = document.getElementById('question');
+    const hugsContainer = document.getElementById('hugs-container');
+
+    if (backToQuestionBtn) {
+        backToQuestionBtn.addEventListener('click', function() {
+            console.log('Back to question button clicked!'); // For debugging
+            hugsContainer.style.display = 'none';
+            questionContainer.style.display = 'block';
+        });
+    }
+    
+    // Initialize the messages functionality only if elements exist
+    if (viewMessagesBtn && messagesSection) {
+        viewMessagesBtn.addEventListener('click', () => {
+            letter.style.display = 'none';
+            messagesSection.style.display = 'block';
+            loadMessages();
+        });
+    }
+    
+    // Initialize other features...
+});
+
+// Messages functionality with Firebase
+const viewMessagesBtn = document.getElementById('view-messages');
+const messagesSection = document.getElementById('messages-section');
+const messageDetail = document.getElementById('message-detail');
+const backFromMessagesBtn = document.getElementById('back-from-messages');
+const sendMessageBtn = document.getElementById('send-message');
+const messageTitle = document.getElementById('message-title');
+const messageContent = document.getElementById('message-content');
+const messagesList = document.getElementById('messages-list');
+const tabButtons = document.querySelectorAll('.tab-btn');
+const backToMessagesBtn = document.getElementById('back-to-messages');
+const kevinMessageForm = document.getElementById('kevin-message-form');
+
+let currentFilter = 'all';
+let currentMessageId = null;
+
+// Show messages section
+viewMessagesBtn.addEventListener('click', () => {
+    letter.style.display = 'none';
+    messagesSection.style.display = 'block';
+    messageDetail.style.display = 'none';
+    loadMessages();
+});
+
+// Back to letter from messages
+backFromMessagesBtn.addEventListener('click', () => {
+    messagesSection.style.display = 'none';
+    messageDetail.style.display = 'none';
+    letter.style.display = 'block';
+});
+
+// Back to messages list from detail view
+backToMessagesBtn.addEventListener('click', () => {
+    messageDetail.style.display = 'none';
+    messagesSection.style.display = 'block';
+    // Mark message as read when returning to inbox
+    if (currentMessageId) {
+        db.collection('messages').doc(currentMessageId).update({
+            read: true
+        }).catch(error => {
+            console.error('Error marking message as read: ', error);
+        });
+    }
+});
+
+// Tab filtering
+tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        currentFilter = button.getAttribute('data-author');
+        loadMessages();
+    });
+});
+
+// Check if it's Kevin accessing the page (simplified auth)
+function isKevin() {
+    // For a real app, you'd use proper authentication
+    // This is a simplified approach for demo purposes
+    const isKevinKey = localStorage.getItem('isKevin');
+    return isKevinKey === 'true';
+}
+
+// Toggle message form visibility based on "user"
+function checkUserAndShowForm() {
+    if (isKevin()) {
+        kevinMessageForm.style.display = 'block';
+    } else {
+        kevinMessageForm.style.display = 'none';
+    }
+}
+
+// Call this when page loads
+document.addEventListener('DOMContentLoaded', checkUserAndShowForm);
+
+// Send a new message (Kevin only)
+sendMessageBtn.addEventListener('click', () => {
+    const title = messageTitle.value.trim();
+    const content = messageContent.value.trim();
+    
+    if (!title || !content) {
+        alert('Please enter both a title and message content.');
+        return;
+    }
+    
+    const message = {
+        from: "Kevin",
+        to: "Marie",
+        title: title,
+        content: content,
+        date: new Date().toISOString().split('T')[0], // YYYY-MM-DD format
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        read: false
+    };
+    
+    // Save message to Firestore
+    db.collection('messages').add(message)
+        .then(() => {
+            // Clear input fields
+            messageTitle.value = '';
+            messageContent.value = '';
+            alert('Message sent to Marie! ❤️');
+            
+            // Reload messages display
+            loadMessages();
+        })
+        .catch(error => {
+            console.error('Error adding message: ', error);
+            alert('Error sending message: ' + error.message);
+        });
+});
+
+// Load and display messages
+function loadMessages() {
+    let query = db.collection('messages').orderBy('timestamp', 'desc');
+    
+    // Filter messages based on the selected tab
+    if (currentFilter === 'unread') {
+        query = query.where('read', '==', false);
+    } else if (currentFilter === 'read') {
+        query = query.where('read', '==', true);
+    }
+    
+    query.get()
+        .then(querySnapshot => {
+            messagesList.innerHTML = '';
+            
+            if (querySnapshot.empty) {
+                messagesList.innerHTML = '<p class="no-messages">No messages yet. Kevin will send you sweet notes here!</p>';
+                return;
+            }
+            
+            querySnapshot.forEach(doc => {
+                const message = doc.data();
+                const messageCard = document.createElement('div');
+                messageCard.className = `message-card ${message.read ? 'read' : 'unread'}`;
+                messageCard.dataset.id = doc.id;
+                
+                const statusIcon = document.createElement('div');
+                statusIcon.className = 'message-status';
+                statusIcon.innerHTML = message.read ? '📖' : '🆕';
+                
+                const titleDiv = document.createElement('div');
+                titleDiv.className = 'message-card-title';
+                titleDiv.textContent = message.title;
+                
+                const metaDiv = document.createElement('div');
+                metaDiv.className = 'message-card-meta';
+                
+                const dateSpan = document.createElement('span');
+                dateSpan.textContent = message.date;
+                
+                const previewSpan = document.createElement('div');
+                previewSpan.className = 'message-preview';
+                previewSpan.textContent = message.content.length > 50 
+                    ? message.content.substring(0, 50) + '...' 
+                    : message.content;
+                
+                metaDiv.appendChild(dateSpan);
+                
+                messageCard.appendChild(statusIcon);
+                messageCard.appendChild(titleDiv);
+                messageCard.appendChild(previewSpan);
+                messageCard.appendChild(metaDiv);
+                
+                // Add click event to view message details
+                messageCard.addEventListener('click', () => {
+                    showMessageDetail(doc.id);
+                });
+                
+                messagesList.appendChild(messageCard);
+            });
+        })
+        .catch(error => {
+            console.error('Error loading messages: ', error);
+            messagesList.innerHTML = '<p class="error">Error loading messages. Please try again later.</p>';
+        });
+}
+
+// Show message detail view
+function showMessageDetail(messageId) {
+    currentMessageId = messageId;
+    
+    db.collection('messages').doc(messageId).get()
+        .then(doc => {
+            if (doc.exists) {
+                const message = doc.data();
+                document.getElementById('detail-title').textContent = message.title;
+                document.getElementById('detail-from').textContent = "From Kevin";
+                document.getElementById('detail-date').textContent = message.date;
+                document.getElementById('detail-content').textContent = message.content;
+                
+                // Mark as read when opened
+                db.collection('messages').doc(messageId).update({
+                    read: true
+                }).catch(error => {
+                    console.error('Error marking message as read: ', error);
+                });
+                
+                messagesSection.style.display = 'none';
+                messageDetail.style.display = 'block';
+            } else {
+                alert('Message not found!');
+            }
+        })
+        .catch(error => {
+            console.error('Error getting message: ', error);
+            alert('Error loading message: ' + error.message);
+        });
+}
+
+
+
+    </script>
+<!-- Firebase App (the core Firebase SDK) -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<!-- Firebase Firestore -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+<script>
+// Your Firebase configuration (you'll get this from Firebase console)
+const firebaseConfig = {
+  apiKey: "AIzaSyDeUJgPeP4hFdZk5Esfqx0iV6-_4EzaVrA",
+  authDomain: "marie-kevin-messages.firebaseapp.com",
+  databaseURL: "https://marie-kevin-messages-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "marie-kevin-messages",
+  storageBucket: "marie-kevin-messages.firebasestorage.app",
+  messagingSenderId: "994244523164",
+  appId: "1:994244523164:web:2445e9a0df367dd33e6959",
+  measurementId: "G-L6H87ZWC70"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+</script>
+<!-- Kevin's secret toggle - can be hidden better in a real app -->
+<div id="admin-toggle" style="position: fixed; bottom: 10px; right: 10px; font-size: 10px; opacity: 0.3;">
+  <button id="toggle-kevin" onclick="toggleKevin()" style="background: none; border: none; color: #999;">⚙️</button>
+</div>
+
+<script>
+function toggleKevin() {
+  const isKevinNow = localStorage.getItem('isKevin') === 'true';
+  localStorage.setItem('isKevin', !isKevinNow);
+  checkUserAndShowForm();
+  alert(isKevinNow ? 'Now viewing as Marie' : 'Now viewing as Kevin');
+}
+</script>
+</body>
+</html>

@@ -875,6 +875,17 @@ body {
   to { opacity: 1; }
 }
 
+@keyframes slideUpFade {
+  0% {
+    opacity: 1;
+    top: 20%;
+  }
+  100% {
+    opacity: 0;
+    top: 0%;
+  }
+}
+
 /* Mobile responsiveness */
 @media screen and (max-width: 768px) {
   /* General adjustments */
@@ -1249,4 +1260,116 @@ body {
     100% {
         transform: translateY(100vh);
     }
+}
+/* Girlfriends Day Banner */
+#girlfriends-day-banner {
+  display: none;
+  position: fixed;
+  top: 20%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: linear-gradient(to right, #ff85a2, #ff9db7, #ff85a2);
+  padding: 15px 20px;
+  text-align: center;
+  z-index: 1000;
+  animation: none;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+#girlfriends-day-banner .banner-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+#girlfriends-day-banner h2 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    color: #fff;
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#girlfriends-day-banner p {
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    margin: 5px 0 0;
+}
+
+@keyframes slideDown {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(0); }
+}
+
+/* Update the Floating Polaroids styles */
+.floating-polaroids {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 999;
+    display: none; /* Initially hidden, changed by JS */
+}
+
+.polaroid {
+    position: absolute;
+    background-color: #fff;
+    padding: 10px 10px 35px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    width: 180px;
+    transform: rotate(var(--rotation));
+    animation: floatAcrossScreen 20s linear infinite;
+}
+
+.polaroid:nth-child(1) {
+    top: 20%;
+    animation-delay: 0s;
+    --rotation: 5deg;
+}
+
+.polaroid:nth-child(2) {
+    top: 40%;
+    animation-delay: 7s;
+    --rotation: -3deg;
+}
+
+.polaroid:nth-child(3) {
+    top: 65%;
+    animation-delay: 14s;
+    --rotation: 7deg;
+}
+
+.polaroid img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border: 1px solid #f0f0f0;
+}
+
+.caption {
+    text-align: center;
+    font-family: 'Dancing Script', cursive;
+    margin-top: 8px;
+    font-size: 1rem;
+    color: #ff85a2;
+}
+
+@keyframes floatAcrossScreen {
+    0% { left: -200px; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { left: 100%; opacity: 0; }
+}
+
+@keyframes fadeInBanner {
+  0% {
+    opacity: 0;
+    top: 20%;
+  }
+  100% {
+    opacity: 1;
+    top: 20%;
+  }
 }

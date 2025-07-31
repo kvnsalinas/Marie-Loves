@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Surprise! Happy Girlfriends Day</title>
+    <!-- Replace the Dancing Script font with Libertinus Serif -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Libertinus+Serif:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* Refined color gradient with navy blue and pastel pink */
+            background: linear-gradient(135deg, 
+                        rgba(25, 55, 109, 0.92) 0%,
+                        rgba(41, 80, 149, 0.85) 30%,
+                        rgba(248, 187, 208, 0.9) 70%, 
+                        rgba(255, 209, 220, 0.85) 100%);
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+        }
+        
+        .animation-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .text-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            z-index: 10;
+            transition: opacity 0.8s ease-in-out;
+        }
+        
+        .text-content {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        /* Updated these CSS rules for better color harmony with the background */
+        .text-small {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3rem;
+            color: #ffffff; /* White for better visibility against both colors */
+            margin: 0;
+            text-shadow: 0 2px 10px rgba(25, 55, 109, 0.5); /* Navy blue shadow adds depth */
+        }
+        
+        .text-medium {
+            font-family: 'Poppins', sans-serif;
+            font-size: 3.5rem;
+            color: #ffffff; /* Clean white */
+            margin: 0;
+            text-shadow: 0 2px 12px rgba(25, 55, 109, 0.4); /* Subtle navy shadow */
+        }
+        
+        .text-large {
+            font-family: 'Poppins', sans-serif;
+            font-size: 4.5rem;
+            color: #f8f9ff; /* Very slight blue tint to white */
+            margin: 0;
+            text-shadow: 0 3px 15px rgba(25, 55, 109, 0.5);
+        }
+        
+        .countdown {
+            font-family: 'Poppins', sans-serif;
+            font-size: 5rem;
+            font-weight: bold;
+            color: #ffffff; /* White */
+            margin: 0;
+            text-shadow: 0 0 25px rgba(248, 187, 208, 0.8); /* Pink glow effect */
+        }
+        
+        .final-text {
+            font-family: 'Poppins', sans-serif;
+            font-size: 5rem;
+            font-weight: bold;
+            background: linear-gradient(to right, #ffffff, #f8f9ff, #ffffff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 0;
+            text-shadow: 0 2px 20px rgba(25, 55, 109, 0.6);
+        }
+        
+        .photo-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        
+        .polaroid {
+            background-color: #fff;
+            padding: 15px 15px 50px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+            max-width: 300px;
+            transform: rotate(var(--rotation, 0deg));
+            transition: all 0.8s ease;
+        }
+        
+        .polaroid img {
+            width: 100%;
+            height: auto;
+            border: 1px solid #f0f0f0;
+        }
+        
+        .caption {
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            color: #1d3c78; /* Navy blue for polaroid captions */
+            margin-top: 15px;
+        }
+        
+        .back-button {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        
+        .back-button button {
+            background: rgba(25, 55, 109, 0.9); /* Navy blue button */
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            font-size: 1.2rem;
+            font-family: 'Poppins', sans-serif;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(25, 55, 109, 0.3);
+            transition: all 0.2s;
+        }
+        
+        .back-button button:hover {
+            background: rgba(41, 80, 149, 0.95); /* Lighter navy blue on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(41, 80, 149, 0.4);
+        }
+        
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+        
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            animation: float-heart 15s linear infinite;
+        }
+        
+        @keyframes float-heart {
+            0% { transform: translateY(100vh) scale(1); opacity: 0; }
+            10% { opacity: 0.7; }
+            90% { opacity: 0.7; }
+            100% { transform: translateY(-50px) scale(1.2); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="animation-container">
+        <!-- Text screens -->
+        <div class="text-screen" id="text1">
+            <div class="text-content">
+                <h2 class="text-medium">Hi Love!</h2>
+            </div>
+        </div>
+        
+        <div class="text-screen" id="text2">
+            <div class="text-content">
+                <h2 class="text-medium">You know what day it is right? ❤️</h2>
+            </div>
+        </div>
+        
+        <div class="text-screen" id="text3">
+            <div class="text-content">
+                <h2 class="text-medium">Surprise!</h2>
+            </div>
+        </div>
+        
+        <div class="text-screen" id="text4">
+            <div class="text-content">
+                <h2 class="countdown">3..</h2>
+            </div>
+        </div>
+        
+        <div class="text-screen" id="text5">
+            <div class="text-content">
+                <h2 class="countdown">2..</h2>
+            </div>
+        </div>
+        
+        <div class="text-screen" id="text6">
+            <div class="text-content">
+                <h2 class="countdown">1..</h2>
+            </div>
+        </div>
+        
+        <div class="text-screen" id="text7">
+            <div class="text-content">
+                <h2 class="final-text">HAPPY GIRLFRIENDS DAY!</h2>
+            </div>
+        </div>
+        
+        <!-- Photo screens -->
+        <div class="photo-screen" id="photo1">
+            <div class="polaroid" style="--rotation: -3deg;">
+                <img src="images/polaroid1.jpg" alt="Us together" onerror="this.src='https://via.placeholder.com/400x300?text=Our+Photo+1';">
+                <p class="caption">You're my best view 😝</p>
+            </div>
+        </div>
+        
+        <div class="photo-screen" id="photo2">
+            <div class="polaroid" style="--rotation: 2deg;">
+                <img src="images/polaroid2.jpg" alt="Special day" onerror="this.src='https://via.placeholder.com/400x300?text=Our+Photo+2';">
+                <p class="caption">Sa museum, ikaw lang gusto kong makita 😚</p>
+            </div>
+        </div>
+        
+        <div class="photo-screen" id="photo3">
+            <div class="polaroid" style="--rotation: -3deg;">
+                <img src="images/polaroid3.jpg" alt="Happy memories" onerror="this.src='https://via.placeholder.com/400x300?text=Our+Photo+3';">
+                <p class="caption">Kalagu naman uy!! 😍✨</p>
+            </div>
+        </div>
+        
+        <div class="photo-screen" id="photo4">
+            <div class="polaroid" style="--rotation: 3deg;">
+                <img src="images/polaroid4.jpg" alt="Together forever" onerror="this.src='https://via.placeholder.com/400x300?text=Our+Photo+4';">
+                <p class="caption">Sunkissed - More like pakiss naman 🤪</p>
+            </div>
+        </div>
+
+        <div class="photo-screen" id="photo5">
+            <div class="polaroid" style="--rotation: 3deg;">
+                <img src="images/polaroid5.jpg" alt="Together forever" onerror="this.src='https://via.placeholder.com/400x300?text=Our+Photo+4';">
+                <p class="caption">To more (dinner) dates with u 😋😋</p>
+            </div>
+        </div>
+
+        <div class="photo-screen" id="photo6">
+            <div class="polaroid" style="--rotation: 3deg;">
+                <img src="images/polaroid6.jpg" alt="Together forever" onerror="this.src='https://via.placeholder.com/400x300?text=Our+Photo+4';">
+                <p class="caption">I'm always proud of you my MedTech baby 💉</p>
+            </div>
+        </div>
+        
+        <div class="text-screen" id="finalMessage">
+            <div class="text-content">
+                <h2 class="final-text" style="font-size: 4rem;">I love you so much daarin! 💙</h2>
+            </div>
+        </div>
+        
+        <!-- Floating hearts background -->
+        <div class="hearts" id="hearts">
+            <!-- Hearts will be added by JavaScript -->
+        </div>
+        
+        <!-- Back button -->
+        <div class="back-button" id="backBtn">
+            <button onclick="window.location.href='index.html'">Back to Home</button>
+        </div>
+    </div>
+    
+    <script>
+        // Animation sequence timing
+        document.addEventListener('DOMContentLoaded', () => {
+            // Create floating hearts
+            const heartsContainer = document.getElementById('hearts');
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (10 + Math.random() * 15) + 's';
+                heart.style.animationDelay = (Math.random() * 10) + 's';
+                heart.style.fontSize = (20 + Math.random() * 30) + 'px';
+                heartsContainer.appendChild(heart);
+            }
+            
+            // Start animation sequence
+            setTimeout(() => { startAnimation(); }, 500);
+        });
+        
+        function startAnimation() {
+            const sequence = [
+                { element: document.getElementById('text1'), duration: 2500 },
+                { element: document.getElementById('text2'), duration: 2500 },
+                { element: document.getElementById('text3'), duration: 2000 },
+                { element: document.getElementById('text4'), duration: 1000 },
+                { element: document.getElementById('text5'), duration: 1000 },
+                { element: document.getElementById('text6'), duration: 1000 },
+                { element: document.getElementById('text7'), duration: 3000 },
+                { element: document.getElementById('hearts'), duration: 3000, keepVisible: true },
+                { element: document.getElementById('photo1'), duration: 5000 },
+                { element: document.getElementById('photo2'), duration: 5000 },
+                { element: document.getElementById('photo3'), duration: 5000 },
+                { element: document.getElementById('photo4'), duration: 5000 },
+                { element: document.getElementById('finalMessage'), duration: 7000, keepVisible: true },
+                { element: document.getElementById('backBtn'), duration: 500, keepVisible: true }
+            ];
+            
+            let timeOffset = 0;
+            
+            sequence.forEach((item, index) => {
+                // Show the element
+                setTimeout(() => {
+                    item.element.style.opacity = '1';
+                }, timeOffset);
+                
+                // Hide the element unless it should stay visible
+                if (!item.keepVisible) {
+                    setTimeout(() => {
+                        item.element.style.opacity = '0';
+                    }, timeOffset + item.duration);
+                }
+                
+                timeOffset += item.duration + 500; // Add 500ms between animations
+            });
+        }
+    </script>
+</body>
+</html>

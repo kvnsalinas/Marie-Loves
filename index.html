@@ -277,6 +277,11 @@
                 <div class="heart"></div>
             </div>
         </div>
+        <div class="surprise-button-container" style="text-align:center; margin-top:20px;">
+            <button id="surprise-btn" style="background:#ff85a2; color:white; font-family:'Poppins',sans-serif; font-size:1.3rem; border:none; border-radius:8px; padding:12px 28px; cursor:pointer; box-shadow:0 2px 8px rgba(255,133,162,0.15); transition:all 0.2s;">
+                Surprise!
+            </button>
+        </div>
         <div class="letter" style="display: none;">
             <div class="text">
                 <strong>To my Darling,</strong>
@@ -489,12 +494,12 @@
                 <i class="pause-icon" style="display:none;">❚❚</i>
             </button>
             <div class="song-info">
-                <span class="song-title">I Don't Wanna Be Okay Without You</span>
-                <span class="song-artist">Charlie Burg</span>
+                <span class="song-title">Love.</span>
+                <span class="song-artist">Wave to Earth</span>
             </div>
         </div>
         <audio id="background-music" loop>
-            <source src="Charlie Burg - I Don't Wanna Be Okay Without You.mp3" type="audio/mpeg">
+            <source src="wave to earth - love..mp3" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
     </div>
@@ -866,7 +871,7 @@ if (sendEmailBtn) {
             body: formData
         })
         .then(response => response.json())
-        .then(data => {
+        .then((data) => {
             if (data.success) {
                 emailStatus.textContent = data.message;
                 emailStatus.className = 'email-status success';
@@ -1206,6 +1211,11 @@ document.getElementById('delete-message').addEventListener('click', function() {
         .catch(error => {
             alert('Error deleting message: ' + error.message);
         });
+});
+
+// Redirect to surprise page
+document.getElementById('surprise-btn').addEventListener('click', function() {
+    window.location.href = 'surprise.html';
 });
     </script>
 <!-- Firebase App (the core Firebase SDK) -->

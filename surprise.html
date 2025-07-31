@@ -111,19 +111,23 @@
             transition: opacity 1s ease-in-out;
         }
         
+        /* Make polaroids responsive */
         .polaroid {
             background-color: #fff;
             padding: 15px 15px 50px;
             box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
-            max-width: 300px;
+            width: 80%; /* Use percentage instead of fixed width */
+            max-width: 300px; /* Maximum width on larger screens */
             transform: rotate(var(--rotation, 0deg));
             transition: all 0.8s ease;
         }
         
+        /* Improve image quality */
         .polaroid img {
             width: 100%;
             height: auto;
             border: 1px solid #f0f0f0;
+            object-fit: cover;
         }
         
         .caption {
@@ -186,6 +190,42 @@
             10% { opacity: 0.7; }
             90% { opacity: 0.7; }
             100% { transform: translateY(-50px) scale(1.2); opacity: 0; }
+        }
+        
+        /* Media queries for mobile devices */
+        @media screen and (max-width: 767px) {
+            .polaroid {
+                width: 85%;
+                max-width: 280px;
+                padding: 10px 10px 40px;
+            }
+            
+            .caption {
+                font-size: 1.2rem;
+                margin-top: 10px;
+            }
+            
+            .photo-screen {
+                align-items: center;
+            }
+            
+            /* Adjust final message size */
+            .final-text {
+                font-size: 2.8rem !important;
+            }
+        }
+        
+        /* For very small screens */
+        @media screen and (max-width: 374px) {
+            .polaroid {
+                width: 90%;
+                max-width: 250px;
+                padding: 8px 8px 35px;
+            }
+            
+            .caption {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>

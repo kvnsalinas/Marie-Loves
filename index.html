@@ -1286,6 +1286,7 @@ document.getElementById('surprise-btn').addEventListener('click', function() {
                 .then(() => {
                     console.log("Signed in successfully");
                     alert("Admin login successful! You can now send messages.");
+                    showMessageForm(); // Show the form after successful login
                 })
                 .catch((error) => {
                     console.error("Error signing in:", error);
@@ -1309,12 +1310,25 @@ document.getElementById('surprise-btn').addEventListener('click', function() {
         document.getElementById('admin-password').value = '';
         document.getElementById('login-error').textContent = '';
     });
+
+    // Toggle Kevin mode
+function toggleKevin() {
+    // Toggle Kevin mode
+    const isKevinNow = localStorage.getItem('isKevin') === 'true';
+    localStorage.setItem('isKevin', !isKevinNow);
+    
+    // Visual feedback
+    alert(isKevinNow ? "Switched to Marie view" : "Switched to Kevin view");
+    
+    // Refresh message form visibility
+    checkUserAndShowForm();
+}
 </script>
 
 <!-- Hidden admin controls -->
 <div id="admin-toggle" style="position: fixed; bottom: 10px; right: 10px; z-index: 9000; opacity: 0.4; display: flex; gap: 10px;">
   <span id="admin-login-trigger" style="cursor: pointer; font-size: 20px; color: #777; user-select: none;">⚙️</span>
-  <span id="toggle-kevin" onclick="toggleKevin()" style="cursor: pointer; font-size: 20px; color: #777; user-select: none;">⚙️</span>
+  <span onclick="toggleKevin()" style="cursor: pointer; font-size: 20px; color: #777; user-select: none;">⚙️</span>
 </div>
 </body>
 </html>

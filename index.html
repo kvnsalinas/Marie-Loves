@@ -1099,6 +1099,9 @@ document.addEventListener('DOMContentLoaded', checkUserAndShowForm);
 
 // Send a new message (Kevin only)
 sendMessageBtn.addEventListener('click', () => {
+    console.log("Send button clicked");
+    console.log("Authentication status:", firebase.auth().currentUser ? "Authenticated" : "Not authenticated");
+    
     // First verify Firebase authentication is complete
     if (!firebase.auth().currentUser) {
         alert("Authentication error. Please login again.");
@@ -1275,25 +1278,32 @@ document.getElementById('surprise-btn').addEventListener('click', function() {
     // Simple admin authentication
     // Handle login attempt
     document.getElementById('login-btn').addEventListener('click', function() {
+        console.clear(); // Clear console for debugging
+        console.log("Login button clicked");
+        
         const password = document.getElementById('admin-password').value;
-        // Simple password check - change "marie123" to your desired password
+        console.log("Password entered:", password === "marie123" ? "Correct" : "Incorrect");
+        
+        // Simple password check
         if (password === "marie123") {
+            console.log("Password correct, authenticating...");
             isAdminAuthenticated = true;
             document.getElementById('admin-login-modal').style.display = 'none';
             
             // Sign in with Firebase anonymously
             firebase.auth().signInAnonymously()
-                .then(() => {
-                    console.log("Signed in successfully");
-                    console.log("Signed in successfully with ID:", firebase.auth().currentUser.uid);
+                .then((userCredential) => {
+                    console.log("Firebase auth successful:", userCredential.user.uid);
                     alert("Admin login successful! You can now send messages.");
-                    showMessageForm(); // Show the form after successful login
+                    document.getElementById('kevin-message-form').style.display = 'block';
                 })
                 .catch((error) => {
-                    console.error("Error signing in:", error);
+                    console.error("Firebase auth error:", error.code, error.message);
+                    alert("Authentication error: " + error.message);
                 });
         } else {
             document.getElementById('login-error').textContent = "Incorrect password";
+            console.log("Password incorrect");
         }
     });
 

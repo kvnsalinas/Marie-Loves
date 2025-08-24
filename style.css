@@ -1373,3 +1373,10 @@ body {
     top: 20%;
   }
 }
+
+#admin-toggle {
+  transition: opacity 0.3s;
+}
+#admin-toggle:hover {
+  opacity: 0.8;
+}

@@ -1307,9 +1307,9 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 </script>
 <!-- Kevin's secret toggle - can be hidden better in a real app -->
-<div id="admin-toggle" style="position: fixed; bottom: 10px; right: 10px; z-index: 9000; display: flex; gap: 10px;">
-  <button id="admin-login-trigger" style="background: #ff85a2; color: white; border: none; border-radius: 5px; padding: 5px 10px; cursor: pointer; font-size: 12px;">Admin Login</button>
-  <button id="toggle-kevin" onclick="toggleKevin()" style="background: #ccc; border: none; border-radius: 5px; padding: 5px 10px; cursor: pointer; font-size: 12px;">Toggle View</button>
+<div id="admin-toggle" style="position: fixed; bottom: 5px; right: 5px; z-index: 9000; opacity: 0.3; display: flex; gap: 5px;">
+  <span id="admin-login-trigger" style="cursor: pointer; font-size: 16px; color: #888; user-select: none;">⚙️</span>
+  <span id="toggle-kevin" onclick="toggleKevin()" style="cursor: pointer; font-size: 16px; color: #888; margin-left: 3px; user-select: none;">⚙️</span>
 </div>
 
 <script>

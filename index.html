@@ -19,6 +19,14 @@
   animation: pulse-button 0.5s;
 }
 
+#admin-toggle {
+  transition: opacity 0.3s;
+}
+
+#admin-toggle:hover {
+  opacity: 1;
+}
+
 .photo-dots {
   display: flex;
   justify-content: center;
@@ -262,6 +270,13 @@
     background-color: rgba(255, 133, 162, 0.3);
 }
     </style>
+    
+    <!-- Firebase App (the core Firebase SDK) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <!-- Firebase Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <!-- Firebase Auth -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 </head>
 <body>
     <div class="container">
@@ -516,6 +531,24 @@
     </div>
 </div>
     <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyDeUJgPeP4hFdZk5Esfqx0iV6-_4EzaVrA",
+            authDomain: "marie-kevin-messages.firebaseapp.com",
+            databaseURL: "https://marie-kevin-messages-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "marie-kevin-messages",
+            storageBucket: "marie-kevin-messages.firebasestorage.app",
+            messagingSenderId: "994244523164",
+            appId: "1:994244523164:web:2445e9a0df367dd33e6959",
+            measurementId: "G-L6H87ZWC70"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        
+        // Track admin authentication status
+        let isAdminAuthenticated = false;
         const envelope = document.querySelector('.envelope-wrapper');
         const letter = document.querySelector('.letter');
         const photoGallery = document.getElementById('photo-gallery');
@@ -1066,6 +1099,13 @@ document.addEventListener('DOMContentLoaded', checkUserAndShowForm);
 
 // Send a new message (Kevin only)
 sendMessageBtn.addEventListener('click', () => {
+    // Check if user is authenticated
+    if (!isAdminAuthenticated) {
+        // Show login modal if not authenticated
+        document.getElementById('admin-login-modal').style.display = 'flex';
+        return;
+    }
+
     const title = messageTitle.value.trim();
     const content = messageContent.value.trim();
     
@@ -1233,13 +1273,6 @@ document.getElementById('surprise-btn').addEventListener('click', function() {
 
 <!-- Admin functionality script -->
     // Simple admin authentication
-    let isAdminAuthenticated = false;
-    
-    // When gear icon is clicked, show login modal
-    document.getElementById('admin-login-trigger').addEventListener('click', function() {
-        document.getElementById('admin-login-modal').style.display = 'flex';
-    });
-
     // Handle login attempt
     document.getElementById('login-btn').addEventListener('click', function() {
         const password = document.getElementById('admin-password').value;
@@ -1262,6 +1295,14 @@ document.getElementById('surprise-btn').addEventListener('click', function() {
         }
     });
 
+    // Add event listener for admin login trigger
+    document.addEventListener('DOMContentLoaded', function() {
+        // Attach admin login trigger
+        document.getElementById('admin-login-trigger').addEventListener('click', function() {
+            document.getElementById('admin-login-modal').style.display = 'flex';
+        });
+    });
+
     // Cancel login
     document.getElementById('cancel-login').addEventListener('click', function() {
         document.getElementById('admin-login-modal').style.display = 'none';
@@ -1269,5 +1310,11 @@ document.getElementById('surprise-btn').addEventListener('click', function() {
         document.getElementById('login-error').textContent = '';
     });
 </script>
+
+<!-- Hidden admin controls -->
+<div id="admin-toggle" style="position: fixed; bottom: 10px; right: 10px; z-index: 9000; opacity: 0.4; display: flex; gap: 10px;">
+  <span id="admin-login-trigger" style="cursor: pointer; font-size: 20px; color: #777; user-select: none;">⚙️</span>
+  <span id="toggle-kevin" onclick="toggleKevin()" style="cursor: pointer; font-size: 20px; color: #777; user-select: none;">⚙️</span>
+</div>
 </body>
 </html>

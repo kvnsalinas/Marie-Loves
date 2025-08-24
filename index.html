@@ -1099,13 +1099,13 @@ document.addEventListener('DOMContentLoaded', checkUserAndShowForm);
 
 // Send a new message (Kevin only)
 sendMessageBtn.addEventListener('click', () => {
-    // Check if user is authenticated
-    if (!isAdminAuthenticated) {
-        // Show login modal if not authenticated
+    // First verify Firebase authentication is complete
+    if (!firebase.auth().currentUser) {
+        alert("Authentication error. Please login again.");
         document.getElementById('admin-login-modal').style.display = 'flex';
         return;
     }
-
+    
     const title = messageTitle.value.trim();
     const content = messageContent.value.trim();
     
@@ -1285,6 +1285,7 @@ document.getElementById('surprise-btn').addEventListener('click', function() {
             firebase.auth().signInAnonymously()
                 .then(() => {
                     console.log("Signed in successfully");
+                    console.log("Signed in successfully with ID:", firebase.auth().currentUser.uid);
                     alert("Admin login successful! You can now send messages.");
                     showMessageForm(); // Show the form after successful login
                 })
@@ -1322,6 +1323,13 @@ function toggleKevin() {
     
     // Refresh message form visibility
     checkUserAndShowForm();
+}
+
+// Add this function after the admin login logic
+function showMessageForm() {
+    if (isAdminAuthenticated) {
+        document.getElementById('kevin-message-form').style.display = 'block';
+    }
 }
 </script>
 

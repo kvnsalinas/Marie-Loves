@@ -1217,6 +1217,72 @@ document.getElementById('delete-message').addEventListener('click', function() {
 document.getElementById('surprise-btn').addEventListener('click', function() {
     window.location.href = 'surprise.html';
 });
+
+// Add this to your main JavaScript
+// Simple admin authentication
+let isAdminAuthenticated = false;
+
+// Add login button to admin toggle area
+document.getElementById('admin-toggle').innerHTML = `
+    <button id="admin-login-trigger" style="background: transparent; border: none; color: #777; font-size: 10px; cursor: pointer;">Admin</button>
+`;
+
+// Show login modal when admin button is clicked
+document.getElementById('admin-login-trigger').addEventListener('click', function() {
+    document.getElementById('admin-login-modal').style.display = 'flex';
+});
+
+// Handle login attempt
+document.getElementById('login-btn').addEventListener('click', function() {
+    const password = document.getElementById('admin-password').value;
+    // Simple password check - replace "your-secret-password" with your actual password
+    if (password === "your-secret-password") {
+        isAdminAuthenticated = true;
+        document.getElementById('admin-login-modal').style.display = 'none';
+        document.getElementById('admin-toggle').innerHTML = `<span style="color: green; font-size: 10px;">✓ Admin</span>`;
+        
+        // Sign in with Firebase
+        firebase.auth().signInAnonymously()
+            .then(() => {
+                console.log("Signed in anonymously");
+            })
+            .catch((error) => {
+                console.error("Error signing in:", error);
+            });
+    } else {
+        document.getElementById('login-error').textContent = "Incorrect password";
+    }
+});
+
+// Cancel login
+document.getElementById('cancel-login').addEventListener('click', function() {
+    document.getElementById('admin-login-modal').style.display = 'none';
+    document.getElementById('admin-password').value = '';
+    document.getElementById('login-error').textContent = '';
+});
+
+// Modify your message sending function to check for authentication
+function sendMessage(messageText) {
+    if (!isAdminAuthenticated) {
+        // Show login modal if not authenticated
+        document.getElementById('admin-login-modal').style.display = 'flex';
+        return;
+    }
+    
+    // Proceed with sending message since admin is authenticated
+    db.collection("messages").add({
+        text: messageText,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        sender: "Kevin"
+    })
+    .then(() => {
+        console.log("Message sent successfully");
+        // Clear input field or perform other actions
+    })
+    .catch((error) => {
+        console.error("Error sending message: ", error);
+    });
+}
     </script>
 <!-- Firebase App (the core Firebase SDK) -->
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -1253,5 +1319,18 @@ function toggleKevin() {
   alert(isKevinNow ? 'Now viewing as Marie' : 'Now viewing as Kevin');
 }
 </script>
+
+<!-- Add this right before the closing </body> tag -->
+<div id="admin-login-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 9999; align-items: center; justify-content: center;">
+    <div style="background: white; padding: 30px; border-radius: 10px; max-width: 400px; width: 90%;">
+        <h3 style="font-family: 'Poppins', sans-serif; color: #1a3561; margin-top: 0;">Admin Login</h3>
+        <input type="password" id="admin-password" placeholder="Enter password" style="width: 100%; padding: 10px; margin: 10px 0; border: 2px solid #ffb6c1; border-radius: 5px;">
+        <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+            <button id="cancel-login" style="background: #ccc; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Cancel</button>
+            <button id="login-btn" style="background: #1a3561; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Login</button>
+        </div>
+        <p id="login-error" style="color: red; margin-top: 10px; font-size: 14px;"></p>
+    </div>
+</div>
 </body>
 </html>

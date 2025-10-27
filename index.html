@@ -224,6 +224,15 @@
                         class="w-full px-4 py-3 rounded-xl border-2 border-marie-pale focus:border-marie-pink outline-none transition-all duration-300 bg-white bg-opacity-70 font-comfortaa">
                 </div>
                 
+                <!-- Remember Me Option -->
+                <div class="flex items-center space-x-2">
+                    <input type="checkbox" id="remember-me" checked 
+                        class="w-4 h-4 text-marie-pink bg-white border-marie-pale rounded focus:ring-marie-pink">
+                    <label for="remember-me" class="font-comfortaa text-sm text-kevin-navy">
+                        Keep me logged in for 30 days 💝
+                    </label>
+                </div>
+                
                 <button id="login-submit" 
                     class="w-full px-6 py-3 bg-gradient-to-r from-marie-pink to-marie-light text-white font-bold text-lg rounded-xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-colorful">
                     Enter Our World ✨
@@ -397,11 +406,11 @@
     <div id="countdown-container" class="fixed bottom-4 left-4 right-4 z-40 hidden">
         <div class="glassmorphism rounded-2xl p-4 text-center shadow-colorful">
             <div class="flex justify-center space-x-2 mb-3">
-                <button id="anniversary-btn" 
+                <button id="countdown-anniversary-btn" 
                     class="px-4 py-2 bg-marie-pink text-white rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105">
                     Anniversary
                 </button>
-                <button id="monthsary-btn" 
+                <button id="countdown-monthsary-btn" 
                     class="px-4 py-2 bg-marie-pale text-marie-pink rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105">
                     Monthsary
                 </button>
@@ -650,12 +659,53 @@
         const loginSubmit = document.getElementById('login-submit');
         const siteLoginError = document.getElementById('login-error');
         
+        // Helper function to get cookie value
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return null;
+        }
+        
         // Check if user is already logged in
         function checkLoginStatus() {
             const isLoggedIn = localStorage.getItem('marie-kevin-logged-in');
-            if (isLoggedIn === 'true') {
-                showMainContent();
+            const loginTime = localStorage.getItem('marie-kevin-login-time');
+            const currentTime = new Date().getTime();
+            
+            // Check if logged in and login is still valid (30 days)
+            if (isLoggedIn === 'true' && loginTime) {
+                const daysSinceLogin = (currentTime - parseInt(loginTime)) / (1000 * 60 * 60 * 24);
+                if (daysSinceLogin < 30) {
+                    showMainContent();
+                    return;
+                }
             }
+            
+            // Also check sessionStorage as backup
+            const sessionLoggedIn = sessionStorage.getItem('marie-kevin-logged-in');
+            if (sessionLoggedIn === 'true') {
+                // Restore to localStorage
+                localStorage.setItem('marie-kevin-logged-in', 'true');
+                localStorage.setItem('marie-kevin-login-time', currentTime.toString());
+                showMainContent();
+                return;
+            }
+            
+            // Check cookie as final fallback
+            const cookieLoggedIn = getCookie('marie-kevin-logged-in');
+            if (cookieLoggedIn === 'true') {
+                // Restore to localStorage
+                localStorage.setItem('marie-kevin-logged-in', 'true');
+                localStorage.setItem('marie-kevin-login-time', currentTime.toString());
+                sessionStorage.setItem('marie-kevin-logged-in', 'true');
+                showMainContent();
+                return;
+            }
+            
+            // If no valid login found, show login screen
+            loginScreen.classList.remove('hidden');
+            mainContent.classList.add('hidden');
         }
         
         // Show main content and hide login
@@ -669,9 +719,29 @@
         function handleLogin() {
             const password = sitePassword.value.toLowerCase().trim();
             const correctPassword = 'ilovebeanbean';
+            const rememberMe = document.getElementById('remember-me').checked;
             
             if (password === correctPassword) {
-                localStorage.setItem('marie-kevin-logged-in', 'true');
+                const currentTime = new Date().getTime();
+                
+                if (rememberMe) {
+                    // Store in localStorage (persistent for 30 days)
+                    localStorage.setItem('marie-kevin-logged-in', 'true');
+                    localStorage.setItem('marie-kevin-login-time', currentTime.toString());
+                    
+                    // Store in cookie as additional backup (expires in 30 days)
+                    const expireDate = new Date();
+                    expireDate.setDate(expireDate.getDate() + 30);
+                    document.cookie = `marie-kevin-logged-in=true; expires=${expireDate.toUTCString()}; path=/`;
+                } else {
+                    // Only store in sessionStorage (expires when browser closes)
+                    localStorage.removeItem('marie-kevin-logged-in');
+                    localStorage.removeItem('marie-kevin-login-time');
+                }
+                
+                // Always store in sessionStorage for current session
+                sessionStorage.setItem('marie-kevin-logged-in', 'true');
+                
                 showMainContent();
                 
                 // Add some celebration
@@ -700,6 +770,18 @@
                 handleLogin();
             }
         });
+        
+        // Logout function (for debugging/testing)
+        function logout() {
+            localStorage.removeItem('marie-kevin-logged-in');
+            localStorage.removeItem('marie-kevin-login-time');
+            sessionStorage.removeItem('marie-kevin-logged-in');
+            document.cookie = 'marie-kevin-logged-in=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+            location.reload();
+        }
+        
+        // Add logout to global scope for console access
+        window.marieLogout = logout;
         
         // DOM Elements
         const questionDiv = document.getElementById('question');
@@ -783,7 +865,6 @@
         yesBtn.addEventListener('click', () => {
             questionDiv.classList.add('hidden');
             envelopeDiv.classList.remove('hidden');
-            countdownContainer.classList.remove('hidden');
             createConfetti();
         });
         
@@ -812,6 +893,7 @@
             envelopeDiv.classList.add('hidden');
             letterDiv.classList.remove('hidden');
             musicPlayer.classList.remove('hidden');
+            countdownContainer.classList.remove('hidden');
             
             // Auto-play music
             if (audio.paused) {
@@ -1167,16 +1249,16 @@
         function startCountdown() {
             let countdownMode = 'anniversary';
             const countdownTitle = document.getElementById('countdown-title');
-            const anniversaryBtn = document.getElementById('anniversary-btn');
-            const monthsaryBtn = document.getElementById('monthsary-btn');
+            const anniversaryBtn = document.getElementById('countdown-anniversary-btn');
+            const monthsaryBtn = document.getElementById('countdown-monthsary-btn');
             
             function getNextAnniversary() {
                 const now = new Date();
                 const currentYear = now.getFullYear();
-                let nextAnniversary = new Date(currentYear, 4, 25);
+                let nextAnniversary = new Date(currentYear, 4, 25, 23, 59, 59); // May 25th end of day
                 
                 if (now > nextAnniversary) {
-                    nextAnniversary = new Date(currentYear + 1, 4, 25);
+                    nextAnniversary = new Date(currentYear + 1, 4, 25, 23, 59, 59);
                 }
                 
                 return nextAnniversary;
@@ -1186,13 +1268,19 @@
                 const now = new Date();
                 const currentYear = now.getFullYear();
                 const currentMonth = now.getMonth();
-                let nextMonthsary = new Date(currentYear, currentMonth, 25);
+                const currentDay = now.getDate();
                 
-                if (now > nextMonthsary) {
-                    if (currentMonth === 11) {
-                        nextMonthsary = new Date(currentYear + 1, 0, 25);
+                let nextMonthsary;
+                
+                // If we're before the 25th of current month, next monthsary is this month
+                if (currentDay < 25) {
+                    nextMonthsary = new Date(currentYear, currentMonth, 25, 23, 59, 59);
+                } else {
+                    // If we're on or after the 25th, next monthsary is next month
+                    if (currentMonth === 11) { // December
+                        nextMonthsary = new Date(currentYear + 1, 0, 25, 23, 59, 59); // January next year
                     } else {
-                        nextMonthsary = new Date(currentYear, currentMonth + 1, 25);
+                        nextMonthsary = new Date(currentYear, currentMonth + 1, 25, 23, 59, 59);
                     }
                 }
                 
@@ -1239,23 +1327,19 @@
             }
             
             anniversaryBtn.addEventListener('click', () => {
-                if (countdownMode !== 'anniversary') {
-                    countdownMode = 'anniversary';
-                    anniversaryBtn.className = 'px-4 py-2 bg-marie-pink text-white rounded-full text-sm font-semibold transition-all duration-300 scale-105';
-                    monthsaryBtn.className = 'px-4 py-2 bg-marie-pale text-marie-pink rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105';
-                    updateTitle();
-                    updateCountdown();
-                }
+                countdownMode = 'anniversary';
+                anniversaryBtn.className = 'px-4 py-2 bg-marie-pink text-white rounded-full text-sm font-semibold transition-all duration-300 scale-105';
+                monthsaryBtn.className = 'px-4 py-2 bg-marie-pale text-marie-pink rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105';
+                updateTitle();
+                updateCountdown();
             });
             
             monthsaryBtn.addEventListener('click', () => {
-                if (countdownMode !== 'monthsary') {
-                    countdownMode = 'monthsary';
-                    monthsaryBtn.className = 'px-4 py-2 bg-marie-pink text-white rounded-full text-sm font-semibold transition-all duration-300 scale-105';
-                    anniversaryBtn.className = 'px-4 py-2 bg-marie-pale text-marie-pink rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105';
-                    updateTitle();
-                    updateCountdown();
-                }
+                countdownMode = 'monthsary';
+                monthsaryBtn.className = 'px-4 py-2 bg-marie-pink text-white rounded-full text-sm font-semibold transition-all duration-300 scale-105';
+                anniversaryBtn.className = 'px-4 py-2 bg-marie-pale text-marie-pink rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105';
+                updateTitle();
+                updateCountdown();
             });
             
             updateTitle();

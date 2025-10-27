@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message from Kevin</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'dancing': ['Dancing Script', 'cursive'],
+                        'fredoka': ['Fredoka', 'sans-serif'],
+                        'comfortaa': ['Comfortaa', 'sans-serif'],
+                    },
+                    colors: {
+                        'marie-pink': '#ff85a2',
+                        'marie-light': '#ff9db7',
+                        'marie-soft': '#ffc1d5',
+                        'marie-pale': '#ffd6e5',
+                        'marie-bg': '#fff0f5',
+                        'kevin-navy': '#1a3561',
+                        'kevin-light': '#2c4e8a',
+                        'pixel-purple': '#8b5cf6',
+                        'pixel-blue': '#3b82f6',
+                        'pixel-green': '#10b981',
+                        'pixel-yellow': '#f59e0b',
+                        'pixel-red': '#ef4444',
+                    },
+                    animation: {
+                        'bounce-slow': 'bounce 3s infinite',
+                        'pulse-soft': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'wiggle': 'wiggle 1s ease-in-out infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'heart-beat': 'heartbeat 1.5s ease-in-out infinite both',
+                        'sparkle': 'sparkle 2s linear infinite',
+                        'slide-in-up': 'slideInUp 1s ease-out',
+                        'fade-in': 'fadeIn 1s ease-out',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        @keyframes wiggle {
+            0%, 7% { transform: rotateZ(0); }
+            15% { transform: rotateZ(-15deg); }
+            20% { transform: rotateZ(10deg); }
+            25% { transform: rotateZ(-10deg); }
+            30% { transform: rotateZ(6deg); }
+            35% { transform: rotateZ(-4deg); }
+            40%, 100% { transform: rotateZ(0); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.3); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.3); }
+            70% { transform: scale(1); }
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1) rotate(180deg); }
+        }
+        
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        .pixel-art {
+            image-rendering: -moz-crisp-edges;
+            image-rendering: -webkit-crisp-edges;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+        
+        .paper-lines {
+            background-image: repeating-linear-gradient(
+                transparent,
+                transparent 24px,
+                rgba(255, 133, 162, 0.2) 24px,
+                rgba(255, 133, 162, 0.2) 25px
+            );
+        }
+        
+        .message-shadow {
+            box-shadow: 0 10px 25px rgba(255, 133, 162, 0.3), 0 5px 15px rgba(139, 92, 246, 0.2);
+        }
+    </style>
+</head>
+<body class="min-h-screen font-fredoka bg-gradient-to-br from-marie-bg via-marie-pale to-marie-soft">
+    <!-- Background Pattern -->
+    <div class="fixed inset-0 z-0">
+        <div class="absolute top-10 left-10 w-8 h-8 bg-pixel-purple rounded animate-bounce-slow opacity-20"></div>
+        <div class="absolute top-32 right-20 w-6 h-6 bg-pixel-blue rounded-full animate-pulse-soft opacity-25"></div>
+        <div class="absolute bottom-20 left-20 w-10 h-10 bg-pixel-green rounded animate-wiggle opacity-15"></div>
+        <div class="absolute bottom-40 right-10 w-7 h-7 bg-pixel-yellow rounded-full animate-float opacity-30"></div>
+        <div class="absolute top-1/2 left-1/4 w-5 h-5 bg-pixel-red rounded animate-sparkle opacity-25"></div>
+    </div>
+
+    <!-- Floating Pixel Characters -->
+    <div class="fixed inset-0 z-10 pointer-events-none overflow-hidden opacity-30">
+        <div class="absolute top-20 left-[5%] animate-float">
+            <img src="mariepixel.png" alt="Marie Pixel" class="w-12 h-12 pixel-art">
+        </div>
+        <div class="absolute top-40 right-[10%] animate-float" style="animation-delay: 1s;">
+            <img src="mariewalk.png" alt="Marie Walk" class="w-14 h-14 pixel-art">
+        </div>
+        <div class="absolute bottom-32 left-[15%] animate-float" style="animation-delay: 2s;">
+            <img src="hmp.png" alt="HMP" class="w-10 h-10 pixel-art">
+        </div>
+        <div class="absolute bottom-20 right-[20%] animate-float" style="animation-delay: 3s;">
+            <img src="cina.png" alt="Cina" class="w-16 h-16 pixel-art">
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="relative z-20 min-h-screen flex items-center justify-center p-4">
+        <div class="w-full max-w-2xl animate-slide-in-up">
+            <!-- Message Paper -->
+            <div class="bg-white rounded-3xl shadow-2xl message-shadow relative overflow-hidden">
+                <!-- Paper hole punches decoration -->
+                <div class="absolute left-6 top-0 bottom-0 w-px">
+                    <div class="flex flex-col justify-evenly h-full py-8">
+                        <div class="w-4 h-4 bg-marie-pale rounded-full -ml-2"></div>
+                        <div class="w-4 h-4 bg-marie-pale rounded-full -ml-2"></div>
+                        <div class="w-4 h-4 bg-marie-pale rounded-full -ml-2"></div>
+                        <div class="w-4 h-4 bg-marie-pale rounded-full -ml-2"></div>
+                    </div>
+                </div>
+                
+                <!-- Red margin line -->
+                <div class="absolute left-16 top-0 bottom-0 w-0.5 bg-pixel-red opacity-30"></div>
+                
+                <!-- Paper content -->
+                <div class="paper-lines min-h-[500px] p-8 pl-20">
+                    <!-- Message Header -->
+                    <div class="border-b-3 border-marie-soft pb-6 mb-6">
+                        <h1 id="message-title" class="font-dancing text-4xl text-marie-pink font-bold mb-3 animate-heart-beat">
+                            Loading message...
+                        </h1>
+                        <div class="flex justify-between text-kevin-navy text-sm">
+                            <span id="message-from" class="flex items-center">
+                                <span class="w-2 h-2 bg-pixel-green rounded-full mr-2 animate-pulse-soft"></span>
+                                From: Kevin
+                            </span>
+                            <span id="message-date" class="flex items-center">
+                                <span class="w-2 h-2 bg-pixel-blue rounded-full mr-2 animate-pulse-soft"></span>
+                                Date: Loading...
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <!-- Message Content -->
+                    <div id="message-content" class="text-kevin-navy text-lg leading-loose whitespace-pre-line relative z-10 font-comfortaa">
+                        Loading message content...
+                    </div>
+                    
+                    <!-- Decorative elements -->
+                    <div class="flex justify-center space-x-4 mt-8 text-3xl animate-heart-beat">
+                        💕 💖 💕
+                    </div>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="p-6 bg-gradient-to-r from-marie-bg to-marie-pale border-t border-marie-soft">
+                    <div class="flex justify-center space-x-4">
+                        <button id="back-btn" 
+                            class="px-6 py-3 bg-gradient-to-r from-marie-pink to-marie-light text-white font-bold rounded-xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:-rotate-1 hover:shadow-xl">
+                            📬 Back to Inbox
+                        </button>
+                        
+                        <button id="delete-btn" 
+                            class="hidden px-6 py-3 bg-gradient-to-r from-pixel-red to-red-600 text-white font-bold rounded-xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:rotate-1 hover:shadow-xl">
+                            🗑️ Delete Message
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Floating decorative hearts -->
+            <div class="absolute -top-4 -right-4 text-2xl animate-float opacity-70">💕</div>
+            <div class="absolute -bottom-4 -left-4 text-3xl animate-bounce-slow opacity-60">💖</div>
+            <div class="absolute top-1/2 -left-8 text-xl animate-pulse-soft opacity-50">💝</div>
+            <div class="absolute top-1/4 -right-6 text-lg animate-wiggle opacity-80">💘</div>
+        </div>
+    </div>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDeUJgPeP4hFdZk5Esfqx0iV6-_4EzaVrA",
+            authDomain: "marie-kevin-messages.firebaseapp.com",
+            databaseURL: "https://marie-kevin-messages-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "marie-kevin-messages",
+            storageBucket: "marie-kevin-messages.firebasestorage.app",
+            messagingSenderId: "994244523164",
+            appId: "1:994244523164:web:2445e9a0df367dd33e6959",
+            measurementId: "G-L6H87ZWC70"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get message ID from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const messageId = urlParams.get('id');
+            
+            if (!messageId) {
+                window.location.href = 'index-new.html';
+                return;
+            }
+            
+            // Check if it's Kevin accessing the page
+            function isKevin() {
+                return localStorage.getItem('isKevin') === 'true';
+            }
+            
+            // Create floating sparkles
+            function createSparkles() {
+                for (let i = 0; i < 10; i++) {
+                    setTimeout(() => {
+                        const sparkle = document.createElement('div');
+                        sparkle.className = 'fixed w-1 h-1 pointer-events-none z-30';
+                        sparkle.style.left = Math.random() * 100 + 'vw';
+                        sparkle.style.top = Math.random() * 100 + 'vh';
+                        sparkle.style.backgroundColor = ['#ff85a2', '#8b5cf6', '#3b82f6', '#10b981'][Math.floor(Math.random() * 4)];
+                        sparkle.style.borderRadius = '50%';
+                        sparkle.style.animation = 'sparkle 3s ease-in-out infinite';
+                        sparkle.style.animationDelay = Math.random() * 2 + 's';
+                        document.body.appendChild(sparkle);
+                        
+                        setTimeout(() => sparkle.remove(), 6000);
+                    }, i * 200);
+                }
+            }
+            
+            // Start sparkles
+            createSparkles();
+            setInterval(createSparkles, 8000);
+            
+            // Get message details
+            db.collection('messages').doc(messageId).get()
+                .then(doc => {
+                    if (doc.exists) {
+                        const message = doc.data();
+                        
+                        // Set page title to message title
+                        document.title = `Message: ${message.title}`;
+                        
+                        // Update UI with message details
+                        document.getElementById('message-title').textContent = message.title;
+                        document.getElementById('message-from').innerHTML = `
+                            <span class="w-2 h-2 bg-pixel-green rounded-full mr-2 animate-pulse-soft"></span>
+                            From: ${message.from}
+                        `;
+                        document.getElementById('message-date').innerHTML = `
+                            <span class="w-2 h-2 bg-pixel-blue rounded-full mr-2 animate-pulse-soft"></span>
+                            Date: ${message.date || 'Unknown'}
+                        `;
+                        document.getElementById('message-content').textContent = message.content;
+                        
+                        // Mark message as read
+                        db.collection('messages').doc(messageId).update({
+                            read: true
+                        }).catch(error => {
+                            console.error('Error marking message as read:', error);
+                        });
+                        
+                        // Show delete button only for Kevin
+                        const deleteBtn = document.getElementById('delete-btn');
+                        if (isKevin()) {
+                            deleteBtn.classList.remove('hidden');
+                        }
+                    } else {
+                        document.getElementById('message-title').textContent = 'Message not found';
+                        document.getElementById('message-content').textContent = 'This message may have been deleted or does not exist.';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error getting message:', error);
+                    document.getElementById('message-title').textContent = 'Error loading message';
+                    document.getElementById('message-content').textContent = `An error occurred: ${error.message}`;
+                });
+            
+            // Set up back button
+            document.getElementById('back-btn').addEventListener('click', () => {
+                window.location.href = 'index-new.html?section=messages';
+            });
+            
+            // Set up delete button
+            document.getElementById('delete-btn').addEventListener('click', () => {
+                if (!messageId) return;
+                
+                if (confirm('Are you sure you want to delete this message?')) {
+                    db.collection('messages').doc(messageId).delete()
+                        .then(() => {
+                            // Create deletion animation
+                            const container = document.querySelector('.message-shadow');
+                            container.style.transform = 'scale(0) rotate(180deg)';
+                            container.style.opacity = '0';
+                            
+                            setTimeout(() => {
+                                alert('Message deleted! 🗑️');
+                                window.location.href = 'index-new.html';
+                            }, 500);
+                        })
+                        .catch(error => {
+                            alert('Error deleting message: ' + error.message);
+                        });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

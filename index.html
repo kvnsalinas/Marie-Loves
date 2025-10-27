@@ -5,532 +5,586 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy 16th Monthsary, My Darling</title>
-    <link rel="stylesheet" href="./style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
-    <style>
-        @keyframes pulse-button {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-}
-
-.toggle-btn.just-clicked {
-  animation: pulse-button 0.5s;
-}
-
-#admin-toggle {
-  transition: opacity 0.3s;
-}
-
-#admin-toggle:hover {
-  opacity: 1;
-}
-
-.photo-dots {
-  display: flex;
-  justify-content: center;
-  margin: 15px 0;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-/* Style for the "Back to Question" button */
-#back-to-question {
-    background-color: #ff85a2;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    font-family: 'Dancing Script', cursive;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-#back-to-question:hover {
-    background-color: #ff6b8d;
-    transform: scale(1.05);
-}
-
-#back-to-question:active {
-    background-color: #ff4f73;
-    transform: scale(0.95);
-}
-.dot {
-  width: 10px;
-  height: 10px;
-  background-color: #ffd6e5;
-  border-radius: 50%;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.dot.active {
-  background-color: #ff85a2;
-  transform: scale(1.2);
-}
-
-/* Add this to your existing style section */
-.messages-container {
-        background-color: rgba(255, 255, 255, 0.9);
-        border-radius: 15px;
-        padding: 20px;
-        max-width: 600px;
-        margin: 0 auto;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    }
     
-    .message-form {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        margin-bottom: 20px;
-    }
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     
-    #message-author {
-        padding: 8px;
-        border: 2px solid #ffd6e5;
-        border-radius: 5px;
-        width: 100px;
-    }
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    #message-text {
-        padding: 10px;
-        border: 2px solid #ffd6e5;
-        border-radius: 5px;
-        min-height: 80px;
-        font-family: 'Poppins', sans-serif;
-    }
-    
-    #send-message {
-        background-color: #ff85a2;
-        color: white;
-        border: none;
-        padding: 10px;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-family: 'Dancing Script', cursive;
-        font-size: 1.2rem;
-    }
-    
-    #send-message:hover {
-        background-color: #ff6b8d;
-        transform: scale(1.05);
-    }
-    
-    .message-item {
-        margin-bottom: 15px;
-        padding: 10px 15px;
-        border-radius: 10px;
-        position: relative;
-    }
-    
-    .message-kevin {
-        background-color: #e3f2fd;
-        margin-left: 20px;
-        margin-right: 60px;
-    }
-    
-    .message-marie {
-        background-color: #ffeef5;
-        margin-right: 20px;
-        margin-left: 60px;
-        text-align: right;
-    }
-    
-    .message-author {
-        font-weight: bold;
-        margin-bottom: 5px;
-        font-family: 'Dancing Script', cursive;
-        font-size: 1.2rem;
-    }
-    
-    .message-time {
-        font-size: 0.8rem;
-        color: #888;
-        margin-top: 5px;
-    }
-    
-    #messages-list {
-        max-height: 400px;
-        overflow-y: auto;
-        padding: 10px;
-        border-radius: 10px;
-        background-color: rgba(255, 255, 255, 0.7);
-    }
-
-    .messages-tabs {
-        display: flex;
-        margin-bottom: 20px;
-        gap: 10px;
-    }
-    
-    .tab-btn {
-        padding: 8px 16px;
-        background-color: #ffd6e5;
-        border: none;
-        border-radius: 20px;
-        cursor: pointer;
-        font-family: 'Dancing Script', cursive;
-        font-size: 1rem;
-        transition: all 0.3s ease;
-    }
-    
-    .tab-btn.active {
-        background-color: #ff85a2;
-        color: white;
-    }
-    
-    #messages-list {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        max-height: 300px;
-        overflow-y: auto;
-        margin-bottom: 20px;
-    }
-    
-    .message-card {
-        padding: 15px;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: transform 0.2s;
-        position: relative;
-        background-color: #fff;
-        border-left: 4px solid #ff85a2;
-        margin-bottom: 10px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-    
-    .message-card:hover {
-        transform: scale(1.02);
-        box-shadow: 0 3px 8px rgba(0,0,0,0.15);
-    }
-    
-    .message-card.unread {
-        background-color: #ffebf4;
-        font-weight: bold;
-    }
-    
-    .message-card.read {
-        background-color: #fff;
-        opacity: 0.85;
-    }
-    
-    .message-status {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        font-size: 1.2rem;
-    }
-    
-    .message-preview {
-        margin: 5px 0;
-        font-size: 0.9rem;
-        color: #666;
-        line-height: 1.3;
-    }
-    
-    .no-messages {
-        text-align: center;
-        color: #999;
-        padding: 20px;
-        font-style: italic;
-    }
-    
-    #messages-section h2 {
-        font-family: 'Dancing Script', cursive;
-        color: #ff85a2;
-        text-align: center;
-        margin-bottom: 20px;
-        font-size: 2.2rem;
-    }
-    
-    /* Message Detail Paper Style */
-.message-content {
-    background-color: #fff;
-    background-image: linear-gradient(#f2f2f2 1px, transparent 1px);
-    background-size: 100% 25px;
-    line-height: 25px;
-    padding: 0 20px 0;
-    position: relative;
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.95rem;
-    color: #444;
-}
-
-.message-content::after {
-    content: '';
-    position: absolute;
-    width: 3px;
-    top: 0;
-    bottom: 0;
-    left: 30px;
-    background-color: rgba(255, 133, 162, 0.3);
-}
-    </style>
-    
-    <!-- Firebase App (the core Firebase SDK) -->
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <!-- Firebase Firestore -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <!-- Firebase Auth -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'dancing': ['Dancing Script', 'cursive'],
+                        'fredoka': ['Fredoka', 'sans-serif'],
+                        'comfortaa': ['Comfortaa', 'sans-serif'],
+                    },
+                    colors: {
+                        'marie-pink': '#ff85a2',
+                        'marie-light': '#ff9db7',
+                        'marie-soft': '#ffc1d5',
+                        'marie-pale': '#ffd6e5',
+                        'marie-bg': '#fff0f5',
+                        'kevin-navy': '#1a3561',
+                        'kevin-light': '#2c4e8a',
+                        'pixel-purple': '#8b5cf6',
+                        'pixel-blue': '#3b82f6',
+                        'pixel-green': '#10b981',
+                        'pixel-yellow': '#f59e0b',
+                        'pixel-red': '#ef4444',
+                    },
+                    animation: {
+                        'bounce-slow': 'bounce 3s infinite',
+                        'pulse-soft': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'wiggle': 'wiggle 1s ease-in-out infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'heart-beat': 'heartbeat 1.5s ease-in-out infinite both',
+                        'sparkle': 'sparkle 2s linear infinite',
+                        'slide-in-left': 'slideInLeft 0.8s ease-out',
+                        'slide-in-right': 'slideInRight 0.8s ease-out',
+                        'fade-in-up': 'fadeInUp 0.8s ease-out',
+                        'pixel-dance': 'pixelDance 0.5s ease-in-out',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        @keyframes wiggle {
+            0%, 7% { transform: rotateZ(0); }
+            15% { transform: rotateZ(-15deg); }
+            20% { transform: rotateZ(10deg); }
+            25% { transform: rotateZ(-10deg); }
+            30% { transform: rotateZ(6deg); }
+            35% { transform: rotateZ(-4deg); }
+            40%, 100% { transform: rotateZ(0); }
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.3); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.3); }
+            70% { transform: scale(1); }
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1) rotate(180deg); }
+        }
+        
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-100%); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(100%); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pixelDance {
+            0% { transform: translateY(0) scale(1); }
+            25% { transform: translateY(-10px) scale(1.1); }
+            50% { transform: translateY(-20px) scale(1.2); }
+            75% { transform: translateY(-10px) scale(1.1); }
+            100% { transform: translateY(0) scale(1); }
+        }
+        
+        .floating-icon {
+            position: absolute;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .floating-icon:nth-child(1) { animation-delay: 0s; }
+        .floating-icon:nth-child(2) { animation-delay: 1s; }
+        .floating-icon:nth-child(3) { animation-delay: 2s; }
+        .floating-icon:nth-child(4) { animation-delay: 3s; }
+        
+        .pixel-art {
+            image-rendering: -moz-crisp-edges;
+            image-rendering: -webkit-crisp-edges;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+        }
+        
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        .text-shadow-pink {
+            text-shadow: 2px 2px 4px rgba(255, 133, 162, 0.5);
+        }
+        
+        .shadow-colorful {
+            box-shadow: 0 10px 25px rgba(255, 133, 162, 0.3), 0 5px 15px rgba(139, 92, 246, 0.2);
+        }
+        
+        .gradient-border {
+            background: linear-gradient(45deg, #ff85a2, #8b5cf6, #3b82f6, #10b981);
+            background-size: 400% 400%;
+            animation: gradient-shift 3s ease infinite;
+        }
+        
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        
+        .animate-shimmer-slow {
+            background-image: linear-gradient(90deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+            background-size: 200% 100%;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+        
+        .pixel-border {
+            border-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20v20H0z' fill='none'/%3E%3Cpath d='M0 0h4v4H0zm16 0h4v4h-4zM0 16h4v4H0zm16 0h4v4h-4z' fill='%23ff85a2'/%3E%3C/svg%3E") 4;
+        }
+    </style>
 </head>
-<body>
-    <div class="container">
-        <div class="question-container" id="question">
-            <h2>Happy 16th Monthsary to my baby Darling </h2>
-            <div class="buttons">
-                <button id="yes-btn">CLICK THIS!</button>
-                <button id="no-btn">Hug ka ni beanbean hihi</button>
-                <button id="new-btn">New Button</button> <!-- Added new button -->
+<body class="min-h-screen overflow-x-hidden font-fredoka">
+    <!-- Background Pattern -->
+    <div class="fixed inset-0 z-0">
+        <div class="absolute inset-0 bg-gradient-to-br from-marie-bg via-marie-pale to-marie-soft"></div>
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute top-10 left-10 w-8 h-8 bg-pixel-purple rounded animate-bounce-slow"></div>
+            <div class="absolute top-32 right-20 w-6 h-6 bg-pixel-blue rounded-full animate-pulse-soft"></div>
+            <div class="absolute bottom-20 left-20 w-10 h-10 bg-pixel-green rounded animate-wiggle"></div>
+            <div class="absolute bottom-40 right-10 w-7 h-7 bg-pixel-yellow rounded-full animate-float"></div>
+            <div class="absolute top-1/2 left-1/4 w-5 h-5 bg-pixel-red rounded animate-sparkle"></div>
+        </div>
+    </div>
+
+    <!-- Floating Pixel Characters -->
+    <div class="fixed inset-0 z-10 pointer-events-none overflow-hidden">
+        <div class="floating-icon top-20 left-[5%]">
+            <img src="mariepixel.png" alt="Marie Pixel" class="w-12 h-12 pixel-art opacity-80 hover:animate-pixel-dance">
+        </div>
+        <div class="floating-icon top-40 right-[10%]">
+            <img src="mariewalk.png" alt="Marie Walk" class="w-14 h-14 pixel-art opacity-75">
+        </div>
+        <div class="floating-icon bottom-32 left-[15%]">
+            <img src="hmp.png" alt="HMP" class="w-10 h-10 pixel-art opacity-70">
+        </div>
+        <div class="floating-icon bottom-20 right-[20%]">
+            <img src="cina.png" alt="Cina" class="w-16 h-16 pixel-art opacity-85">
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="relative z-20 min-h-screen flex items-center justify-center p-4">
+        
+        <!-- Question Container -->
+        <div id="question" class="text-center space-y-8 animate-fade-in-up">
+            <div class="space-y-4">
+                <h1 class="font-dancing text-4xl md:text-6xl lg:text-7xl font-bold text-marie-pink text-shadow-pink animate-heart-beat">
+                    Happy 16th Monthsary
+                </h1>
+                <h2 class="font-dancing text-3xl md:text-5xl text-kevin-navy opacity-90">
+                    to my baby Darling 💕
+                </h2>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row gap-6 items-center justify-center mt-12">
+                <button id="yes-btn" 
+                    class="px-8 py-4 bg-gradient-to-r from-marie-pink to-marie-light text-white font-bold text-xl rounded-2xl shadow-colorful transform transition-all duration-300 hover:scale-110 hover:rotate-2 hover:shadow-2xl active:scale-95 animate-bounce-slow">
+                    CLICK THIS! ✨
+                </button>
+                
+                <button id="no-btn" 
+                    class="px-8 py-4 bg-gradient-to-r from-pixel-purple to-pixel-blue text-white font-semibold text-lg rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:-rotate-1 hover:shadow-xl">
+                    Hug ka ni beanbean hihi 🤗
+                </button>
+                
+                <button id="new-btn" 
+                    class="px-6 py-3 bg-gradient-to-r from-pixel-green to-pixel-yellow text-white font-medium rounded-xl shadow-md transform transition-all duration-300 hover:scale-105 hover:wiggle">
+                    Surprise 🎉
+                </button>
+            </div>
+            
+            <!-- 2nd Anniversary Button -->
+            <div class="mt-8 text-center">
+                <button id="anniversary-btn" 
+                    class="px-12 py-6 bg-gradient-to-r from-rose-400 via-pink-400 to-red-400 text-white font-bold text-2xl rounded-3xl shadow-2xl transform transition-all duration-500 hover:scale-110 hover:shadow-pink-500/50 animate-shimmer-slow">
+                    💕 Our 2nd Anniversary 💕
+                </button>
             </div>
         </div>
-        <div class="envelope-wrapper" id="envelope" style="display: none;">
-            <div class="envelope">
-                <div class="heart"></div>
+
+        <!-- Envelope Container -->
+        <div id="envelope" class="hidden animate-slide-in-left">
+            <div class="relative">
+                <!-- Envelope -->
+                <div class="w-80 h-56 bg-gradient-to-br from-marie-bg to-marie-pale rounded-2xl shadow-colorful relative overflow-hidden cursor-pointer transition-transform duration-500 hover:scale-105">
+                    <!-- Envelope Pattern -->
+                    <div class="absolute inset-0 opacity-30">
+                        <div class="w-full h-full bg-gradient-to-r from-marie-soft via-transparent to-marie-soft"></div>
+                    </div>
+                    
+                    <!-- Heart Seal -->
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+                        <div class="w-12 h-12 bg-gradient-to-r from-marie-pink to-pixel-red rounded-full flex items-center justify-center text-white text-2xl animate-heart-beat cursor-pointer transition-transform duration-300 hover:scale-125">
+                            💕
+                        </div>
+                    </div>
+                    
+                    <!-- Decorative Elements -->
+                    <div class="absolute top-4 left-4 w-6 h-6 bg-pixel-purple rounded opacity-40 animate-sparkle"></div>
+                    <div class="absolute bottom-4 right-4 w-8 h-8 bg-pixel-blue rounded-full opacity-30 animate-pulse-soft"></div>
+                </div>
             </div>
         </div>
-        <div class="surprise-button-container" style="text-align:center; margin-top:20px;">
-            <button id="surprise-btn" style="background:#ff85a2; color:white; font-family:'Poppins',sans-serif; font-size:1.3rem; border:none; border-radius:8px; padding:12px 28px; cursor:pointer; box-shadow:0 2px 8px rgba(255,133,162,0.15); transition:all 0.2s;">
-                Surprise!
+
+        <!-- Surprise Button -->
+        <div class="text-center mt-8 hidden" id="surprise-container">
+            <button id="surprise-btn" 
+                class="px-10 py-5 bg-gradient-to-r from-pixel-yellow via-pixel-red to-marie-pink text-white font-bold text-2xl rounded-3xl shadow-colorful transform transition-all duration-300 hover:scale-110 hover:rotate-3 animate-wiggle">
+                🎉 Surprise! 🎉
             </button>
         </div>
-        <div class="letter" style="display: none;">
-            <div class="text">
-                <strong>To my Darling,</strong>
-                <p>꘎♡━━━━━♡꘎   ꘎♡━━━━━♡꘎   ꘎♡━━━━━♡꘎</p>
-            <p>This is our website and I will always update this hehehe</p>
-            <p>Please do come here from time to time and this is a reminder of how special you are to me</p>
-            <p>I love you always and I hope I can see you soon na </p>
-            <p>P.S. Go click the "Your messages" to see my messages for you hehe</p>
-            <p>꘎♡━━━━━♡꘎   ꘎♡━━━━━♡꘎   ꘎♡━━━━━♡꘎</p>
-            </div>
-            <div class="view-memories">
-                <button id="view-photos">View Our Memories ❤️</button>
-                <button id="view-coupon">View Your Gift ✨</button>
-                <button id="view-messages">Our Messages 💌</button>
+
+        <!-- Letter Container -->
+        <div id="letter" class="hidden w-full max-w-2xl mx-auto animate-fade-in-up">
+            <div class="glassmorphism rounded-3xl p-8 shadow-colorful">
+                <div class="text-center space-y-6">
+                    <!-- Letter Header -->
+                    <div class="border-b-2 border-marie-soft pb-4">
+                        <h3 class="font-dancing text-3xl text-marie-pink font-bold">To my Darling,</h3>
+                    </div>
+                    
+                    <!-- Letter Content (PRESERVED EXACTLY) -->
+                    <div class="text-kevin-navy space-y-4 text-lg leading-relaxed">
+                        <p class="font-dancing text-marie-pink text-center">꘎♡━━━━━♡꘎   ꘎♡━━━━━♡꘎   ꘎♡━━━━━♡꘎</p>
+                        <p>This is our website and I will always update this hehehe</p>
+                        <p>Please do come here from time to time and this is a reminder of how special you are to me</p>
+                        <p>I love you always and I hope I can see you soon na</p>
+                        <p>P.S. Go click the "Your messages" to see my messages for you hehe</p>
+                        <p class="font-dancing text-marie-pink text-center">꘎♡━━━━━♡꘎   ꘎♡━━━━━♡꘎   ꘎♡━━━━━♡꘎</p>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6">
+                        <button id="view-photos" 
+                            class="px-6 py-3 bg-gradient-to-r from-marie-pink to-marie-light text-white font-semibold rounded-xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:-rotate-1">
+                            View Our Memories ❤️
+                        </button>
+                        
+                        <button id="view-coupon" 
+                            class="px-6 py-3 bg-gradient-to-r from-pixel-yellow to-pixel-red text-white font-semibold rounded-xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:rotate-1">
+                            View Your Gift ✨
+                        </button>
+                        
+                        <button id="view-messages" 
+                            class="px-6 py-3 bg-gradient-to-r from-pixel-purple to-pixel-blue text-white font-semibold rounded-xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:-rotate-1">
+                            Our Messages 💌
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
-        <!-- Add the photo gallery section -->
-        <div id="photo-gallery" style="display: none;">
-            <div class="gallery-container">
-                <div class="arrow left-arrow">❮</div>
-                <div class="photo-container">
-                    <!-- Replace these with your actual photos and add custom captions -->
-                    <div class="photo active" data-caption="Me making this hehehe">
-                        <img src="images/photo1.jpg" alt="Us together" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+1';">
-                    </div>
-                    <div class="photo" data-caption="I miss your hugs and care mahal ko.">
-                        <img src="images/photo2.jpg" alt="Special day" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+2';">
-                    </div>
-                    <div class="photo" data-caption="Cute naman natin dito HAHAHA">
-                        <img src="images/photo3.jpg" alt="Happy memories" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+3';">
-                    </div>
-                    <div class="photo" data-caption="Ay ang baby ko na yan pakiss kiss pa uy!">
-                        <img src="images/photo4.jpg" alt="Together forever" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+4';">
-                    </div>
-                    <div class="photo" data-caption="Oh eto kiss na rin kita diyan ;P">
-                        <img src="images/photo5.jpg" alt="Our adventures" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+5';">
-                    </div>
-                    <div class="photo" data-caption="Pacute cute pa ang love love ohh">
-                        <img src="images/photo6.jpg" alt="Your beautiful smile" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+6';">
-                    </div>
-                    <div class="photo" data-caption="Let's eat ulit dito nehh mahal ko, gusto ko ulit nung carbonara nilang pang 5 tao HAHAHA">
-                        <img src="images/photo7.jpg" alt="Special occasion" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+7';">
-                    </div>
-                    <div class="photo" data-caption="I miss staying at pampanga with you, soon ulit nehh">
-                        <img src="images/photo8.jpg" alt="Simple joys" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+8';">
-                    </div>
-                    <div class="photo" data-caption="jajajaja pogi! HAHAHAHA">
-                        <img src="images/photo9.jpg" alt="Happy memories" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+9';">
-                    </div>
-                    <div class="photo" data-caption="ETO NAMAN MAGANDA SYEMPRE BAKA MINAMAHAL Q YAN!">
-                        <img src="images/photo10.jpg" alt="Cherished moments" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+10';">
-                    </div>
-                    <div class="photo" data-caption="You're the best thing that's ever happened to me. I Love You Always">
-                        <img src="images/photo11.jpg" alt="Love forever" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+11';">
-                    </div>
-                    <div class="photo" data-caption="Happy Monthsary to my makulit kulit na love love!">
-                      <img src="images/photo12.jpg" alt="Love forever" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+11';">
-                  </div>
-                  <div class="photo" data-caption="and sshhh, everyday is your day :P There's no day wherein you're not special hehe. Mwah">
-                    <img src="images/photo13.jpg" alt="Love forever" onerror="this.onerror=null; this.src='https://via.placeholder.com/400x300?text=Our+Photo+11';">
-                </div>
-                </div>
-                <div class="arrow right-arrow">❯</div>
+
+        <!-- Hug Container -->
+        <div id="hugs-container" class="hidden text-center space-y-6 animate-fade-in-up">
+            <div class="relative">
+                <img src="hug.gif" alt="Hugs" 
+                     onerror="this.onerror=null; this.src='hug.png';" 
+                     class="max-w-xs mx-auto rounded-2xl shadow-colorful transform hover:scale-105 transition-transform duration-300">
             </div>
-            <div class="gallery-caption">
-                <h3 id="photo-count">Photo 1 of 11</h3>
-                <p id="photo-caption">Our special moments together ❤️</p>
-            </div>
-            <div class="photo-dots">
-                <!-- Will be populated with JavaScript -->
-            </div>
-            <div class="back-button">
-                <button id="back-to-letter">Back to Letter</button>
-            </div>
-        </div>
-        <div id="hugs-container" style="display: none; text-align: center;">
-            <div class="hug-image-container">
-                <img src="hug.gif" alt="Hugs" onerror="this.onerror=null; this.src='hug.png'; if(this.src.includes('png')) this.onerror=null;" style="max-width: 300px; margin-bottom: 20px;">
-            </div>
-            <h3 style="font-family: 'Dancing Script', cursive; font-size: 2rem; color: var(--txt-color);">
-                Yakap mahigpit mahal! I'm here lang po nehh ❤️   
+            
+            <h3 class="font-dancing text-3xl md:text-4xl text-marie-pink font-bold animate-heart-beat">
+                Yakap mahigpit mahal! I'm here lang po nehh ❤️
             </h3>
-            <button id="back-to-question" style="margin-top: 20px;" onclick="window.location.reload();">Ready kana mahal?</button>
-        </div>
-        <div class="floating-icons">
-            <!-- Multiple copies of your images for more floating elements -->
-            <div class="floating-icon"><img src="mariepixel.png" alt="Icon 1"></div>
-            <div class="floating-icon"><img src="mariewalk.png" alt="Icon 2"></div>
-            <div class="floating-icon"><img src="hmp.png" alt="Icon 3"></div>
-            <div class="floating-icon"><img src="cina.png" alt="Icon 4"></div>
             
-            <div class="floating-icon"><img src="mariepixel.png" alt="Icon 5"></div>
-            <div class="floating-icon"><img src="mariewalk.png" alt="Icon 6"></div>
-            <div class="floating-icon"><img src="hmp.png" alt="Icon 3"></div>
-            <div class="floating-icon"><img src="cina.png" alt="Icon 4"></div>
-            
-            <div class="floating-icon"><img src="mariepixel.png" alt="Icon 1"></div>
-            <div class="floating-icon"><img src="mariewalk.png" alt="Icon 2"></div>
-            <div class="floating-icon"><img src="hmp.png" alt="Icon 3"></div>
-            <div class="floating-icon"><img src="cina.png" alt="Icon 4"></div>
-            
-            <div class="floating-icon"><img src="mariepixel.png" alt="Icon 1"></div>
-            <div class="floating-icon"><img src="mariewalk.png" alt="Icon 2"></div>
-            <div class="floating-icon"><img src="hmp.png" alt="Icon 3"></div>
-            <div class="floating-icon"><img src="cina.png" alt="Icon 4"></div>
-            
-            <div class="floating-icon"><img src="mariepixel.png" alt="Icon 1"></div>
-            <div class="floating-icon"><img src="mariewalk.png" alt="Icon 2"></div>
-            <div class="floating-icon"><img src="hmp.png" alt="Icon 3"></div>
-            <div class="floating-icon"><img src="cina.png" alt="Icon 4"></div>
-        </div>
-
-        <div class="countdown-container" style="display: none;">
-          <div class="countdown-toggle">
-            <button id="anniversary-btn" class="toggle-btn active">Anniversary</button>
-            <button id="monthsary-btn" class="toggle-btn">Monthsary</button>
-          </div>
-          
-          <h3 id="countdown-title">Time Until Our Anniversary - May 25th</h3>
-          <div id="countdown">
-            <div class="time-section">
-              <span id="days">00</span>
-              <span class="time-label">Days</span>
-            </div>
-            <div class="time-section">
-              <span id="hours">00</span>
-              <span class="time-label">Hours</span>
-            </div>
-            <div class="time-section">
-              <span id="minutes">00</span>
-              <span class="time-label">Minutes</span>
-            </div>
-            <div class="time-section">
-              <span id="seconds">00</span>
-              <span class="time-label">Seconds</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="love-messages">
-          <div class="love-spot" style="top: 20%; left: 15%;" data-message="You make my heart smile!"></div>
-          <div class="love-spot" style="top: 70%; left: 80%;" data-message="Every moment with you is a blessing"></div>
-          <div class="love-spot" style="top: 40%; left: 75%;" data-message="You're my favorite person"></div>
-          <div class="love-spot" style="top: 80%; left: 30%;" data-message="I love your laugh"></div>
-        </div>
-
-        <div class="coupon" id="love-coupon" style="display: none;">
-          <div class="coupon-inner">
-            <h2>Love Coupon</h2>
-            <p class="coupon-text">This coupon entitles you to:</p>
-            <h3>BeanBean Time</h3>
-            <p class="coupon-note">Redeemable anytime. No expiration.</p>
-            <p class="coupon-signature">Present the screenshot to redeeeeem!</p>
-            <p class="coupon-signature">(Can redeem again and again and again forever)</p>
-            <div class="coupon-hearts"></div>
-          </div>
-          
-          
-          <div class="back-button">
-            <button id="back-from-coupon">Back to Letter</button>
-          </div>
-        </div>
-
-        <div id="messages-section" style="display: none;" class="messages-container">
-    <h2>Marie's Inbox 💌</h2>
-    
-    <!-- Simplified tabs - just inbox view -->
-    <div class="messages-tabs">
-        <button class="tab-btn active" data-author="all">All Messages</button>
-    </div>
-    
-    <div id="messages-list">
-        <!-- Messages will be displayed here -->
-    </div>
-    
-    <!-- Only visible for Kevin when authenticated -->
-    <div class="create-message-form" id="kevin-message-form" style="display: none;">
-        <h3>Send a Message to Marie</h3>
-        <input type="text" id="message-title" placeholder="Message Title">
-        <textarea id="message-content" placeholder="Write your message here..."></textarea>
-        <div class="form-buttons">
-            <button id="send-message">Send Message ❤️</button>
-        </div>
-    </div>
-    
-    <div class="back-button">
-        <button id="back-from-messages">Back to Letter</button>
-    </div>
-</div>
-
-<div id="message-detail" style="display: none;" class="message-detail-container">
-    <h3 id="detail-title">Message Title</h3>
-    <div class="message-meta">
-        <span id="detail-from">From Kevin</span>
-        <span id="detail-date">Date</span>
-    </div>
-    <div id="detail-content" class="message-content">
-        Message content goes here
-    </div>
-    <div class="detail-buttons">
-        <button id="back-to-messages">Back to Inbox</button>
-        <button id="delete-message" style="display:none;">Delete Message</button>
-    </div>
-</div>
-    </div>
-    <div class="music-player">
-        <div class="music-controls">
-            <button id="play-pause-btn">
-                <i class="play-icon">♫</i>
-                <i class="pause-icon" style="display:none;">❚❚</i>
+            <button id="back-to-question" 
+                class="px-8 py-4 bg-gradient-to-r from-marie-pink to-marie-light text-white font-bold text-xl rounded-2xl shadow-colorful transform transition-all duration-300 hover:scale-110 hover:rotate-2">
+                Ready kana mahal? 💕
             </button>
-            <div class="song-info">
-                <span class="song-title">Love.</span>
-                <span class="song-artist">Wave to Earth</span>
+        </div>
+    </div>
+
+    <!-- Music Player -->
+    <div id="music-player" class="fixed top-0 left-0 right-0 z-50 hidden">
+        <div class="glassmorphism px-6 py-3 flex items-center justify-center space-x-4">
+            <button id="play-pause-btn" 
+                class="w-10 h-10 bg-marie-pink text-white rounded-full flex items-center justify-center hover:bg-marie-light transition-colors duration-300">
+                <span class="play-icon">♫</span>
+                <span class="pause-icon hidden">❚❚</span>
+            </button>
+            
+            <div class="text-center">
+                <div class="font-dancing text-marie-pink font-semibold">Love.</div>
+                <div class="text-kevin-navy text-sm">Wave to Earth</div>
             </div>
         </div>
         <audio id="background-music" loop>
             <source src="wave to earth - love..mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
         </audio>
     </div>
-    <div id="falling-hearts"></div>
-    <div id="admin-login-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 9999; align-items: center; justify-content: center;">
-    <div style="background: white; padding: 30px; border-radius: 10px; max-width: 400px; width: 90%;">
-        <h3 style="font-family: 'Poppins', sans-serif; color: #1a3561; margin-top: 0;">Admin Login</h3>
-        <input type="password" id="admin-password" placeholder="Enter password" style="width: 100%; padding: 10px; margin: 10px 0; border: 2px solid #ffb6c1; border-radius: 5px;">
-        <div style="display: flex; justify-content: space-between; margin-top: 20px;">
-            <button id="cancel-login" style="background: #ccc; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Cancel</button>
-            <button id="login-btn" style="background: #1a3561; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">Login</button>
+
+    <!-- Countdown Container -->
+    <div id="countdown-container" class="fixed bottom-4 left-4 right-4 z-40 hidden">
+        <div class="glassmorphism rounded-2xl p-4 text-center shadow-colorful">
+            <div class="flex justify-center space-x-2 mb-3">
+                <button id="anniversary-btn" 
+                    class="px-4 py-2 bg-marie-pink text-white rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105">
+                    Anniversary
+                </button>
+                <button id="monthsary-btn" 
+                    class="px-4 py-2 bg-marie-pale text-marie-pink rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105">
+                    Monthsary
+                </button>
+            </div>
+            
+            <h3 id="countdown-title" class="font-dancing text-lg text-marie-pink font-bold mb-2">
+                Time Until Our Anniversary - May 25th
+            </h3>
+            
+            <div id="countdown" class="flex justify-center space-x-4 text-kevin-navy">
+                <div class="text-center">
+                    <div id="days" class="text-2xl font-bold">00</div>
+                    <div class="text-xs">Days</div>
+                </div>
+                <div class="text-center">
+                    <div id="hours" class="text-2xl font-bold">00</div>
+                    <div class="text-xs">Hours</div>
+                </div>
+                <div class="text-center">
+                    <div id="minutes" class="text-2xl font-bold">00</div>
+                    <div class="text-xs">Minutes</div>
+                </div>
+                <div class="text-center">
+                    <div id="seconds" class="text-2xl font-bold">00</div>
+                    <div class="text-xs">Seconds</div>
+                </div>
+            </div>
         </div>
-        <p id="login-error" style="color: red; margin-top: 10px; font-size: 14px;"></p>
     </div>
-</div>
+
+    <!-- Photo Gallery -->
+    <div id="photo-gallery" class="hidden fixed inset-0 z-50 bg-marie-bg bg-opacity-95 flex items-center justify-center p-4">
+        <div class="w-full max-w-4xl">
+            <div class="glassmorphism rounded-3xl p-6 text-center shadow-colorful">
+                <!-- Gallery Navigation -->
+                <div class="flex items-center justify-center space-x-4 mb-6">
+                    <button class="left-arrow w-12 h-12 bg-marie-pink text-white rounded-full flex items-center justify-center text-2xl hover:bg-marie-light transition-colors duration-300">
+                        ❮
+                    </button>
+                    
+                    <div class="flex-1 max-w-lg">
+                        <div class="photo-container relative h-80 rounded-2xl overflow-hidden shadow-colorful">
+                            <!-- Photos will be populated by JavaScript -->
+                            <div class="photo active absolute inset-0 transition-opacity duration-500">
+                                <img src="images/photo1.jpg" alt="Our Memory" 
+                                     class="w-full h-full object-cover" 
+                                     onerror="this.src='https://via.placeholder.com/400x300?text=Our+Photo+1';">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="right-arrow w-12 h-12 bg-marie-pink text-white rounded-full flex items-center justify-center text-2xl hover:bg-marie-light transition-colors duration-300">
+                        ❯
+                    </button>
+                </div>
+                
+                <!-- Gallery Info -->
+                <div class="space-y-2 mb-6">
+                    <h3 id="photo-count" class="font-dancing text-2xl text-marie-pink font-bold">Photo 1 of 13</h3>
+                    <p id="photo-caption" class="text-kevin-navy text-lg">Our special moments together ❤️</p>
+                </div>
+                
+                <!-- Photo Dots -->
+                <div class="photo-dots flex justify-center space-x-2 mb-6 flex-wrap gap-2">
+                    <!-- Dots populated by JavaScript -->
+                </div>
+                
+                <!-- Back Button -->
+                <button id="back-to-letter" 
+                    class="px-6 py-3 bg-marie-pale text-marie-pink font-semibold rounded-xl hover:bg-marie-soft transition-colors duration-300">
+                    Back to Letter
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Coupon Modal -->
+    <div id="love-coupon" class="hidden fixed inset-0 z-50 bg-marie-bg bg-opacity-95 flex items-center justify-center p-4">
+        <div class="w-full max-w-md">
+            <div class="bg-white rounded-3xl p-8 text-center shadow-colorful border-4 border-dashed border-marie-pink relative overflow-hidden">
+                <!-- Decorative corners -->
+                <div class="absolute top-2 left-2 w-6 h-6 bg-pixel-yellow rounded-full animate-sparkle"></div>
+                <div class="absolute top-2 right-2 w-4 h-4 bg-pixel-blue rounded animate-pulse-soft"></div>
+                <div class="absolute bottom-2 left-2 w-5 h-5 bg-pixel-green rounded-full animate-bounce-slow"></div>
+                <div class="absolute bottom-2 right-2 w-6 h-6 bg-pixel-purple rounded animate-wiggle"></div>
+                
+                <div class="space-y-4">
+                    <h2 class="font-dancing text-4xl text-marie-pink font-bold">Love Coupon</h2>
+                    
+                    <p class="text-kevin-navy text-lg">This coupon entitles you to:</p>
+                    
+                    <h3 class="font-dancing text-3xl text-marie-light font-bold">BeanBean Time</h3>
+                    
+                    <div class="space-y-2 text-kevin-navy">
+                        <p class="text-sm italic">Redeemable anytime. No expiration.</p>
+                        <p class="font-semibold">Present the screenshot to redeeeeem!</p>
+                        <p class="text-xs">(Can redeem again and again and again forever)</p>
+                    </div>
+                    
+                    <!-- Floating hearts decoration -->
+                    <div class="flex justify-center space-x-4 text-2xl animate-heart-beat">
+                        💕 💖 💕
+                    </div>
+                </div>
+                
+                <button id="back-from-coupon" 
+                    class="mt-6 px-6 py-3 bg-marie-pale text-marie-pink font-semibold rounded-xl hover:bg-marie-soft transition-colors duration-300">
+                    Back to Letter
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Messages Section -->
+    <div id="messages-section" class="hidden fixed inset-0 z-50 bg-marie-bg bg-opacity-95 flex items-center justify-center p-4">
+        <div class="w-full max-w-4xl max-h-[90vh] overflow-auto">
+            <div class="glassmorphism rounded-3xl p-6 shadow-colorful">
+                <h2 class="font-dancing text-4xl text-marie-pink font-bold text-center mb-6">Marie's Inbox 💌</h2>
+                
+                <!-- Messages Tabs -->
+                <div class="flex justify-center space-x-2 mb-6">
+                    <button class="tab-btn active px-4 py-2 bg-marie-pink text-white rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105" data-author="all">
+                        All Messages
+                    </button>
+                </div>
+                
+                <!-- Messages List -->
+                <div id="messages-list" class="space-y-4 mb-6 max-h-96 overflow-y-auto">
+                    <p class="text-center text-kevin-navy italic">Loading messages...</p>
+                </div>
+                
+                <!-- Kevin's Message Form (Hidden by default) -->
+                <div id="kevin-message-form" class="hidden space-y-4 p-4 bg-white bg-opacity-50 rounded-2xl">
+                    <h3 class="font-dancing text-2xl text-marie-pink font-bold text-center">Send a Message to Marie</h3>
+                    
+                    <input type="text" id="message-title" placeholder="Message Title" 
+                        class="w-full px-4 py-3 rounded-xl border-2 border-marie-pale focus:border-marie-pink outline-none transition-colors duration-300">
+                    
+                    <textarea id="message-content" placeholder="Write your message here..." rows="4"
+                        class="w-full px-4 py-3 rounded-xl border-2 border-marie-pale focus:border-marie-pink outline-none transition-colors duration-300 resize-none"></textarea>
+                    
+                    <button id="send-message" 
+                        class="w-full px-6 py-3 bg-gradient-to-r from-marie-pink to-marie-light text-white font-bold rounded-xl shadow-lg transform transition-all duration-300 hover:scale-105">
+                        Send Message ❤️
+                    </button>
+                </div>
+                
+                <div class="text-center">
+                    <button id="back-from-messages" 
+                        class="px-6 py-3 bg-marie-pale text-marie-pink font-semibold rounded-xl hover:bg-marie-soft transition-colors duration-300">
+                        Back to Letter
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Message Detail Modal -->
+    <div id="message-detail" class="hidden fixed inset-0 z-50 bg-marie-bg bg-opacity-95 flex items-center justify-center p-4">
+        <div class="w-full max-w-2xl">
+            <div class="bg-white rounded-3xl p-6 shadow-colorful relative">
+                <!-- Paper lines effect -->
+                <div class="absolute inset-0 opacity-10 pointer-events-none">
+                    <div class="w-full h-full bg-gradient-to-b from-transparent via-marie-pale to-transparent bg-repeat" style="background-size: 100% 25px; background-image: linear-gradient(marie-pale 1px, transparent 1px);"></div>
+                </div>
+                
+                <div class="relative z-10">
+                    <div class="border-b-2 border-marie-soft pb-4 mb-6">
+                        <h3 id="detail-title" class="font-dancing text-3xl text-marie-pink font-bold">Message Title</h3>
+                        <div class="flex justify-between text-kevin-navy text-sm mt-2">
+                            <span id="detail-from">From Kevin</span>
+                            <span id="detail-date">Date</span>
+                        </div>
+                    </div>
+                    
+                    <div id="detail-content" class="text-kevin-navy text-lg leading-relaxed mb-6 whitespace-pre-line">
+                        Message content goes here
+                    </div>
+                    
+                    <div class="flex justify-center space-x-4">
+                        <button id="back-to-messages" 
+                            class="px-6 py-3 bg-marie-pale text-marie-pink font-semibold rounded-xl hover:bg-marie-soft transition-colors duration-300">
+                            Back to Inbox
+                        </button>
+                        <button id="delete-message" 
+                            class="hidden px-6 py-3 bg-pixel-red text-white font-semibold rounded-xl hover:bg-red-600 transition-colors duration-300">
+                            Delete Message
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Login Modal -->
+    <div id="admin-login-modal" class="hidden fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl p-6 w-full max-w-sm shadow-colorful">
+            <h3 class="font-dancing text-2xl text-kevin-navy font-bold text-center mb-4">Admin Login</h3>
+            
+            <input type="password" id="admin-password" placeholder="Enter password" 
+                class="w-full px-4 py-3 rounded-xl border-2 border-marie-pale focus:border-marie-pink outline-none transition-colors duration-300 mb-4">
+            
+            <div class="flex space-x-3">
+                <button id="cancel-login" 
+                    class="flex-1 px-4 py-2 bg-gray-300 text-gray-700 rounded-xl hover:bg-gray-400 transition-colors duration-300">
+                    Cancel
+                </button>
+                <button id="login-btn" 
+                    class="flex-1 px-4 py-2 bg-kevin-navy text-white rounded-xl hover:bg-kevin-light transition-colors duration-300">
+                    Login
+                </button>
+            </div>
+            
+            <p id="login-error" class="text-red-500 text-sm text-center mt-3"></p>
+        </div>
+    </div>
+
+    <!-- Admin Toggle (Hidden) -->
+    <div id="admin-toggle" class="fixed bottom-4 right-4 z-50 opacity-30 hover:opacity-80 transition-opacity duration-300 space-x-2">
+        <button id="admin-login-trigger" class="text-2xl">⚙️</button>
+        <button onclick="toggleKevin()" class="text-2xl">👤</button>
+    </div>
+
+    <!-- Falling Hearts Container -->
+    <div id="falling-hearts" class="fixed inset-0 pointer-events-none z-30"></div>
+
     <script>
         // Initialize Firebase
         const firebaseConfig = {
@@ -544,810 +598,601 @@
             measurementId: "G-L6H87ZWC70"
         };
 
-        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
         
-        // Track admin authentication status
-        let isAdminAuthenticated = false;
-        const envelope = document.querySelector('.envelope-wrapper');
-        const letter = document.querySelector('.letter');
+        // DOM Elements
+        const questionDiv = document.getElementById('question');
+        const envelopeDiv = document.getElementById('envelope');
+        const letterDiv = document.getElementById('letter');
+        const hugsDiv = document.getElementById('hugs-container');
         const photoGallery = document.getElementById('photo-gallery');
-        const viewPhotosBtn = document.getElementById('view-photos');
-        const backToLetterBtn = document.getElementById('back-to-letter');
-        const photos = document.querySelectorAll('.photo');
-        const photoCount = document.getElementById('photo-count');
-        const photoCaption = document.getElementById('photo-caption');
-        let currentPhoto = 0;
-
-        // Show music player after envelope is opened
-        envelope.addEventListener('click', () => {
-            envelope.classList.add('fade-out');
-            setTimeout(() => {
-                envelope.style.display = 'none';
-                letter.style.display = 'block';
-                
-                // Show the elegant music player at the top
-                document.querySelector('.music-player').classList.add('visible');
-                
-                // Make sure countdown is running
-                startCountdown();
-            }, 500);
-        });
-
-        // Start playing when "Open" is clicked
-        document.getElementById('yes-btn').addEventListener('click', () => {
-            document.getElementById('question').style.display = 'none'; // Hide the first page
-    document.getElementById('envelope').style.display = 'block'; // Show the envelope
-    document.querySelector('.countdown-container').style.display = 'block'; // Show the countdown
-        });
+        const musicPlayer = document.getElementById('music-player');
+        const countdownContainer = document.getElementById('countdown-container');
+        const couponDiv = document.getElementById('love-coupon');
+        const messagesSection = document.getElementById('messages-section');
+        const messageDetail = document.getElementById('message-detail');
         
-        document.getElementById('no-btn').addEventListener('click', () => {
-            document.getElementById('question').style.display = 'none';
-            document.getElementById('hugs-container').style.display = 'block';
-        });
-
-        // Photo gallery navigation
-        viewPhotosBtn.addEventListener('click', () => {
-            letter.style.display = 'none';
-            photoGallery.style.display = 'block';
-        });
-
-        backToLetterBtn.addEventListener('click', () => {
-            photoGallery.style.display = 'none';
-            letter.style.display = 'block';
-        });
-
-        function updatePhotoGallery() {
-            photoCount.textContent = `Photo ${currentPhoto + 1} of ${photos.length}`;
-            
-            // Update each photo's visibility
-            photos.forEach((photo, index) => {
-                photo.classList.toggle('active', index === currentPhoto);
-                
-                // If this is the current photo, update the caption
-                if (index === currentPhoto) {
-                    // Get custom caption from data attribute or use default
-                    const customCaption = photo.getAttribute('data-caption');
-                    photoCaption.textContent = customCaption || 'Our special moments together ❤️';
-                }
-            });
-        }
-
-        document.querySelector('.left-arrow').addEventListener('click', () => {
-            currentPhoto = (currentPhoto > 0) ? currentPhoto - 1 : photos.length - 1;
-            updatePhotoGallery();
-        });
-
-        document.querySelector('.right-arrow').addEventListener('click', () => {
-            currentPhoto = (currentPhoto < photos.length - 1) ? currentPhoto + 1 : 0;
-            updatePhotoGallery();
-        });
-
-        // Initialize photo gallery
-        updatePhotoGallery();
-
-        // Music player functionality
+        // Button Elements
+        const yesBtn = document.getElementById('yes-btn');
+        const noBtn = document.getElementById('no-btn');
+        const newBtn = document.getElementById('new-btn');
+        const anniversaryBtn = document.getElementById('anniversary-btn');
+        const backToQuestionBtn = document.getElementById('back-to-question');
+        const surpriseBtn = document.getElementById('surprise-btn');
+        
+        // Letter Action Buttons
+        const viewPhotosBtn = document.getElementById('view-photos');
+        const viewCouponBtn = document.getElementById('view-coupon');
+        const viewMessagesBtn = document.getElementById('view-messages');
+        const backToLetterBtn = document.getElementById('back-to-letter');
+        const backFromCouponBtn = document.getElementById('back-from-coupon');
+        const backFromMessagesBtn = document.getElementById('back-from-messages');
+        const backToMessagesBtn = document.getElementById('back-to-messages');
+        
+        // Music Elements
         const playPauseBtn = document.getElementById('play-pause-btn');
         const playIcon = document.querySelector('.play-icon');
         const pauseIcon = document.querySelector('.pause-icon');
         const audio = document.getElementById('background-music');
-        // The disc variable is referenced but not defined - let's remove these references
         
+        // Photo Gallery Elements
+        const leftArrow = document.querySelector('.left-arrow');
+        const rightArrow = document.querySelector('.right-arrow');
+        const photoCount = document.getElementById('photo-count');
+        const photoCaption = document.getElementById('photo-caption');
+        
+        // Messages Elements
+        const messagesList = document.getElementById('messages-list');
+        const kevinMessageForm = document.getElementById('kevin-message-form');
+        const sendMessageBtn = document.getElementById('send-message');
+        const messageTitle = document.getElementById('message-title');
+        const messageContent = document.getElementById('message-content');
+        
+        // Admin Elements
+        const adminLoginModal = document.getElementById('admin-login-modal');
+        const adminLoginTrigger = document.getElementById('admin-login-trigger');
+        const loginBtn = document.getElementById('login-btn');
+        const cancelLoginBtn = document.getElementById('cancel-login');
+        const adminPassword = document.getElementById('admin-password');
+        const loginError = document.getElementById('login-error');
+        
+        // State
+        let currentPhoto = 0;
+        let isAdminAuthenticated = false;
+        let currentMessageId = null;
+        
+        // Photo Data
+        const photos = [
+            { src: 'images/photo1.jpg', caption: 'Me making this hehehe' },
+            { src: 'images/photo2.jpg', caption: 'I miss your hugs and care mahal ko.' },
+            { src: 'images/photo3.jpg', caption: 'Cute naman natin dito HAHAHA' },
+            { src: 'images/photo4.jpg', caption: 'Ay ang baby ko na yan pakiss kiss pa uy!' },
+            { src: 'images/photo5.jpg', caption: 'Oh eto kiss na rin kita diyan ;P' },
+            { src: 'images/photo6.jpg', caption: 'Pacute cute pa ang love love ohh' },
+            { src: 'images/photo7.jpg', caption: 'Let\'s eat ulit dito nehh mahal ko, gusto ko ulit nung carbonara nilang pang 5 tao HAHAHA' },
+            { src: 'images/photo8.jpg', caption: 'I miss staying at pampanga with you, soon ulit nehh' },
+            { src: 'images/photo9.jpg', caption: 'jajajaja pogi! HAHAHAHA' },
+            { src: 'images/photo10.jpg', caption: 'ETO NAMAN MAGANDA SYEMPRE BAKA MINAMAHAL Q YAN!' },
+            { src: 'images/photo11.jpg', caption: 'You\'re the best thing that\'s ever happened to me. I Love You Always' },
+            { src: 'images/photo12.jpg', caption: 'Happy Monthsary to my makulit kulit na love love!' },
+            { src: 'images/photo13.jpg', caption: 'and sshhh, everyday is your day :P There\'s no day wherein you\'re not special hehe. Mwah' }
+        ];
+        
+        // Main Event Listeners
+        yesBtn.addEventListener('click', () => {
+            questionDiv.classList.add('hidden');
+            envelopeDiv.classList.remove('hidden');
+            countdownContainer.classList.remove('hidden');
+            createConfetti();
+        });
+        
+        noBtn.addEventListener('click', () => {
+            questionDiv.classList.add('hidden');
+            hugsDiv.classList.remove('hidden');
+        });
+        
+        backToQuestionBtn.addEventListener('click', () => {
+            hugsDiv.classList.add('hidden');
+            questionDiv.classList.remove('hidden');
+        });
+        
+        // New Button - Navigate to surprise page
+        newBtn.addEventListener('click', () => {
+            window.location.href = 'surprise.html';
+        });
+        
+        // Anniversary Button - Navigate to anniversary page
+        anniversaryBtn.addEventListener('click', () => {
+            window.location.href = 'anniversary.html';
+        });
+        
+        // Envelope click to open letter
+        envelopeDiv.addEventListener('click', () => {
+            envelopeDiv.classList.add('hidden');
+            letterDiv.classList.remove('hidden');
+            musicPlayer.classList.remove('hidden');
+            
+            // Auto-play music
+            if (audio.paused) {
+                audio.play();
+                playIcon.classList.add('hidden');
+                pauseIcon.classList.remove('hidden');
+            }
+            
+            startCountdown();
+            createFloatingHearts();
+        });
+        
+        // Music controls
         playPauseBtn.addEventListener('click', () => {
             if (audio.paused) {
                 audio.play();
-                // Remove this line: disc.classList.add('playing');
-                playIcon.style.display = 'none';
-                pauseIcon.style.display = 'block';
+                playIcon.classList.add('hidden');
+                pauseIcon.classList.remove('hidden');
             } else {
                 audio.pause();
-                // Remove this line: disc.classList.remove('playing');
-                playIcon.style.display = 'block';
-                pauseIcon.style.display = 'none';
+                playIcon.classList.remove('hidden');
+                pauseIcon.classList.add('hidden');
             }
         });
-
-        // Optional: Automatically play music when the envelope is opened
-        document.querySelector('.heart')?.addEventListener('click', () => {
-            // Wait for envelope animation to complete
-            setTimeout(() => {
-                if (audio.paused) {
-                    audio.play();
-                    playIcon.style.display = 'none';
-                    pauseIcon.style.display = 'block';
-                }
-            }, 1000);
-        });
-
-        // Create falling hearts animation
-        function createHearts() {
-    const container = document.getElementById('falling-hearts');
-    const heartCount = 20;
-
-    for (let i = 0; i < heartCount; i++) {
-        setTimeout(() => {
-            const heart = document.createElement('div');
-            heart.classList.add('heart-animation');
-
-            // Random position and size
-            heart.style.left = Math.random() * 100 + '%';
-            heart.style.opacity = Math.random() * 0.7 + 0.3;
-            heart.style.fontSize = Math.random() * 15 + 10 + 'px';
-
-            // Set animation duration randomly
-            heart.style.animationDuration = Math.random() * 3 + 3 + 's';
-
-            container.appendChild(heart);
-
-            // Remove heart after animation completes
-            setTimeout(() => {
-                heart.remove();
-            }, 6000);
-        }, i * 300);
-    }
-}
-
-        // Trigger hearts when envelope is opened
-        envelope.addEventListener('click', () => {
-          setTimeout(() => {
-            createHearts();
-            setInterval(createHearts, 10000); // Create new hearts every 10 seconds
-          }, 500);
-        });
-
-        // Add this inside your script tag
-        const yesBtn = document.getElementById('yes-btn');
-        yesBtn.addEventListener('click', function() {
-          // Create confetti effect
-          createConfetti();
-          
-        });
-
-        function createConfetti() {
-          for (let i = 0; i < 150; i++) {
-            const confetti = document.createElement('div');
-            confetti.className = 'confetti';
-            confetti.style.left = Math.random() * 100 + 'vw';
-            confetti.style.animationDelay = Math.random() * 3 + 's';
-            confetti.style.backgroundColor = ['#ff85a2', '#ff9db7', '#ffc1d5', '#ffb6c1', 
-                                             '#ffd6e5'][Math.floor(Math.random() * 5)];
-            document.body.appendChild(confetti);
-            
-            // Remove confetti after animation
-            setTimeout(() => {
-              confetti.remove();
-            }, 6000);
-          }
-        }
-
-        // Countdown timer function with support for Anniversary and Monthsary
-function startCountdown() {
-  let countdownMode = 'anniversary'; // Default mode
-  const countdownTitle = document.getElementById('countdown-title');
-  const anniversaryBtn = document.getElementById('anniversary-btn');
-  const monthsaryBtn = document.getElementById('monthsary-btn');
-  
-  // Get next anniversary (May 25th of current or next year)
-  function getNextAnniversary() {
-    const now = new Date();
-    const currentYear = now.getFullYear();
-    
-    // Create date object for May 25th of current year
-    let nextAnniversary = new Date(currentYear, 4, 25); // Month is 0-indexed (4 = May)
-    
-    // If May 25th has already passed this year, set for next year
-    if (now > nextAnniversary) {
-      nextAnniversary = new Date(currentYear + 1, 4, 25);
-    }
-    
-    return nextAnniversary;
-  }
-  
-  // Get next monthsary (25th of current or next month)
-  function getNextMonthsary() {
-    const now = new Date();
-    const currentYear = now.getFullYear();
-    const currentMonth = now.getMonth();
-    
-    // Create date object for 25th of current month
-    let nextMonthsary = new Date(currentYear, currentMonth, 25);
-    
-    // If the 25th has already passed this month, set for next month
-    if (now > nextMonthsary) {
-      // If December, go to January of next year
-      if (currentMonth === 11) {
-        nextMonthsary = new Date(currentYear + 1, 0, 25);
-      } else {
-        nextMonthsary = new Date(currentYear, currentMonth + 1, 25);
-      }
-    }
-    
-    return nextMonthsary;
-  }
-  
-  function getTargetDate() {
-    return countdownMode === 'anniversary' ? getNextAnniversary() : getNextMonthsary();
-  }
-  
-  function updateTitle() {
-    if (countdownMode === 'anniversary') {
-      const targetDate = getNextAnniversary();
-      const year = targetDate.getFullYear();
-      countdownTitle.textContent = `Time Until Our Anniversary - May 25th, ${year}`;
-    } else {
-      const targetDate = getNextMonthsary();
-      const month = targetDate.toLocaleString('default', { month: 'long' });
-      const year = targetDate.getFullYear();
-      countdownTitle.textContent = `Time Until Our Monthsary - ${month} 25th, ${year}`;
-    }
-  }
-  
-  function updateCountdown() {
-    const now = new Date().getTime();
-    let targetDate = getTargetDate().getTime();
-    const distance = targetDate - now;
-    
-    // Time calculations
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    
-    // Display the result
-    document.getElementById("days").textContent = days.toString().padStart(2, "0");
-    document.getElementById("hours").textContent = hours.toString().padStart(2, "0");
-    document.getElementById("minutes").textContent = minutes.toString().padStart(2, "0");
-    document.getElementById("seconds").textContent = seconds.toString().padStart(2, "0");
-    
-    // If the countdown is finished, display a special message
-    if (distance < 0) {
-      const messageType = countdownMode === 'anniversary' ? 'Anniversary' : 'Monthsary';
-      document.getElementById("countdown").innerHTML = `<p>Happy ${messageType}! 💖</p>`;
-      
-      // Reset the countdown for next day check
-      setTimeout(updateCountdown, 86400000); // Check again in 24 hours
-    }
-  }
-  
-  // Add event listeners for toggle buttons
-  anniversaryBtn.addEventListener('click', function() {
-  if (countdownMode !== 'anniversary') {
-    countdownMode = 'anniversary';
-    anniversaryBtn.classList.add('active');
-    monthsaryBtn.classList.remove('active');
-    updateTitle();
-    updateCountdown();
-    
-    // Add animation class
-    this.classList.add('just-clicked');
-    setTimeout(() => this.classList.remove('just-clicked'), 500);
-  }
-});
-
-monthsaryBtn.addEventListener('click', function() {
-  if (countdownMode !== 'monthsary') {
-    countdownMode = 'monthsary';
-    monthsaryBtn.classList.add('active');
-    anniversaryBtn.classList.remove('active');
-    updateTitle();
-    updateCountdown();
-    
-    // Add animation class
-    this.classList.add('just-clicked');
-    setTimeout(() => this.classList.remove('just-clicked'), 500);
-  }
-});
-  
-  // Initialize title
-  updateTitle();
-  
-  // Update countdown immediately
-  updateCountdown();
-  
-  // Update the countdown every second
-  const countdownTimer = setInterval(updateCountdown, 1000);
-}
-document.querySelectorAll('.love-spot').forEach(spot => {
-  spot.addEventListener('click', function() {
-    const message = document.createElement('div');
-    message.className = 'love-message';
-    message.textContent = this.dataset.message;
-    
-    // Position the message above the spot
-    message.style.top = (parseInt(this.style.top) - 10) + '%';
-    message.style.left = this.style.left;
-    
-    document.querySelector('.love-messages').appendChild(message);
-    
-    // Remove message after animation completes
-    setTimeout(() => {
-      message.remove();
-    }, 2000);
-  });
-});
-
-
-        // Initialize the countdown right away
-        startCountdown();
-
-        // Coupon functionality
-const viewCouponBtn = document.getElementById('view-coupon');
-const couponDiv = document.getElementById('love-coupon');
-const backFromCouponBtn = document.getElementById('back-from-coupon');
-const sendEmailBtn = document.getElementById('send-email-btn');
-const recipientEmail = document.getElementById('recipient-email');
-const emailStatus = document.getElementById('email-status');
-
-// Show coupon when button is clicked
-viewCouponBtn.addEventListener('click', () => {
-    letter.style.display = 'none';
-    couponDiv.style.display = 'block';  
-});
-
-// Return to letter from coupon
-backFromCouponBtn.addEventListener('click', () => {
-    couponDiv.style.display = 'none';
-    letter.style.display = 'block';
-});
-
-// Send email with coupon
-if (sendEmailBtn) {
-    sendEmailBtn.addEventListener('click', () => {
-        const email = recipientEmail?.value.trim();
-        if (!email) {
-            emailStatus.textContent = 'Please enter your email address';
-            emailStatus.className = 'email-status error';
-            return;
-        }
         
-        // Disable button while processing
-        sendEmailBtn.disabled = true;
-        sendEmailBtn.textContent = 'Sending...';
-        emailStatus.textContent = '';
-        
-        // Create form data
-        const formData = new FormData();
-        formData.append('email', email);
-        
-        // Send AJAX request
-        fetch('send-coupon.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then((data) => {
-            if (data.success) {
-                emailStatus.textContent = data.message;
-                emailStatus.className = 'email-status success';
-                recipientEmail.value = '';
-            } else {
-                emailStatus.textContent = data.message;
-                emailStatus.className = 'email-status error';
-            }
-        })
-        .catch(error => {
-            emailStatus.textContent = 'An error occurred. Please try again.';
-            emailStatus.className = 'email-status error';
-            console.error('Error:', error);
-        })
-        .finally(() => {
-            // Re-enable button
-            sendEmailBtn.disabled = false;
-            sendEmailBtn.textContent = 'Email this Coupon';
+        // Letter Actions
+        viewPhotosBtn.addEventListener('click', () => {
+            letterDiv.classList.add('hidden');
+            photoGallery.classList.remove('hidden');
+            setupPhotoGallery();
         });
-    });
-}
-
-// Create dots for navigation
-function createDots() {
-  const dotContainer = document.querySelector('.photo-dots');
-  if (dotContainer) {
-    dotContainer.innerHTML = ''; // Clear existing dots
-    
-    for (let i = 0; i < photos.length; i++) {
-      const dot = document.createElement('div');
-      dot.className = 'dot' + (i === currentPhoto ? ' active' : '');
-      dot.addEventListener('click', () => {
-        currentPhoto = i;
-        updatePhotoGallery();
-      });
-      dotContainer.appendChild(dot);
-    }
-  }
-}
-
-// Update this function to also update the dots
-function updatePhotoGallery() {
-  photoCount.textContent = `Photo ${currentPhoto + 1} of ${photos.length}`;
-  
-  // Update each photo's visibility
-  photos.forEach((photo, index) => {
-    photo.classList.toggle('active', index === currentPhoto);
-    
-    // If this is the current photo, update the caption
-    if (index === currentPhoto) {
-      // Get custom caption from data attribute or use default
-      const customCaption = photo.getAttribute('data-caption');
-      photoCaption.textContent = customCaption || 'Our special moments together ❤️';
-    }
-  });
-  
-  // Update the dots
-  document.querySelectorAll('.dot').forEach((dot, index) => {
-    dot.classList.toggle('active', index === currentPhoto);
-  });
-}
-
-// Call this after you initialize your photo gallery
-createDots();
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Move your initialization code here if needed
-    
-    // For example:
-    const backToQuestionBtn = document.getElementById('back-to-question');
-    const questionContainer = document.getElementById('question');
-    const hugsContainer = document.getElementById('hugs-container');
-
-    if (backToQuestionBtn) {
-        backToQuestionBtn.addEventListener('click', function() {
-            console.log('Back to question button clicked!'); // For debugging
-            hugsContainer.style.display = 'none';
-            questionContainer.style.display = 'block';
+        
+        viewCouponBtn.addEventListener('click', () => {
+            letterDiv.classList.add('hidden');
+            couponDiv.classList.remove('hidden');
         });
-    }
-    
-    // Initialize the messages functionality only if elements exist
-    if (viewMessagesBtn && messagesSection) {
+        
         viewMessagesBtn.addEventListener('click', () => {
-            letter.style.display = 'none';
-            messagesSection.style.display = 'block';
+            letterDiv.classList.add('hidden');
+            messagesSection.classList.remove('hidden');
             loadMessages();
         });
-    }
-    
-    // Check URL parameters to see if we should show a specific section
-    const urlParams = new URLSearchParams(window.location.search);
-    const section = urlParams.get('section');
-    
-    if (section === 'messages') {
-        // Hide the initial question and show the messages section
-        document.getElementById('question').style.display = 'none';
-        document.getElementById('messages-section').style.display = 'block';
         
-        // Load the messages
-        loadMessages();
-    }
-    
-    // Your existing DOMContentLoaded code...
-});
-
-// Messages functionality with Firebase
-const viewMessagesBtn = document.getElementById('view-messages');
-const messagesSection = document.getElementById('messages-section');
-const messageDetail = document.getElementById('message-detail');
-const backFromMessagesBtn = document.getElementById('back-from-messages');
-const sendMessageBtn = document.getElementById('send-message');
-const messageTitle = document.getElementById('message-title');
-const messageContent = document.getElementById('message-content');
-const messagesList = document.getElementById('messages-list');
-const tabButtons = document.querySelectorAll('.tab-btn');
-const backToMessagesBtn = document.getElementById('back-to-messages');
-const kevinMessageForm = document.getElementById('kevin-message-form');
-
-let currentFilter = 'all';
-let currentMessageId = null;
-
-// Show messages section
-viewMessagesBtn.addEventListener('click', () => {
-    letter.style.display = 'none';
-    messagesSection.style.display = 'block';
-    messageDetail.style.display = 'none';
-    loadMessages();
-});
-
-// Back to letter from messages
-backFromMessagesBtn.addEventListener('click', () => {
-    messagesSection.style.display = 'none';
-    messageDetail.style.display = 'none';
-    letter.style.display = 'block';
-});
-
-// Back to messages list from detail view
-backToMessagesBtn.addEventListener('click', () => {
-    messageDetail.style.display = 'none';
-    messagesSection.style.display = 'block';
-    // Mark message as read when returning to inbox
-    if (currentMessageId) {
-        db.collection('messages').doc(currentMessageId).update({
-            read: true
-        }).catch(error => {
-            console.error('Error marking message as read: ', error);
+        // Back buttons
+        backToLetterBtn.addEventListener('click', () => {
+            photoGallery.classList.add('hidden');
+            letterDiv.classList.remove('hidden');
         });
-    }
-});
-
-// Tab filtering
-tabButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        tabButtons.forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-        currentFilter = button.getAttribute('data-author');
-        loadMessages();
-    });
-});
-
-// Check if it's Kevin accessing the page (simplified auth)
-function isKevin() {
-    // For a real app, you'd use proper authentication
-    // This is a simplified approach for demo purposes
-    const isKevinKey = localStorage.getItem('isKevin');
-    return isKevinKey === 'true';
-}
-
-// Toggle message form visibility based on "user"
-function checkUserAndShowForm() {
-    if (isKevin()) {
-        kevinMessageForm.style.display = 'block';
-    } else {
-        kevinMessageForm.style.display = 'none';
-    }
-}
-
-// Call this when page loads
-document.addEventListener('DOMContentLoaded', checkUserAndShowForm);
-
-// Send a new message (Kevin only)
-sendMessageBtn.addEventListener('click', () => {
-    console.log("Send button clicked");
-    console.log("Authentication status:", firebase.auth().currentUser ? "Authenticated" : "Not authenticated");
-    
-    // First verify Firebase authentication is complete
-    if (!firebase.auth().currentUser) {
-        alert("Authentication error. Please login again.");
-        document.getElementById('admin-login-modal').style.display = 'flex';
-        return;
-    }
-    
-    const title = messageTitle.value.trim();
-    const content = messageContent.value.trim();
-    
-    if (!title || !content) {
-        alert('Please enter both a title and message content.');
-        return;
-    }
-    
-    const message = {
-        from: "Kevin",
-        to: "Marie",
-        title: title,
-        content: content,
-        date: new Date().toISOString().split('T')[0], // YYYY-MM-DD format
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        read: false
-    };
-    
-    // Save message to Firestore
-    db.collection('messages').add(message)
-        .then(() => {
-            // Clear input fields
-            messageTitle.value = '';
-            messageContent.value = '';
-            alert('Message sent to Marie! ❤️');
-            
-            // Reload messages display
-            loadMessages();
-        })
-        .catch(error => {
-            console.error('Error adding message: ', error);
-            alert('Error sending message: ' + error.message);
+        
+        backFromCouponBtn.addEventListener('click', () => {
+            couponDiv.classList.add('hidden');
+            letterDiv.classList.remove('hidden');
         });
-});
-
-// Load and display messages
-function loadMessages() {
-    let query = db.collection('messages').orderBy('timestamp', 'desc');
-    
-    // Filter messages based on the selected tab
-    if (currentFilter === 'unread') {
-        query = query.where('read', '==', false);
-    } else if (currentFilter === 'read') {
-        query = query.where('read', '==', true);
-    }
-    
-    query.get()
-        .then(querySnapshot => {
-            messagesList.innerHTML = '';
-            
-            if (querySnapshot.empty) {
-                messagesList.innerHTML = '<p class="no-messages">No messages yet. Kevin will send you sweet notes here!</p>';
+        
+        backFromMessagesBtn.addEventListener('click', () => {
+            messagesSection.classList.add('hidden');
+            messageDetail.classList.add('hidden');
+            letterDiv.classList.remove('hidden');
+        });
+        
+        backToMessagesBtn.addEventListener('click', () => {
+            messageDetail.classList.add('hidden');
+            messagesSection.classList.remove('hidden');
+            if (currentMessageId) {
+                db.collection('messages').doc(currentMessageId).update({
+                    read: true
+                }).catch(error => console.error('Error marking message as read: ', error));
+            }
+        });
+        
+        // Photo Gallery Navigation
+        leftArrow.addEventListener('click', () => {
+            currentPhoto = (currentPhoto > 0) ? currentPhoto - 1 : photos.length - 1;
+            updatePhotoGallery();
+        });
+        
+        rightArrow.addEventListener('click', () => {
+            currentPhoto = (currentPhoto < photos.length - 1) ? currentPhoto + 1 : 0;
+            updatePhotoGallery();
+        });
+        
+        // Messages Functionality
+        sendMessageBtn.addEventListener('click', () => {
+            if (!firebase.auth().currentUser) {
+                alert("Authentication error. Please login again.");
+                adminLoginModal.classList.remove('hidden');
                 return;
             }
             
-            querySnapshot.forEach(doc => {
-                const message = doc.data();
-                const messageCard = document.createElement('div');
-                messageCard.className = `message-card ${message.read ? 'read' : 'unread'}`;
-                messageCard.dataset.id = doc.id;
-                
-                const statusIcon = document.createElement('div');
-                statusIcon.className = 'message-status';
-                statusIcon.innerHTML = message.read ? '📖' : '🆕';
-                
-                const titleDiv = document.createElement('div');
-                titleDiv.className = 'message-card-title';
-                titleDiv.textContent = message.title;
-                
-                const metaDiv = document.createElement('div');
-                metaDiv.className = 'message-card-meta';
-                
-                const dateSpan = document.createElement('span');
-                dateSpan.textContent = message.date;
-                
-                const previewSpan = document.createElement('div');
-                previewSpan.className = 'message-preview';
-                previewSpan.textContent = message.content.length > 50 
-                    ? message.content.substring(0, 50) + '...' 
-                    : message.content;
-                
-                metaDiv.appendChild(dateSpan);
-                
-                messageCard.appendChild(statusIcon);
-                messageCard.appendChild(titleDiv);
-                messageCard.appendChild(previewSpan);
-                messageCard.appendChild(metaDiv);
-                
-                // Add click event to view message details
-                messageCard.addEventListener('click', () => {
-                    window.location.href = `message.html?id=${doc.id}`;
+            const title = messageTitle.value.trim();
+            const content = messageContent.value.trim();
+            
+            if (!title || !content) {
+                alert('Please enter both a title and message content.');
+                return;
+            }
+            
+            const message = {
+                from: "Kevin",
+                to: "Marie",
+                title: title,
+                content: content,
+                date: new Date().toISOString().split('T')[0],
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                read: false
+            };
+            
+            db.collection('messages').add(message)
+                .then(() => {
+                    messageTitle.value = '';
+                    messageContent.value = '';
+                    alert('Message sent to Marie! ❤️');
+                    loadMessages();
+                })
+                .catch(error => {
+                    console.error('Error adding message: ', error);
+                    alert('Error sending message: ' + error.message);
                 });
-                
-                messagesList.appendChild(messageCard);
-            });
-        })
-        .catch(error => {
-            console.error('Error loading messages: ', error);
-            messagesList.innerHTML = '<p class="error">Error loading messages. Please try again later.</p>';
         });
-}
-
-// Show message detail view
-function showMessageDetail(messageId) {
-    currentMessageId = messageId;
-    
-    db.collection('messages').doc(messageId).get()
-        .then(doc => {
-            if (doc.exists) {
-                const message = doc.data();
-                document.getElementById('detail-title').textContent = message.title;
-                document.getElementById('detail-from').textContent = "From Kevin";
-                document.getElementById('detail-date').textContent = message.date;
-                document.getElementById('detail-content').textContent = message.content;
+        
+        // Admin Authentication
+        adminLoginTrigger.addEventListener('click', () => {
+            adminLoginModal.classList.remove('hidden');
+        });
+        
+        loginBtn.addEventListener('click', () => {
+            const password = adminPassword.value;
+            if (password === "marie123") {
+                isAdminAuthenticated = true;
+                adminLoginModal.classList.add('hidden');
                 
-                // Mark as read when opened
-                db.collection('messages').doc(messageId).update({
-                    read: true
-                }).catch(error => {
-                    console.error('Error marking message as read: ', error);
+                firebase.auth().signInAnonymously()
+                    .then((userCredential) => {
+                        alert("Admin login successful! You can now send messages.");
+                        kevinMessageForm.classList.remove('hidden');
+                        localStorage.setItem('isKevin', 'true');
+                    })
+                    .catch((error) => {
+                        console.error("Firebase auth error:", error);
+                        alert("Authentication error: " + error.message);
+                    });
+                
+                adminPassword.value = '';
+                loginError.textContent = '';
+            } else {
+                loginError.textContent = "Incorrect password";
+            }
+        });
+        
+        cancelLoginBtn.addEventListener('click', () => {
+            adminLoginModal.classList.add('hidden');
+            adminPassword.value = '';
+            loginError.textContent = '';
+        });
+        
+        // Surprise button
+        surpriseBtn?.addEventListener('click', () => {
+            window.location.href = 'surprise.html';
+        });
+        
+        // Helper Functions
+        function isKevin() {
+            return localStorage.getItem('isKevin') === 'true';
+        }
+        
+        function toggleKevin() {
+            const isKevinNow = localStorage.getItem('isKevin') === 'true';
+            localStorage.setItem('isKevin', (!isKevinNow).toString());
+            alert(isKevinNow ? "Switched to Marie view" : "Switched to Kevin view");
+            checkUserAndShowForm();
+        }
+        
+        function checkUserAndShowForm() {
+            if (isKevin()) {
+                kevinMessageForm.classList.remove('hidden');
+            } else {
+                kevinMessageForm.classList.add('hidden');
+            }
+        }
+        
+        function setupPhotoGallery() {
+            const photoContainer = document.querySelector('.photo-container');
+            photoContainer.innerHTML = '';
+            
+            photos.forEach((photo, index) => {
+                const photoDiv = document.createElement('div');
+                photoDiv.className = `photo absolute inset-0 transition-opacity duration-500 ${index === 0 ? 'opacity-100' : 'opacity-0'}`;
+                photoDiv.innerHTML = `
+                    <img src="${photo.src}" alt="Our Memory ${index + 1}" 
+                         class="w-full h-full object-cover" 
+                         onerror="this.src='https://via.placeholder.com/400x300?text=Our+Photo+${index + 1}';">
+                `;
+                photoContainer.appendChild(photoDiv);
+            });
+            
+            createPhotoDots();
+            updatePhotoGallery();
+        }
+        
+        function createPhotoDots() {
+            const dotsContainer = document.querySelector('.photo-dots');
+            dotsContainer.innerHTML = '';
+            
+            photos.forEach((_, index) => {
+                const dot = document.createElement('button');
+                dot.className = `w-3 h-3 rounded-full transition-all duration-300 ${index === 0 ? 'bg-marie-pink scale-125' : 'bg-marie-pale hover:bg-marie-soft'}`;
+                dot.addEventListener('click', () => {
+                    currentPhoto = index;
+                    updatePhotoGallery();
                 });
-
-                // Show delete button only for Kevin
-                const deleteBtn = document.getElementById('delete-message');
-                if (isKevin()) {
-                    deleteBtn.style.display = 'inline-block';
+                dotsContainer.appendChild(dot);
+            });
+        }
+        
+        function updatePhotoGallery() {
+            document.querySelectorAll('.photo').forEach((photo, index) => {
+                photo.classList.toggle('opacity-100', index === currentPhoto);
+                photo.classList.toggle('opacity-0', index !== currentPhoto);
+            });
+            
+            photoCount.textContent = `Photo ${currentPhoto + 1} of ${photos.length}`;
+            photoCaption.textContent = photos[currentPhoto].caption;
+            
+            document.querySelectorAll('.photo-dots button').forEach((dot, index) => {
+                if (index === currentPhoto) {
+                    dot.className = 'w-3 h-3 rounded-full bg-marie-pink scale-125 transition-all duration-300';
                 } else {
-                    deleteBtn.style.display = 'none';
+                    dot.className = 'w-3 h-3 rounded-full bg-marie-pale hover:bg-marie-soft transition-all duration-300';
+                }
+            });
+        }
+        
+        function loadMessages() {
+            const query = db.collection('messages').orderBy('timestamp', 'desc');
+            
+            query.get()
+                .then(querySnapshot => {
+                    messagesList.innerHTML = '';
+                    
+                    if (querySnapshot.empty) {
+                        messagesList.innerHTML = '<p class="text-center text-kevin-navy italic">No messages yet. Kevin will send you sweet notes here!</p>';
+                        return;
+                    }
+                    
+                    querySnapshot.forEach(doc => {
+                        const message = doc.data();
+                        const messageCard = document.createElement('div');
+                        messageCard.className = `p-4 bg-white bg-opacity-70 rounded-2xl shadow-lg cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-colorful ${message.read ? 'opacity-75' : 'border-2 border-marie-pink'}`;
+                        
+                        messageCard.innerHTML = `
+                            <div class="flex justify-between items-start mb-2">
+                                <h4 class="font-dancing text-xl text-marie-pink font-bold">${message.title}</h4>
+                                <span class="text-lg">${message.read ? '📖' : '🆕'}</span>
+                            </div>
+                            <p class="text-kevin-navy text-sm mb-2">${message.content.length > 80 ? message.content.substring(0, 80) + '...' : message.content}</p>
+                            <p class="text-xs text-gray-500">${message.date}</p>
+                        `;
+                        
+                        messageCard.addEventListener('click', () => {
+                            showMessageDetail(doc.id, message);
+                        });
+                        
+                        messagesList.appendChild(messageCard);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading messages: ', error);
+                    messagesList.innerHTML = '<p class="text-center text-red-500">Error loading messages. Please try again later.</p>';
+                });
+        }
+        
+        function showMessageDetail(messageId, message) {
+            currentMessageId = messageId;
+            
+            document.getElementById('detail-title').textContent = message.title;
+            document.getElementById('detail-from').textContent = "From Kevin";
+            document.getElementById('detail-date').textContent = message.date;
+            document.getElementById('detail-content').textContent = message.content;
+            
+            const deleteBtn = document.getElementById('delete-message');
+            if (isKevin()) {
+                deleteBtn.classList.remove('hidden');
+                deleteBtn.onclick = () => deleteMessage(messageId);
+            } else {
+                deleteBtn.classList.add('hidden');
+            }
+            
+            messagesSection.classList.add('hidden');
+            messageDetail.classList.remove('hidden');
+            
+            db.collection('messages').doc(messageId).update({
+                read: true
+            }).catch(error => console.error('Error marking message as read: ', error));
+        }
+        
+        function deleteMessage(messageId) {
+            if (!confirm('Are you sure you want to delete this message?')) return;
+            
+            db.collection('messages').doc(messageId).delete()
+                .then(() => {
+                    alert('Message deleted!');
+                    messageDetail.classList.add('hidden');
+                    messagesSection.classList.remove('hidden');
+                    loadMessages();
+                })
+                .catch(error => {
+                    alert('Error deleting message: ' + error.message);
+                });
+        }
+        
+        function createConfetti() {
+            for (let i = 0; i < 150; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'fixed w-2 h-2 pointer-events-none z-50';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-10px';
+                confetti.style.backgroundColor = ['#ff85a2', '#8b5cf6', '#3b82f6', '#10b981', '#f59e0b', '#ef4444'][Math.floor(Math.random() * 6)];
+                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+                confetti.style.animation = `fall ${3 + Math.random() * 2}s linear forwards`;
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), 8000);
+            }
+        }
+        
+        function createFloatingHearts() {
+            const heartsContainer = document.getElementById('falling-hearts');
+            
+            function addHeart() {
+                const heart = document.createElement('div');
+                heart.textContent = ['❤️', '💕', '💖', '💗', '💝'][Math.floor(Math.random() * 5)];
+                heart.className = 'absolute text-2xl pointer-events-none animate-float';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.top = Math.random() * 100 + '%';
+                heart.style.animationDuration = (3 + Math.random() * 3) + 's';
+                heart.style.opacity = 0.6 + Math.random() * 0.4;
+                
+                heartsContainer.appendChild(heart);
+                
+                setTimeout(() => heart.remove(), 6000);
+            }
+            
+            // Add hearts periodically
+            setInterval(addHeart, 2000);
+            
+            // Add initial hearts
+            for (let i = 0; i < 5; i++) {
+                setTimeout(addHeart, i * 500);
+            }
+        }
+        
+        function startCountdown() {
+            let countdownMode = 'anniversary';
+            const countdownTitle = document.getElementById('countdown-title');
+            const anniversaryBtn = document.getElementById('anniversary-btn');
+            const monthsaryBtn = document.getElementById('monthsary-btn');
+            
+            function getNextAnniversary() {
+                const now = new Date();
+                const currentYear = now.getFullYear();
+                let nextAnniversary = new Date(currentYear, 4, 25);
+                
+                if (now > nextAnniversary) {
+                    nextAnniversary = new Date(currentYear + 1, 4, 25);
                 }
                 
-                messagesSection.style.display = 'none';
-                messageDetail.style.display = 'block';
-            } else {
-                alert('Message not found!');
+                return nextAnniversary;
             }
-        })
-        .catch(error => {
-            console.error('Error getting message: ', error);
-            alert('Error loading message: ' + error.message);
-        });
-}
-
-// Delete message functionality
-document.getElementById('delete-message').addEventListener('click', function() {
-    if (!currentMessageId) return;
-    if (!confirm('Are you sure you want to delete this message?')) return;
-    db.collection('messages').doc(currentMessageId).delete()
-        .then(() => {
-            alert('Message deleted!');
-            messageDetail.style.display = 'none';
-            messagesSection.style.display = 'block';
-            loadMessages();
-        })
-        .catch(error => {
-            alert('Error deleting message: ' + error.message);
-        });
-});
-
-// Redirect to surprise page
-document.getElementById('surprise-btn').addEventListener('click', function() {
-    window.location.href = 'surprise.html';
-});
-
-
-
-<!-- Admin functionality script -->
-    // Simple admin authentication
-    // Handle login attempt
-    document.getElementById('login-btn').addEventListener('click', function() {
-        console.clear(); // Clear console for debugging
-        console.log("Login button clicked");
-        
-        const password = document.getElementById('admin-password').value;
-        console.log("Password entered:", password === "marie123" ? "Correct" : "Incorrect");
-        
-        // Simple password check
-        if (password === "marie123") {
-            console.log("Password correct, authenticating...");
-            isAdminAuthenticated = true;
-            document.getElementById('admin-login-modal').style.display = 'none';
             
-            // Sign in with Firebase anonymously
-            firebase.auth().signInAnonymously()
-                .then((userCredential) => {
-                    console.log("Firebase auth successful:", userCredential.user.uid);
-                    alert("Admin login successful! You can now send messages.");
-                    document.getElementById('kevin-message-form').style.display = 'block';
-                })
-                .catch((error) => {
-                    console.error("Firebase auth error:", error.code, error.message);
-                    alert("Authentication error: " + error.message);
-                });
-        } else {
-            document.getElementById('login-error').textContent = "Incorrect password";
-            console.log("Password incorrect");
+            function getNextMonthsary() {
+                const now = new Date();
+                const currentYear = now.getFullYear();
+                const currentMonth = now.getMonth();
+                let nextMonthsary = new Date(currentYear, currentMonth, 25);
+                
+                if (now > nextMonthsary) {
+                    if (currentMonth === 11) {
+                        nextMonthsary = new Date(currentYear + 1, 0, 25);
+                    } else {
+                        nextMonthsary = new Date(currentYear, currentMonth + 1, 25);
+                    }
+                }
+                
+                return nextMonthsary;
+            }
+            
+            function getTargetDate() {
+                return countdownMode === 'anniversary' ? getNextAnniversary() : getNextMonthsary();
+            }
+            
+            function updateTitle() {
+                if (countdownMode === 'anniversary') {
+                    const targetDate = getNextAnniversary();
+                    const year = targetDate.getFullYear();
+                    countdownTitle.textContent = `Time Until Our Anniversary - May 25th, ${year}`;
+                } else {
+                    const targetDate = getNextMonthsary();
+                    const month = targetDate.toLocaleString('default', { month: 'long' });
+                    const year = targetDate.getFullYear();
+                    countdownTitle.textContent = `Time Until Our Monthsary - ${month} 25th, ${year}`;
+                }
+            }
+            
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const targetDate = getTargetDate().getTime();
+                const distance = targetDate - now;
+                
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                document.getElementById("days").textContent = days.toString().padStart(2, "0");
+                document.getElementById("hours").textContent = hours.toString().padStart(2, "0");
+                document.getElementById("minutes").textContent = minutes.toString().padStart(2, "0");
+                document.getElementById("seconds").textContent = seconds.toString().padStart(2, "0");
+                
+                if (distance < 0) {
+                    const messageType = countdownMode === 'anniversary' ? 'Anniversary' : 'Monthsary';
+                    document.getElementById("countdown").innerHTML = `<p class="text-marie-pink font-bold text-center">Happy ${messageType}! 💖</p>`;
+                    setTimeout(updateCountdown, 86400000);
+                }
+            }
+            
+            anniversaryBtn.addEventListener('click', () => {
+                if (countdownMode !== 'anniversary') {
+                    countdownMode = 'anniversary';
+                    anniversaryBtn.className = 'px-4 py-2 bg-marie-pink text-white rounded-full text-sm font-semibold transition-all duration-300 scale-105';
+                    monthsaryBtn.className = 'px-4 py-2 bg-marie-pale text-marie-pink rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105';
+                    updateTitle();
+                    updateCountdown();
+                }
+            });
+            
+            monthsaryBtn.addEventListener('click', () => {
+                if (countdownMode !== 'monthsary') {
+                    countdownMode = 'monthsary';
+                    monthsaryBtn.className = 'px-4 py-2 bg-marie-pink text-white rounded-full text-sm font-semibold transition-all duration-300 scale-105';
+                    anniversaryBtn.className = 'px-4 py-2 bg-marie-pale text-marie-pink rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105';
+                    updateTitle();
+                    updateCountdown();
+                }
+            });
+            
+            updateTitle();
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
         }
-    });
-
-    // Add event listener for admin login trigger
-    document.addEventListener('DOMContentLoaded', function() {
-        // Attach admin login trigger
-        document.getElementById('admin-login-trigger').addEventListener('click', function() {
-            document.getElementById('admin-login-modal').style.display = 'flex';
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            checkUserAndShowForm();
+            
+            // Check URL parameters for direct navigation
+            const urlParams = new URLSearchParams(window.location.search);
+            const section = urlParams.get('section');
+            
+            // Check URL hash for direct navigation (from anniversary page)
+            const hash = window.location.hash;
+            
+            if (section === 'messages' || hash === '#messages') {
+                questionDiv.classList.add('hidden');
+                messagesSection.classList.remove('hidden');
+                musicPlayer.classList.remove('hidden');
+                loadMessages();
+            }
         });
-    });
-
-    // Cancel login
-    document.getElementById('cancel-login').addEventListener('click', function() {
-        document.getElementById('admin-login-modal').style.display = 'none';
-        document.getElementById('admin-password').value = '';
-        document.getElementById('login-error').textContent = '';
-    });
-
-    // Toggle Kevin mode
-function toggleKevin() {
-    // Toggle Kevin mode
-    const isKevinNow = localStorage.getItem('isKevin') === 'true';
-    localStorage.setItem('isKevin', !isKevinNow);
-    
-    // Visual feedback
-    alert(isKevinNow ? "Switched to Marie view" : "Switched to Kevin view");
-    
-    // Refresh message form visibility
-    checkUserAndShowForm();
-}
-
-// Add this function after the admin login logic
-function showMessageForm() {
-    if (isAdminAuthenticated) {
-        document.getElementById('kevin-message-form').style.display = 'block';
-    }
-}
-</script>
-
-<!-- Hidden admin controls -->
-<div id="admin-toggle" style="position: fixed; bottom: 10px; right: 10px; z-index: 9000; opacity: 0.4; display: flex; gap: 10px;">
-  <span id="admin-login-trigger" style="cursor: pointer; font-size: 20px; color: #777; user-select: none;">⚙️</span>
-  <span onclick="toggleKevin()" style="cursor: pointer; font-size: 20px; color: #777; user-select: none;">⚙️</span>
-</div>
+        
+        // Add fall animation to head
+        const fallAnimation = document.createElement('style');
+        fallAnimation.textContent = `
+            @keyframes fall {
+                to {
+                    transform: translateY(100vh) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(fallAnimation);
+    </script>
 </body>
 </html>

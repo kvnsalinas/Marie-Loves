@@ -200,8 +200,51 @@
         </div>
     </div>
 
+    <!-- Login Screen -->
+    <div id="login-screen" class="fixed inset-0 z-50 bg-gradient-to-br from-marie-bg via-marie-pale to-marie-soft flex items-center justify-center p-4">
+        <div class="glassmorphism rounded-3xl p-8 w-full max-w-md text-center shadow-colorful">
+            <!-- Heart Header -->
+            <div class="mb-6">
+                <div class="text-6xl animate-heart-beat mb-4">💕</div>
+                <h1 class="font-dancing text-4xl md:text-5xl text-marie-pink font-bold mb-2">
+                    Welcome to Our Space
+                </h1>
+                <p class="font-comfortaa text-kevin-navy opacity-80">
+                    A special place just for Marie & Kevin
+                </p>
+            </div>
+            
+            <!-- Login Form -->
+            <div class="space-y-6">
+                <div class="space-y-2">
+                    <label class="font-comfortaa text-kevin-navy font-semibold block text-left">
+                        Enter the magic words 🪄
+                    </label>
+                    <input type="password" id="site-password" placeholder="What does Kevin say to Marie? 💖"
+                        class="w-full px-4 py-3 rounded-xl border-2 border-marie-pale focus:border-marie-pink outline-none transition-all duration-300 bg-white bg-opacity-70 font-comfortaa">
+                </div>
+                
+                <button id="login-submit" 
+                    class="w-full px-6 py-3 bg-gradient-to-r from-marie-pink to-marie-light text-white font-bold text-lg rounded-xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-colorful">
+                    Enter Our World ✨
+                </button>
+                
+                <p id="login-error" class="text-pixel-red text-sm hidden animate-wiggle">
+                    Hmm, that's not quite right. Try again! 💭
+                </p>
+                
+                <!-- Hint -->
+                <div class="mt-6 p-4 bg-marie-pale bg-opacity-50 rounded-xl">
+                    <p class="font-comfortaa text-xs text-kevin-navy opacity-70">
+                        💡 Hint: It's what Marie always tells her Kebean
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Main Container -->
-    <div class="relative z-20 min-h-screen flex items-center justify-center p-4">
+    <div id="main-content" class="relative z-20 min-h-screen flex items-center justify-center p-4 hidden">
         
         <!-- Question Container -->
         <div id="question" class="text-center space-y-8 animate-fade-in-up">
@@ -599,6 +642,64 @@
 
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
+        
+        // Login System
+        const loginScreen = document.getElementById('login-screen');
+        const mainContent = document.getElementById('main-content');
+        const sitePassword = document.getElementById('site-password');
+        const loginSubmit = document.getElementById('login-submit');
+        const siteLoginError = document.getElementById('login-error');
+        
+        // Check if user is already logged in
+        function checkLoginStatus() {
+            const isLoggedIn = localStorage.getItem('marie-kevin-logged-in');
+            if (isLoggedIn === 'true') {
+                showMainContent();
+            }
+        }
+        
+        // Show main content and hide login
+        function showMainContent() {
+            loginScreen.classList.add('hidden');
+            mainContent.classList.remove('hidden');
+            createConfetti(); // Welcome confetti!
+        }
+        
+        // Handle login
+        function handleLogin() {
+            const password = sitePassword.value.toLowerCase().trim();
+            const correctPassword = 'ilovebeanbean';
+            
+            if (password === correctPassword) {
+                localStorage.setItem('marie-kevin-logged-in', 'true');
+                showMainContent();
+                
+                // Add some celebration
+                setTimeout(() => {
+                    createFloatingHearts();
+                }, 500);
+            } else {
+                siteLoginError.classList.remove('hidden');
+                sitePassword.classList.add('border-pixel-red');
+                sitePassword.value = '';
+                
+                // Shake animation
+                sitePassword.style.animation = 'wiggle 0.5s ease-in-out';
+                setTimeout(() => {
+                    sitePassword.style.animation = '';
+                    sitePassword.classList.remove('border-pixel-red');
+                    siteLoginError.classList.add('hidden');
+                }, 2000);
+            }
+        }
+        
+        // Login event listeners
+        loginSubmit.addEventListener('click', handleLogin);
+        sitePassword.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                handleLogin();
+            }
+        });
         
         // DOM Elements
         const questionDiv = document.getElementById('question');
@@ -1164,6 +1265,9 @@
         
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', () => {
+            // Check login status first
+            checkLoginStatus();
+            
             checkUserAndShowForm();
             
             // Check URL parameters for direct navigation

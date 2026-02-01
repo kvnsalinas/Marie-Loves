@@ -366,14 +366,24 @@
         
         <!-- ===== HERO SECTION ===== -->
         <section id="hero" class="relative h-screen flex items-center justify-center overflow-hidden">
-            <!-- Background Image with Ken Burns -->
+            <!-- Background Image Carousel with Ken Burns -->
             <div class="absolute inset-0">
-                <img 
-                    src="images/hero/hero-main.jpg" 
-                    alt="Marie and Kevin" 
-                    class="w-full h-full object-cover animate-ken-burns"
-                    onerror="this.style.background='linear-gradient(135deg, #E8B4B8 0%, #D4A574 100%)'; this.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';"
-                >
+                <div id="hero-carousel" class="relative w-full h-full">
+                    <img 
+                        src="images/hero/hero1.jpg" 
+                        alt="Marie and Kevin" 
+                        class="hero-slide absolute inset-0 w-full h-full object-cover animate-ken-burns opacity-100 transition-opacity duration-1000"
+                        style="object-position: center 50%;"
+                        onerror="this.style.background='linear-gradient(135deg, #E8B4B8 0%, #D4A574 100%)';"
+                    >
+                    <img 
+                        src="images/hero/hero2.jpg" 
+                        alt="Marie and Kevin" 
+                        class="hero-slide absolute inset-0 w-full h-full object-cover animate-ken-burns opacity-0 transition-opacity duration-1000"
+                        style="object-position: center 25%;"
+                        onerror="this.style.background='linear-gradient(135deg, #E8B4B8 0%, #D4A574 100%)';"
+                    >
+                </div>
                 <div class="hero-overlay absolute inset-0"></div>
             </div>
             
@@ -458,7 +468,7 @@
                             
                             <div class="mt-8 pt-6 border-t border-rose-100">
                                 <p class="font-handwriting text-xl text-charcoal-800">Forever yours,</p>
-                                <p class="font-handwriting text-2xl text-rose-400 mt-1">Kevin (Your Kebean) 🤗</p>
+                                <p class="font-handwriting text-2xl text-rose-400 mt-1">Kevin (Your Kebean) </p>
                             </div>
                         </div>
                     </div>
@@ -491,8 +501,8 @@
                             <div class="md:w-1/2 md:pl-12">
                                 <div class="photo-frame inline-block">
                                     <img 
-                                        src="images/timeline/first-date.jpg" 
-                                        alt="Our first date" 
+                                        src="images/timeline/first_month.jpg" 
+                                        alt="Our very first month" 
                                         class="w-64 h-48 object-cover"
                                         onerror="this.src='images/photo1.jpg';"
                                     >
@@ -504,15 +514,15 @@
                         <div class="reveal flex flex-col md:flex-row-reverse items-center gap-8">
                             <div class="md:w-1/2 md:text-left md:pl-12">
                                 <p class="text-sm text-rose-400 font-medium mb-2">A Special Moment</p>
-                                <h3 class="font-serif text-2xl font-semibold text-charcoal-800 mb-3">First "I Love You"</h3>
-                                <p class="text-charcoal-700">When I first told you I love you, my heart was racing. I'll never forget that moment.</p>
+                                <h3 class="font-serif text-2xl font-semibold text-charcoal-800 mb-3">First Kiss Moment</h3>
+                                <p class="text-charcoal-700">When our lips first touched, time stood still. I'll never forget that magical moment.</p>
                             </div>
                             <div class="timeline-dot hidden md:block z-10"></div>
                             <div class="md:w-1/2 md:pr-12 md:text-right">
                                 <div class="photo-frame inline-block">
                                     <img 
-                                        src="images/timeline/first-ily.jpg" 
-                                        alt="First I love you" 
+                                        src="images/timeline/first_kiss.jpg" 
+                                        alt="First kiss moment" 
                                         class="w-64 h-48 object-cover"
                                         onerror="this.src='images/photo2.jpg';"
                                     >
@@ -531,8 +541,8 @@
                             <div class="md:w-1/2 md:pl-12">
                                 <div class="photo-frame inline-block">
                                     <img 
-                                        src="images/timeline/favorite-memory.jpg" 
-                                        alt="Favorite memory" 
+                                        src="images/timeline/adventure.jpg" 
+                                        alt="Our adventures" 
                                         class="w-64 h-48 object-cover"
                                         onerror="this.src='images/photo8.jpg';"
                                     >
@@ -545,14 +555,14 @@
                             <div class="md:w-1/2 md:text-left md:pl-12">
                                 <p class="text-sm text-rose-400 font-medium mb-2">January 25, 2026</p>
                                 <h3 class="font-serif text-2xl font-semibold text-charcoal-800 mb-3">20 Months & Counting</h3>
-                                <p class="text-charcoal-700">20 months later, I love you more than ever. Here's to forever, my beanbean. 💕</p>
+                                <p class="text-charcoal-700">20 months later, I love you more than ever. Here's to forever, my Elieza. 💕</p>
                             </div>
                             <div class="timeline-dot hidden md:block z-10"></div>
                             <div class="md:w-1/2 md:pr-12 md:text-right">
                                 <div class="photo-frame inline-block">
                                     <img 
-                                        src="images/timeline/us-now.jpg" 
-                                        alt="Us now" 
+                                        src="images/timeline/forever.jpg" 
+                                        alt="Us now, forever" 
                                         class="w-64 h-48 object-cover"
                                         onerror="this.src='images/photo11.jpg';"
                                     >
@@ -911,19 +921,26 @@
 
         // ==================== PHOTO DATA ====================
         const photos = [
-            { src: 'images/photo1.jpg', caption: 'Me making this website for you hehehe' },
-            { src: 'images/photo2.jpg', caption: 'I miss your hugs and care, mahal ko.' },
-            { src: 'images/photo3.jpg', caption: 'Cute naman natin dito! 😊' },
-            { src: 'images/photo4.jpg', caption: 'My baby, pakiss kiss pa!' },
-            { src: 'images/photo5.jpg', caption: 'Kiss kita diyan! 😘' },
-            { src: 'images/photo6.jpg', caption: 'Pacute cute pa ang love love ko' },
-            { src: 'images/photo7.jpg', caption: 'Let\'s eat ulit dito soon!' },
-            { src: 'images/photo8.jpg', caption: 'I miss staying at Pampanga with you' },
-            { src: 'images/photo9.jpg', caption: 'Pogi ng boyfriend mo! 😂' },
-            { src: 'images/photo10.jpg', caption: 'Maganda naman ng girlfriend ko!' },
-            { src: 'images/photo11.jpg', caption: 'You\'re the best thing that happened to me' },
-            { src: 'images/photo12.jpg', caption: 'Happy Monthsary, mahal!' },
-            { src: 'images/photo13.jpg', caption: 'Every day is special with you' },
+            // New photos - 20th monthsary
+            { src: 'images/photo14.jpg', caption: 'oh i know how you love just because flowers <3' },
+            { src: 'images/photo15.jpg', caption: 'i love taking pictures of you palagi mahal ko' },
+            { src: 'images/photo16.jpg', caption: 'hhehehe :P' },
+            { src: 'images/photo17.jpg', caption: 'kahit kakagising ko lang, buo na araw ko makita ka lang' },
+            { src: 'images/photo18.jpg', caption: 'hihi thank you for this wonderful experience talaga mahal' },
+            // Original photos
+            { src: 'images/photo1.jpg', caption: 'Me making this hehehe' },
+            { src: 'images/photo2.jpg', caption: 'I miss your hugs and care mahal ko.' },
+            { src: 'images/photo3.jpg', caption: 'Cute naman natin dito HAHAHA' },
+            { src: 'images/photo4.jpg', caption: 'Ay ang baby ko na yan pakiss kiss pa uy!' },
+            { src: 'images/photo5.jpg', caption: 'Oh eto kiss na rin kita diyan ;P' },
+            { src: 'images/photo6.jpg', caption: 'Pacute cute pa ang love love ohh' },
+            { src: 'images/photo7.jpg', caption: 'Let\'s eat ulit dito nehh mahal ko, gusto ko ulit nung carbonara nilang pang 5 tao HAHAHA' },
+            { src: 'images/photo8.jpg', caption: 'I miss staying at pampanga with you, soon ulit nehh' },
+            { src: 'images/photo9.jpg', caption: 'jajajaja pogi! HAHAHAHA' },
+            { src: 'images/photo10.jpg', caption: 'ETO NAMAN MAGANDA SYEMPRE BAKA MINAMAHAL Q YAN!' },
+            { src: 'images/photo11.jpg', caption: 'You\'re the best thing that\'s ever happened to me. I Love You Always' },
+            { src: 'images/photo12.jpg', caption: 'Happy Monthsary to my makulit kulit na love love!' },
+            { src: 'images/photo13.jpg', caption: 'and sshhh, everyday is your day :P There\'s no day wherein you\'re not special hehe. Mwah' }
         ];
 
         // ==================== DOM ELEMENTS ====================
@@ -1015,6 +1032,21 @@
             initMusicPlayer();
             initModals();
             updateLoveCounter();
+            initHeroCarousel();
+        }
+
+        // ==================== HERO CAROUSEL ====================
+        function initHeroCarousel() {
+            const slides = document.querySelectorAll('.hero-slide');
+            if (slides.length < 2) return;
+            
+            let currentSlide = 0;
+            
+            setInterval(() => {
+                slides[currentSlide].style.opacity = '0';
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].style.opacity = '1';
+            }, 5000); // Switch every 5 seconds
         }
 
         // ==================== SCROLL REVEAL ====================

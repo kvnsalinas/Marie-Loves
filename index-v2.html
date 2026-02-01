@@ -385,18 +385,18 @@
                 <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl font-semibold mb-6 animate-fade-in" style="animation-delay: 0.4s;">
                     Marie & Kevin
                 </h1>
-                <p class="text-lg md:text-xl opacity-90 animate-fade-in-up" style="animation-delay: 0.6s;">
+                <p class="text-lg md:text-xl opacity-90 mb-8 animate-fade-in-up" style="animation-delay: 0.6s;">
                     20 months of love, laughter, and endless memories
                 </p>
-            </div>
-            
-            <!-- Scroll indicator - Fixed at bottom -->
-            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-float z-10">
-                <div class="flex flex-col items-center gap-2 text-white/80">
-                    <span class="text-sm font-medium">Scroll to explore</span>
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                    </svg>
+                
+                <!-- Scroll indicator -->
+                <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-float">
+                    <div class="flex flex-col items-center gap-2 text-white/80">
+                        <span class="text-sm font-medium">Scroll to explore</span>
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                        </svg>
+                    </div>
                 </div>
             </div>
         </section>
@@ -596,7 +596,7 @@
                     <h2 class="font-serif text-4xl md:text-5xl font-semibold text-charcoal-800">Special Surprises</h2>
                 </div>
                 
-                <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 reveal">
+                <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 reveal">
                     <!-- Messages Card -->
                     <div class="card p-8 text-center cursor-pointer group" id="btn-messages">
                         <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-rose-100 flex items-center justify-center group-hover:bg-rose-200 transition-colors">
@@ -615,22 +615,13 @@
                         <p class="text-charcoal-700 opacity-70 text-sm">Redeem your special gift</p>
                     </div>
                     
-                    <!-- 2025 Girlfriend's Day Card -->
-                    <div class="card p-8 text-center cursor-pointer group" id="btn-girlfriends-day">
-                        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-rose-100 flex items-center justify-center group-hover:bg-rose-200 transition-colors">
-                            <span class="text-2xl">👸</span>
-                        </div>
-                        <h3 class="font-serif text-xl font-semibold text-charcoal-800 mb-2">2025 Girlfriend's Day</h3>
-                        <p class="text-charcoal-700 opacity-70 text-sm">A special celebration</p>
-                    </div>
-                    
-                    <!-- 20th Monthsary Surprise Card -->
+                    <!-- Surprise Card -->
                     <div class="card p-8 text-center cursor-pointer group" id="btn-surprise">
-                        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-rose-200 to-warm-200 flex items-center justify-center group-hover:from-rose-300 group-hover:to-warm-300 transition-colors">
+                        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-rose-100 flex items-center justify-center group-hover:bg-rose-200 transition-colors">
                             <span class="text-2xl">✨</span>
                         </div>
-                        <h3 class="font-serif text-xl font-semibold text-charcoal-800 mb-2">20th Surprise</h3>
-                        <p class="text-charcoal-700 opacity-70 text-sm">Something special for you</p>
+                        <h3 class="font-serif text-xl font-semibold text-charcoal-800 mb-2">Surprise</h3>
+                        <p class="text-charcoal-700 opacity-70 text-sm">Something special awaits</p>
                     </div>
                 </div>
                 
@@ -776,26 +767,6 @@
                     </button>
                 </div>
                 
-                <!-- Kevin's Message Form (Hidden by default) -->
-                <div id="kevin-message-form" class="hidden p-6 border-b border-rose-100 bg-rose-50/50">
-                    <h4 class="font-handwriting text-lg text-rose-400 mb-4">Send a new message to Marie 💕</h4>
-                    <input 
-                        type="text" 
-                        id="new-message-title" 
-                        placeholder="Message title..."
-                        class="w-full px-4 py-3 rounded-xl border-2 border-rose-200 focus:border-rose-400 outline-none transition-colors mb-3"
-                    >
-                    <textarea 
-                        id="new-message-content" 
-                        placeholder="Write your sweet message here..."
-                        rows="3"
-                        class="w-full px-4 py-3 rounded-xl border-2 border-rose-200 focus:border-rose-400 outline-none transition-colors resize-none mb-3"
-                    ></textarea>
-                    <button onclick="sendMessage()" class="btn-primary w-full py-3">
-                        Send Message ❤️
-                    </button>
-                </div>
-                
                 <!-- Messages List -->
                 <div id="messages-list" class="flex-1 overflow-y-auto p-6 space-y-4">
                     <p class="text-center text-charcoal-700 opacity-70">Loading messages...</p>
@@ -859,37 +830,9 @@
         </div>
     </div>
 
-    <!-- ===== ADMIN TOGGLE (Very Hidden - Triple tap bottom left corner) ===== -->
-    <div id="admin-trigger" class="fixed bottom-0 left-0 w-16 h-16 z-50 opacity-0" onclick="showAdminLogin()"></div>
-    
-    <!-- ===== KEVIN MODE INDICATOR & SWITCH ===== -->
-    <div id="kevin-mode-indicator" class="fixed bottom-4 left-4 z-50 hidden">
-        <button onclick="switchToMarieView()" 
-                class="bg-rose-300 hover:bg-rose-400 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg transition-all flex items-center gap-2">
-            <span>👸</span>
-            <span>Switch to Marie View</span>
-        </button>
-    </div>
-    
-    <!-- ===== ADMIN LOGIN MODAL ===== -->
-    <div id="admin-login-modal" class="fixed inset-0 z-[100] hidden">
-        <div class="modal-backdrop absolute inset-0" onclick="closeAdminLogin()"></div>
-        <div class="relative z-10 h-full flex items-center justify-center p-4">
-            <div class="bg-white rounded-3xl max-w-sm w-full p-8">
-                <h3 class="font-serif text-2xl text-charcoal-800 text-center mb-6">Kevin's Access</h3>
-                <input 
-                    type="password" 
-                    id="admin-password" 
-                    placeholder="Enter Kevin's password"
-                    class="w-full px-5 py-4 rounded-xl border-2 border-rose-200 focus:border-rose-400 outline-none transition-colors mb-4"
-                >
-                <p id="admin-error" class="text-rose-600 text-sm text-center mb-4 hidden">Wrong password!</p>
-                <div class="flex gap-3">
-                    <button onclick="closeAdminLogin()" class="flex-1 btn-secondary py-3">Cancel</button>
-                    <button onclick="verifyAdminPassword()" class="flex-1 btn-primary py-3">Login</button>
-                </div>
-            </div>
-        </div>
+    <!-- ===== ADMIN TOGGLE (Hidden) ===== -->
+    <div id="admin-toggle" class="fixed bottom-6 left-6 z-50 opacity-20 hover:opacity-80 transition-opacity">
+        <button onclick="toggleKevin()" class="text-2xl">👤</button>
     </div>
 
     <!-- ===== JAVASCRIPT ===== -->
@@ -970,20 +913,14 @@
             mainContent.classList.remove('hidden');
             musicPlayer.classList.remove('hidden');
             initializeApp();
-            
-            // Check if Kevin mode was previously enabled
-            if (isKevin()) {
-                document.getElementById('kevin-mode-indicator').classList.remove('hidden');
-                document.getElementById('admin-trigger').classList.add('hidden');
-            }
         }
 
         function handleLogin() {
             const password = document.getElementById('site-password').value.toLowerCase().trim();
-            const validPasswords = ['ilovebeanbean', 'bean', 'beanbean', 'kebean', 'mahal', 'love', 'darling', 'daarin'];
+            const correctPassword = 'ilovebeanbean';
             const rememberMe = document.getElementById('remember-me').checked;
 
-            if (validPasswords.includes(password)) {
+            if (password === correctPassword) {
                 const currentTime = new Date().getTime();
                 
                 if (rememberMe) {
@@ -1230,12 +1167,9 @@
                 document.body.style.overflow = '';
             });
 
-            // Girlfriend's Day & Surprise
-            document.getElementById('btn-girlfriends-day').addEventListener('click', () => {
-                window.location.href = 'surprise.html';
-            });
+            // Surprise & Anniversary
             document.getElementById('btn-surprise').addEventListener('click', () => {
-                window.location.href = 'monthsary-20.html';
+                window.location.href = 'surprise.html';
             });
             document.getElementById('btn-anniversary').addEventListener('click', () => {
                 window.location.href = 'anniversary.html';
@@ -1269,7 +1203,6 @@
         function openMessagesModal() {
             document.getElementById('messages-modal').classList.remove('hidden');
             document.body.style.overflow = 'hidden';
-            updateKevinUI();
             loadMessages();
         }
 
@@ -1329,105 +1262,10 @@
             return localStorage.getItem('isKevin') === 'true';
         }
 
-        function showAdminLogin() {
-            document.getElementById('admin-login-modal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeAdminLogin() {
-            document.getElementById('admin-login-modal').classList.add('hidden');
-            document.getElementById('admin-password').value = '';
-            document.getElementById('admin-error').classList.add('hidden');
-            document.body.style.overflow = '';
-        }
-
-        function verifyAdminPassword() {
-            const password = document.getElementById('admin-password').value.toLowerCase().trim();
-            if (password === 'ilovemarie') {
-                localStorage.setItem('isKevin', 'true');
-                closeAdminLogin();
-                
-                // Show Kevin mode indicator
-                document.getElementById('kevin-mode-indicator').classList.remove('hidden');
-                document.getElementById('admin-trigger').classList.add('hidden');
-                
-                // Sign in to Firebase anonymously for write access
-                firebase.auth().signInAnonymously()
-                    .then(() => {
-                        alert('Welcome back, Kevin! 💕 You can now send messages.');
-                        updateKevinUI();
-                    })
-                    .catch((error) => {
-                        console.error('Firebase auth error:', error);
-                        alert('Kevin mode enabled! (Note: Message sending may require refresh)');
-                        updateKevinUI();
-                    });
-            } else {
-                document.getElementById('admin-error').classList.remove('hidden');
-            }
-        }
-
-        function updateKevinUI() {
-            const messageForm = document.getElementById('kevin-message-form');
-            if (isKevin() && messageForm) {
-                messageForm.classList.remove('hidden');
-            }
-            // Also show Kevin mode indicator
-            if (isKevin()) {
-                document.getElementById('kevin-mode-indicator').classList.remove('hidden');
-                document.getElementById('admin-trigger').classList.add('hidden');
-            }
-        }
-
-        function switchToMarieView() {
-            localStorage.removeItem('isKevin');
-            document.getElementById('kevin-mode-indicator').classList.add('hidden');
-            document.getElementById('admin-trigger').classList.remove('hidden');
-            
-            const messageForm = document.getElementById('kevin-message-form');
-            if (messageForm) {
-                messageForm.classList.add('hidden');
-            }
-            
-            alert('Switched to Marie View 👸');
-        }
-
-        function logoutKevin() {
-            localStorage.removeItem('isKevin');
-            firebase.auth().signOut();
-            location.reload();
-        }
-
-        function sendMessage() {
-            const title = document.getElementById('new-message-title').value.trim();
-            const content = document.getElementById('new-message-content').value.trim();
-
-            if (!title || !content) {
-                alert('Please enter both title and message!');
-                return;
-            }
-
-            const message = {
-                from: "Kevin",
-                to: "Marie",
-                title: title,
-                content: content,
-                date: new Date().toISOString().split('T')[0],
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                read: false
-            };
-
-            db.collection('messages').add(message)
-                .then(() => {
-                    document.getElementById('new-message-title').value = '';
-                    document.getElementById('new-message-content').value = '';
-                    alert('Message sent to Marie! ❤️');
-                    loadMessages();
-                })
-                .catch(error => {
-                    console.error('Error sending message:', error);
-                    alert('Error sending message. Try refreshing the page.');
-                });
+        function toggleKevin() {
+            const isKevinNow = localStorage.getItem('isKevin') === 'true';
+            localStorage.setItem('isKevin', (!isKevinNow).toString());
+            alert(isKevinNow ? "Switched to Marie view" : "Switched to Kevin view");
         }
 
         // ==================== KEYBOARD NAVIGATION ====================

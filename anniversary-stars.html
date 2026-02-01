@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starry Night 🌌 | 2nd Anniversary</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            background: linear-gradient(180deg, #0a0a1a 0%, #1a1a3a 50%, #0f0f2f 100%);
+            font-family: 'Cormorant Garamond', serif;
+            overflow-x: hidden;
+        }
+        
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s ease-in-out infinite;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        .shooting-star {
+            position: absolute;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, white, transparent);
+            animation: shoot 3s linear infinite;
+            opacity: 0;
+        }
+        
+        @keyframes shoot {
+            0% { transform: translateX(0) translateY(0); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateX(300px) translateY(300px); opacity: 0; }
+        }
+        
+        .constellation {
+            position: relative;
+        }
+        
+        .constellation-line {
+            position: absolute;
+            height: 2px;
+            background: rgba(255,255,255,0.3);
+            transform-origin: left center;
+        }
+        
+        .photo-star {
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(100, 150, 255, 0.4);
+            transition: all 0.4s ease;
+        }
+        
+        .photo-star:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 50px rgba(150, 200, 255, 0.6);
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 20px rgba(150, 200, 255, 0.5), 0 0 40px rgba(150, 200, 255, 0.3);
+        }
+        
+        .handwriting {
+            font-family: 'Caveat', cursive;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        .float {
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .moon {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #FFFACD 0%, #F0E68C 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 60px rgba(255, 250, 205, 0.6), 0 0 100px rgba(255, 250, 205, 0.3);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen text-white">
+    
+    <!-- Stars Background -->
+    <div class="stars" id="stars"></div>
+    
+    <!-- Shooting Stars -->
+    <div class="shooting-star" style="top: 10%; left: 5%; animation-delay: 0s;"></div>
+    <div class="shooting-star" style="top: 30%; left: 20%; animation-delay: 2s;"></div>
+    <div class="shooting-star" style="top: 50%; left: 60%; animation-delay: 4s;"></div>
+    
+    <!-- Music Player -->
+    <div class="fixed bottom-4 right-4 z-50 bg-white/10 backdrop-blur rounded-full px-4 py-2 flex items-center gap-3">
+        <button onclick="toggleMusic()" class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+            <span id="play-icon">▶</span>
+        </button>
+        <span class="text-sm text-white/80">Our Song</span>
+    </div>
+    <audio id="music" loop src="2nd anniv/2nd_anniv.mp3"></audio>
+    
+    <!-- Main Content -->
+    <div class="relative z-10 min-h-screen flex flex-col items-center justify-center p-6">
+        
+        <!-- Moon -->
+        <div class="moon absolute top-10 right-10 float opacity-80"></div>
+        
+        <!-- Title -->
+        <div class="text-center mb-12">
+            <p class="handwriting text-3xl text-blue-200 mb-2">Written in the stars...</p>
+            <h1 class="text-5xl md:text-7xl font-semibold glow-text mb-4">Our Love Story</h1>
+            <p class="text-xl text-white/70">2 Years Among the Stars ✨</p>
+        </div>
+        
+        <!-- Constellation of Photos -->
+        <div class="constellation relative w-full max-w-4xl h-96 md:h-[500px]">
+            
+            <!-- Photo 1 - Top Left -->
+            <div class="absolute top-0 left-0 md:left-10">
+                <div class="photo-star w-24 h-24 md:w-32 md:h-32 float" style="animation-delay: 0s;">
+                    <img src="2nd anniv/vc1.jpg" class="w-full h-full object-cover" alt="Memory">
+                </div>
+                <p class="handwriting text-center text-blue-200 mt-2">Video Calls 💕</p>
+            </div>
+            
+            <!-- Photo 2 - Top Right -->
+            <div class="absolute top-0 right-0 md:right-10">
+                <div class="photo-star w-28 h-28 md:w-36 md:h-36 float" style="animation-delay: 0.5s;">
+                    <img src="2nd anniv/vc2.jpg" class="w-full h-full object-cover" alt="Memory">
+                </div>
+                <p class="handwriting text-center text-blue-200 mt-2">Your Smile ✨</p>
+            </div>
+            
+            <!-- Photo 3 - Center -->
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <div class="photo-star w-36 h-36 md:w-48 md:h-48 float" style="animation-delay: 1s;">
+                    <img src="2nd anniv/cutie.jpg" class="w-full h-full object-cover" alt="Memory">
+                </div>
+                <p class="handwriting text-center text-yellow-200 mt-2 text-xl">My Universe 🌟</p>
+            </div>
+            
+            <!-- Photo 4 - Bottom Left -->
+            <div class="absolute bottom-0 left-5 md:left-20">
+                <div class="photo-star w-24 h-24 md:w-32 md:h-32 float" style="animation-delay: 1.5s;">
+                    <img src="2nd anniv/first_sleep.jpg" class="w-full h-full object-cover" alt="Memory">
+                </div>
+                <p class="handwriting text-center text-blue-200 mt-2">Sweet Dreams 🌙</p>
+            </div>
+            
+            <!-- Photo 5 - Bottom Right -->
+            <div class="absolute bottom-0 right-5 md:right-20">
+                <div class="photo-star w-28 h-28 md:w-36 md:h-36 float" style="animation-delay: 2s;">
+                    <img src="2nd anniv/it_led_to_this_moment.jpg" class="w-full h-full object-cover" alt="Memory">
+                </div>
+                <p class="handwriting text-center text-blue-200 mt-2">Our Moment 💫</p>
+            </div>
+        </div>
+        
+        <!-- Message -->
+        <div class="text-center mt-12 max-w-2xl">
+            <p class="text-xl text-white/80 mb-6">
+                "I love you to the moon and back" isn't just a saying for us — 
+                it's a promise written in the stars above.
+            </p>
+            <p class="handwriting text-4xl glow-text">2 Years & Forever More ✨</p>
+        </div>
+        
+        <!-- Back Button -->
+        <div class="mt-12">
+            <a href="anniversary.html" class="inline-block px-6 py-3 bg-white/10 backdrop-blur text-white rounded-full hover:bg-white/20 transition-colors">
+                ← Choose Another Experience
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Generate stars
+        const starsContainer = document.getElementById('stars');
+        for (let i = 0; i < 150; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.width = Math.random() * 3 + 1 + 'px';
+            star.style.height = star.style.width;
+            star.style.animationDelay = Math.random() * 3 + 's';
+            starsContainer.appendChild(star);
+        }
+        
+        // Music
+        let isPlaying = false;
+        const music = document.getElementById('music');
+        
+        function toggleMusic() {
+            if (isPlaying) {
+                music.pause();
+                document.getElementById('play-icon').textContent = '▶';
+            } else {
+                music.play();
+                document.getElementById('play-icon').textContent = '⏸';
+            }
+            isPlaying = !isPlaying;
+        }
+        
+        music.play().then(() => {
+            isPlaying = true;
+            document.getElementById('play-icon').textContent = '⏸';
+        }).catch(() => {});
+    </script>
+</body>
+</html>

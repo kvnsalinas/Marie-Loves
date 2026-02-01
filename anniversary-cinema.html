@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Film 🎬 | 2nd Anniversary</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            background: #0a0a0a;
+            font-family: 'Playfair Display', serif;
+            overflow: hidden;
+        }
+        
+        .bebas {
+            font-family: 'Bebas Neue', cursive;
+        }
+        
+        .film-grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            animation: grain 0.5s steps(1) infinite;
+            z-index: 100;
+        }
+        
+        @keyframes grain {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(-5%, -5%); }
+            50% { transform: translate(5%, 5%); }
+            75% { transform: translate(5%, -5%); }
+        }
+        
+        .slide {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .frame {
+            border: 4px solid #333;
+            position: relative;
+        }
+        
+        .sepia { filter: sepia(0.3) contrast(1.1) brightness(0.95); }
+        
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            92% { opacity: 1; }
+            93% { opacity: 0.8; }
+            94% { opacity: 1; }
+        }
+        
+        .flicker {
+            animation: flicker 3s infinite;
+        }
+        
+        .clapboard {
+            background: #1a1a1a;
+            border: 4px solid #f5f5f5;
+        }
+        
+        .clapboard-stripes {
+            background: repeating-linear-gradient(
+                -45deg,
+                #f5f5f5,
+                #f5f5f5 20px,
+                #1a1a1a 20px,
+                #1a1a1a 40px
+            );
+        }
+        
+        .film-border {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 60px;
+            background: #111;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            padding: 10px 0;
+        }
+        
+        .film-border.left { left: 0; }
+        .film-border.right { right: 0; }
+        
+        .film-hole {
+            width: 40px;
+            height: 30px;
+            background: #0a0a0a;
+            border-radius: 4px;
+            margin: 0 auto;
+        }
+        
+        .vignette {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(ellipse at center, transparent 0%, transparent 60%, rgba(0,0,0,0.7) 100%);
+            z-index: 50;
+        }
+        
+        .nav-btn {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 200;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        
+        .nav-btn.prev { left: 20px; }
+        .nav-btn.next { right: 20px; }
+        
+        .progress-bar {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 200;
+        }
+        
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .progress-dot.active {
+            background: white;
+            transform: scale(1.3);
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .slide.active .animate-in {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        .slide.active .delay-1 { animation-delay: 0.2s; opacity: 0; }
+        .slide.active .delay-2 { animation-delay: 0.4s; opacity: 0; }
+        .slide.active .delay-3 { animation-delay: 0.6s; opacity: 0; }
+        .slide.active .delay-4 { animation-delay: 0.8s; opacity: 0; }
+    </style>
+</head>
+
+<body class="text-white">
+    
+    <!-- Film Grain Overlay -->
+    <div class="film-grain"></div>
+    
+    <!-- Vignette Effect -->
+    <div class="vignette"></div>
+    
+    <!-- Film Borders -->
+    <div class="film-border left hidden md:flex">
+        <div class="film-hole"></div>
+        <div class="film-hole"></div>
+        <div class="film-hole"></div>
+        <div class="film-hole"></div>
+        <div class="film-hole"></div>
+        <div class="film-hole"></div>
+    </div>
+    <div class="film-border right hidden md:flex">
+        <div class="film-hole"></div>
+        <div class="film-hole"></div>
+        <div class="film-hole"></div>
+        <div class="film-hole"></div>
+        <div class="film-hole"></div>
+        <div class="film-hole"></div>
+    </div>
+    
+    <!-- Music Player -->
+    <div class="fixed top-4 right-4 z-[200] bg-white/10 backdrop-blur rounded-full px-4 py-2 flex items-center gap-3">
+        <button onclick="toggleMusic()" class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+            <span id="play-icon">▶</span>
+        </button>
+        <span class="text-sm text-white/60">Soundtrack</span>
+    </div>
+    <audio id="music" loop src="2nd anniv/2nd_anniv.mp3"></audio>
+    
+    <!-- Navigation -->
+    <button class="nav-btn prev" onclick="prevSlide()">‹</button>
+    <button class="nav-btn next" onclick="nextSlide()">›</button>
+    
+    <!-- Progress Dots -->
+    <div class="progress-bar" id="progress-bar"></div>
+    
+    <!-- SLIDE 0: Clapboard Intro -->
+    <div class="slide active" data-slide="0">
+        <div class="text-center cursor-pointer" onclick="nextSlide()">
+            <div class="clapboard p-8 rounded-lg mb-8 max-w-md mx-auto flicker">
+                <div class="clapboard-stripes h-16 -mx-8 -mt-8 rounded-t"></div>
+                <div class="pt-6 text-left space-y-3 bebas text-2xl md:text-3xl">
+                    <p><span class="text-gray-500">PRODUCTION:</span> Our Love Story</p>
+                    <p><span class="text-gray-500">SCENE:</span> 730 Days Together</p>
+                    <p><span class="text-gray-500">TAKE:</span> 2nd Anniversary</p>
+                    <p><span class="text-gray-500">DATE:</span> May 25, 2024</p>
+                </div>
+            </div>
+            <p class="text-gray-400 text-xl animate-pulse bebas tracking-widest">CLICK TO START THE FILM</p>
+        </div>
+    </div>
+    
+    <!-- SLIDE 1: Title Card -->
+    <div class="slide" data-slide="1">
+        <div class="text-center px-6">
+            <p class="bebas text-2xl text-gray-500 tracking-[0.5em] mb-6 animate-in">A KEVIN PRODUCTION PRESENTS</p>
+            <h1 class="bebas text-6xl md:text-9xl tracking-wider mb-6 animate-in delay-1">KEVIN & MARIE</h1>
+            <p class="text-3xl italic text-gray-300 animate-in delay-2">A Love Story</p>
+            <div class="mt-8 flex justify-center gap-4 animate-in delay-3">
+                <span class="px-4 py-1 border border-gray-500 text-gray-400 bebas text-xl">ROMANCE</span>
+                <span class="px-4 py-1 border border-gray-500 text-gray-400 bebas text-xl">DRAMA</span>
+                <span class="px-4 py-1 border border-gray-500 text-gray-400 bebas text-xl">FOREVER</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- SLIDE 2: Scene 1 -->
+    <div class="slide" data-slide="2">
+        <div class="px-6 md:px-20 max-w-5xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="frame animate-in">
+                    <img src="2nd anniv/vc1.jpg" class="w-full max-h-[60vh] object-contain sepia" alt="Scene 1">
+                </div>
+                <div class="text-center md:text-left">
+                    <p class="bebas text-gray-500 text-xl animate-in delay-1">SCENE 001</p>
+                    <h3 class="bebas text-5xl md:text-6xl mb-4 animate-in delay-2">The Beginning</h3>
+                    <p class="text-xl text-gray-300 italic animate-in delay-3">"Every great love story starts with a single moment... Ours started with a video call."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- SLIDE 3: Scene 2 -->
+    <div class="slide" data-slide="3">
+        <div class="px-6 md:px-20 max-w-5xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="text-center md:text-right order-2 md:order-1">
+                    <p class="bebas text-gray-500 text-xl animate-in delay-1">SCENE 002</p>
+                    <h3 class="bebas text-5xl md:text-6xl mb-4 animate-in delay-2">Late Night Talks</h3>
+                    <p class="text-xl text-gray-300 italic animate-in delay-3">"The conversations that lasted until sunrise... I never wanted them to end."</p>
+                </div>
+                <div class="frame order-1 md:order-2 animate-in">
+                    <img src="2nd anniv/vc2.jpg" class="w-full max-h-[60vh] object-contain sepia" alt="Scene 2">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- SLIDE 4: Scene 3 -->
+    <div class="slide" data-slide="4">
+        <div class="px-6 md:px-20 max-w-5xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="frame animate-in">
+                    <img src="2nd anniv/first_sleep.jpg" class="w-full max-h-[60vh] object-contain sepia" alt="Scene 3">
+                </div>
+                <div class="text-center md:text-left">
+                    <p class="bebas text-gray-500 text-xl animate-in delay-1">SCENE 003</p>
+                    <h3 class="bebas text-5xl md:text-6xl mb-4 animate-in delay-2">Comfort</h3>
+                    <p class="text-xl text-gray-300 italic animate-in delay-3">"Finding peace in each other's presence... You became my home."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- SLIDE 5: Scene 4 - The Star -->
+    <div class="slide" data-slide="5">
+        <div class="px-6 text-center">
+            <p class="bebas text-gray-500 text-xl mb-2 animate-in">STARRING</p>
+            <div class="frame inline-block animate-in delay-1">
+                <img src="2nd anniv/cutie.jpg" class="max-h-[50vh] object-contain sepia" alt="The Star">
+            </div>
+            <h3 class="bebas text-5xl md:text-7xl mt-6 animate-in delay-2">MARIE</h3>
+            <p class="text-2xl text-gray-300 italic mt-2 animate-in delay-3">"The most beautiful leading lady in the world."</p>
+        </div>
+    </div>
+    
+    <!-- SLIDE 6: Scene 5 -->
+    <div class="slide" data-slide="6">
+        <div class="px-6 md:px-20 max-w-5xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="text-center md:text-right order-2 md:order-1">
+                    <p class="bebas text-gray-500 text-xl animate-in delay-1">SCENE 004</p>
+                    <h3 class="bebas text-5xl md:text-6xl mb-4 animate-in delay-2">Destiny</h3>
+                    <p class="text-xl text-gray-300 italic animate-in delay-3">"Every moment, every decision, every path — they all led to you."</p>
+                </div>
+                <div class="frame order-1 md:order-2 animate-in">
+                    <img src="2nd anniv/it_led_to_this_moment.jpg" class="w-full max-h-[60vh] object-contain sepia" alt="Scene 5">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- SLIDE 7: Scene 6 -->
+    <div class="slide" data-slide="7">
+        <div class="px-6 md:px-20 max-w-5xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="frame animate-in">
+                    <img src="2nd anniv/imissyou.jpg" class="w-full max-h-[60vh] object-contain sepia" alt="Scene 6">
+                </div>
+                <div class="text-center md:text-left">
+                    <p class="bebas text-gray-500 text-xl animate-in delay-1">SCENE 005</p>
+                    <h3 class="bebas text-5xl md:text-6xl mb-4 animate-in delay-2">Longing</h3>
+                    <p class="text-xl text-gray-300 italic animate-in delay-3">"Distance only made my heart grow fonder... Every moment apart was a moment closer to together."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- SLIDE 8: Video -->
+    <div class="slide" data-slide="8">
+        <div class="px-6 text-center">
+            <p class="bebas text-gray-500 text-xl mb-4 animate-in">BONUS FOOTAGE</p>
+            <h3 class="bebas text-4xl md:text-5xl mb-6 animate-in delay-1">Behind The Scenes</h3>
+            <div class="frame inline-block animate-in delay-2">
+                <video controls class="max-h-[50vh] max-w-full sepia">
+                    <source src="2nd anniv/cute_video.mp4" type="video/mp4">
+                </video>
+            </div>
+            <p class="text-xl text-gray-400 italic mt-6 animate-in delay-3">"Some moments are too precious to freeze in time."</p>
+        </div>
+    </div>
+    
+    <!-- SLIDE 9: Credits / Message -->
+    <div class="slide" data-slide="9">
+        <div class="px-6 max-w-3xl mx-auto text-center">
+            <p class="bebas text-3xl text-gray-500 mb-8 animate-in">FROM THE DIRECTOR</p>
+            
+            <div class="bg-white/5 rounded-lg p-8 text-left animate-in delay-1">
+                <p class="text-lg leading-relaxed text-gray-300 italic mb-6">
+                    "This film represents just a fraction of the countless beautiful moments 
+                    we've shared over these two years. Each scene, each memory, is a masterpiece 
+                    in the story of our love.
+                </p>
+                <p class="text-lg leading-relaxed text-gray-300 italic mb-6">
+                    Marie, you are the star who lights up every frame of my life. Every day with you 
+                    is a new scene, a new adventure worth filming.
+                </p>
+                <p class="text-lg leading-relaxed text-gray-300 italic">
+                    Happy 2nd Anniversary, my love. Here's to many more sequels together."
+                </p>
+                <p class="text-right mt-6 text-xl">— Kevin 💕</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- SLIDE 10: The End -->
+    <div class="slide" data-slide="10">
+        <div class="text-center px-6">
+            <p class="bebas text-gray-500 text-2xl tracking-[0.5em] mb-6 animate-in">AND THEY LIVED</p>
+            <h1 class="bebas text-6xl md:text-8xl mb-4 animate-in delay-1">HAPPILY EVER AFTER</h1>
+            <p class="bebas text-5xl text-red-500 my-8 animate-in delay-2">❤</p>
+            
+            <div class="space-y-4 animate-in delay-3">
+                <p class="bebas text-3xl">HAPPY 2ND ANNIVERSARY</p>
+                <p class="text-gray-400 italic">May 25, 2024 — Forever</p>
+            </div>
+            
+            <div class="mt-12 animate-in delay-4">
+                <a href="anniversary.html" class="inline-block px-8 py-3 border border-gray-600 text-gray-300 hover:bg-white/10 transition-colors bebas text-xl tracking-wider">
+                    ← Choose Another Experience
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const totalSlides = 11;
+        
+        // Create progress dots
+        const progressBar = document.getElementById('progress-bar');
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'progress-dot' + (i === 0 ? ' active' : '');
+            dot.onclick = () => goToSlide(i);
+            progressBar.appendChild(dot);
+        }
+        
+        function updateSlides() {
+            document.querySelectorAll('.slide').forEach((slide, index) => {
+                slide.classList.toggle('active', index === currentSlide);
+            });
+            document.querySelectorAll('.progress-dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+        
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlides();
+            }
+        }
+        
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlides();
+            }
+        }
+        
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSlides();
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+        
+        // Touch/Swipe navigation
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        });
+        document.addEventListener('touchend', (e) => {
+            const diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) nextSlide();
+                else prevSlide();
+            }
+        });
+        
+        // Music
+        const music = document.getElementById('music');
+        
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
+                document.getElementById('play-icon').textContent = '⏸';
+            } else {
+                music.pause();
+                document.getElementById('play-icon').textContent = '▶';
+            }
+        }
+        
+        // Auto-play music on first interaction
+        document.addEventListener('click', () => {
+            if (music.paused) {
+                music.play().then(() => {
+                    document.getElementById('play-icon').textContent = '⏸';
+                }).catch(() => {});
+            }
+        }, { once: true });
+    </script>
+</body>
+</html>

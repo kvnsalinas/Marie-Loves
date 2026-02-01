@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gallery 🖼️ | 2nd Anniversary</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            background: #f5f5f0;
+            font-family: 'Cormorant Gararant', serif;
+        }
+        
+        .sans {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gallery-wall {
+            background: linear-gradient(180deg, #e8e8e0 0%, #f5f5f0 50%, #e8e8e0 100%);
+        }
+        
+        .frame-gold {
+            background: linear-gradient(135deg, #D4AF37 0%, #F5E6A3 30%, #D4AF37 50%, #F5E6A3 70%, #D4AF37 100%);
+            padding: 12px;
+            box-shadow: 
+                0 10px 30px rgba(0,0,0,0.3),
+                inset 0 2px 3px rgba(255,255,255,0.3),
+                inset 0 -2px 3px rgba(0,0,0,0.2);
+        }
+        
+        .frame-ornate {
+            background: linear-gradient(135deg, #8B4513 0%, #D2691E 30%, #8B4513 50%, #D2691E 70%, #8B4513 100%);
+            padding: 18px;
+            box-shadow: 
+                0 15px 40px rgba(0,0,0,0.4),
+                inset 0 2px 4px rgba(255,255,255,0.2),
+                inset 0 -2px 4px rgba(0,0,0,0.3);
+            border-radius: 4px;
+        }
+        
+        .frame-modern {
+            background: #1a1a1a;
+            padding: 8px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+        }
+        
+        .frame-white {
+            background: #ffffff;
+            padding: 24px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.15);
+        }
+        
+        .mat {
+            background: #fefefe;
+            padding: 16px;
+        }
+        
+        .spotlight {
+            position: relative;
+        }
+        
+        .spotlight::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200%;
+            height: 150px;
+            background: linear-gradient(180deg, rgba(255,250,220,0.3) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        
+        .plaque {
+            background: linear-gradient(135deg, #B87333 0%, #CD853F 50%, #B87333 100%);
+            color: #1a1a1a;
+            padding: 8px 24px;
+            font-size: 12px;
+            letter-spacing: 2px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .exhibit-number {
+            background: #1a1a1a;
+            color: #f5f5f0;
+            font-size: 10px;
+            padding: 4px 12px;
+            letter-spacing: 3px;
+        }
+        
+        .velvet-rope {
+            background: #8B0000;
+            height: 3px;
+            position: relative;
+        }
+        
+        .velvet-rope::before,
+        .velvet-rope::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 20px;
+            background: #D4AF37;
+            border-radius: 2px;
+        }
+        
+        .velvet-rope::before { left: 0; }
+        .velvet-rope::after { right: 0; }
+        
+        .audio-guide {
+            background: #2a2a2a;
+            color: #f5f5f0;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+    
+    <!-- Gallery Header -->
+    <header class="bg-[#1a1a1a] text-white py-8 px-6">
+        <div class="max-w-6xl mx-auto text-center">
+            <p class="sans text-xs tracking-[0.5em] text-gray-400 mb-4">THE MARIE GALLERY PRESENTS</p>
+            <h1 class="text-5xl md:text-7xl font-semibold tracking-wide">Love: A Retrospective</h1>
+            <p class="mt-4 text-xl text-gray-300 italic">An Exhibition of Two Years Together</p>
+            <div class="mt-6 flex justify-center gap-8 text-sm text-gray-400 sans">
+                <span>May 25, 2024 - Present</span>
+                <span>•</span>
+                <span>Curated with Love</span>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Audio Guide -->
+    <div class="fixed bottom-4 right-4 z-50 audio-guide rounded-full px-4 py-2 flex items-center gap-3">
+        <button onclick="toggleMusic()" class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+            <span id="play-icon">▶</span>
+        </button>
+        <span class="text-sm">Audio Guide</span>
+    </div>
+    <audio id="music" loop src="2nd anniv/2nd_anniv.mp3"></audio>
+    
+    <!-- Gallery Introduction -->
+    <section class="gallery-wall py-16 px-6">
+        <div class="max-w-3xl mx-auto text-center">
+            <div class="velvet-rope w-32 mx-auto mb-12"></div>
+            <p class="text-2xl leading-relaxed text-gray-700">
+                Welcome to this special exhibition celebrating the extraordinary journey of 
+                <span class="font-semibold">Kevin & Marie</span>. Each piece in this collection 
+                represents a treasured moment, carefully preserved for eternity.
+            </p>
+            <div class="velvet-rope w-32 mx-auto mt-12"></div>
+        </div>
+    </section>
+    
+    <!-- Gallery Exhibits -->
+    <section class="gallery-wall py-12 px-6">
+        <div class="max-w-6xl mx-auto">
+            
+            <!-- Exhibit 1 -->
+            <div class="mb-24 spotlight">
+                <div class="max-w-xl mx-auto text-center">
+                    <div class="exhibit-number inline-block mb-6 sans">EXHIBIT I</div>
+                    <div class="frame-gold inline-block">
+                        <div class="mat">
+                            <img src="2nd anniv/vc1.jpg" class="max-h-[400px] object-contain" alt="Exhibit 1">
+                        </div>
+                    </div>
+                    <div class="plaque inline-block mt-6 sans">
+                        <p class="font-semibold">Connection</p>
+                    </div>
+                    <p class="mt-6 text-gray-600 sans text-sm max-w-md mx-auto leading-relaxed">
+                        This piece captures the essence of modern love — two souls connecting 
+                        across digital spaces, finding comfort in each other's pixelated presence.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Exhibit 2 & 3 Side by Side -->
+            <div class="grid md:grid-cols-2 gap-16 mb-24">
+                
+                <!-- Exhibit 2 -->
+                <div class="spotlight text-center">
+                    <div class="exhibit-number inline-block mb-6 sans">EXHIBIT II</div>
+                    <div class="frame-ornate inline-block">
+                        <div class="mat">
+                            <img src="2nd anniv/vc2.jpg" class="h-[280px] object-cover" alt="Exhibit 2">
+                        </div>
+                    </div>
+                    <div class="plaque inline-block mt-6 sans">
+                        <p class="font-semibold">Radiance</p>
+                    </div>
+                    <p class="mt-4 text-gray-600 sans text-sm leading-relaxed">
+                        A study in light and joy. The artist's muse, captured in a moment of pure happiness.
+                    </p>
+                </div>
+                
+                <!-- Exhibit 3 -->
+                <div class="spotlight text-center">
+                    <div class="exhibit-number inline-block mb-6 sans">EXHIBIT III</div>
+                    <div class="frame-modern inline-block">
+                        <img src="2nd anniv/first_sleep.jpg" class="h-[280px] object-cover" alt="Exhibit 3">
+                    </div>
+                    <div class="plaque inline-block mt-6 sans">
+                        <p class="font-semibold">Serenity</p>
+                    </div>
+                    <p class="mt-4 text-gray-600 sans text-sm leading-relaxed">
+                        A contemporary piece exploring the peace found in vulnerability and trust.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Centerpiece -->
+            <div class="mb-24 spotlight">
+                <div class="max-w-2xl mx-auto text-center">
+                    <div class="bg-red-900/10 rounded-lg p-8 border border-red-900/20 mb-6">
+                        <p class="sans text-xs tracking-[0.3em] text-red-900/60">★ GALLERY CENTERPIECE ★</p>
+                    </div>
+                    <div class="exhibit-number inline-block mb-6 sans">EXHIBIT IV</div>
+                    <div class="frame-gold inline-block" style="padding: 20px;">
+                        <div class="mat" style="padding: 24px;">
+                            <img src="2nd anniv/cutie.jpg" class="max-h-[500px] object-contain" alt="Centerpiece">
+                        </div>
+                    </div>
+                    <div class="plaque inline-block mt-6 sans" style="padding: 12px 32px;">
+                        <p class="font-semibold text-base">The Beautiful One</p>
+                    </div>
+                    <p class="mt-8 text-gray-700 text-lg max-w-lg mx-auto leading-relaxed italic">
+                        "The centerpiece of my life. Every day I look at this face and thank the 
+                        universe for the gift of her love."
+                    </p>
+                    <p class="mt-4 text-gray-500 sans text-sm">— The Curator</p>
+                </div>
+            </div>
+            
+            <!-- Exhibit 5 & 6 -->
+            <div class="grid md:grid-cols-2 gap-16 mb-24">
+                
+                <!-- Exhibit 5 -->
+                <div class="spotlight text-center">
+                    <div class="exhibit-number inline-block mb-6 sans">EXHIBIT V</div>
+                    <div class="frame-white inline-block">
+                        <img src="2nd anniv/it_led_to_this_moment.jpg" class="h-[280px] object-cover" alt="Exhibit 5">
+                    </div>
+                    <div class="plaque inline-block mt-6 sans">
+                        <p class="font-semibold">Destiny</p>
+                    </div>
+                    <p class="mt-4 text-gray-600 sans text-sm leading-relaxed">
+                        Every moment, every decision, every path — they all led to this.
+                    </p>
+                </div>
+                
+                <!-- Exhibit 6 -->
+                <div class="spotlight text-center">
+                    <div class="exhibit-number inline-block mb-6 sans">EXHIBIT VI</div>
+                    <div class="frame-ornate inline-block">
+                        <div class="mat">
+                            <img src="2nd anniv/imissyou.jpg" class="h-[280px] object-cover" alt="Exhibit 6">
+                        </div>
+                    </div>
+                    <div class="plaque inline-block mt-6 sans">
+                        <p class="font-semibold">Longing</p>
+                    </div>
+                    <p class="mt-4 text-gray-600 sans text-sm leading-relaxed">
+                        Distance only makes the heart grow fonder. Every moment apart is a moment closer to together.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Video Installation -->
+            <div class="mb-24 spotlight">
+                <div class="max-w-3xl mx-auto text-center">
+                    <div class="bg-gray-900 rounded-lg p-4 mb-6 inline-block">
+                        <p class="sans text-xs tracking-[0.3em] text-white">VIDEO INSTALLATION</p>
+                    </div>
+                    <div class="exhibit-number inline-block mb-6 sans">EXHIBIT VII</div>
+                    <div class="frame-modern inline-block max-w-2xl">
+                        <video controls class="w-full">
+                            <source src="2nd anniv/cute_video.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="plaque inline-block mt-6 sans">
+                        <p class="font-semibold">In Motion</p>
+                    </div>
+                    <p class="mt-6 text-gray-600 sans text-sm max-w-md mx-auto leading-relaxed">
+                        A moving piece — quite literally. Some moments are too precious to freeze in time.
+                    </p>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+    
+    <!-- Gift Shop (Message) -->
+    <section class="bg-[#1a1a1a] text-white py-20 px-6">
+        <div class="max-w-3xl mx-auto text-center">
+            <p class="sans text-xs tracking-[0.5em] text-gray-400 mb-6">FROM THE CURATOR</p>
+            <h2 class="text-4xl font-semibold mb-8">A Personal Note</h2>
+            <div class="bg-white/5 rounded-lg p-8 text-left">
+                <p class="text-lg leading-relaxed text-gray-300 italic mb-6">
+                    "This exhibition represents just a fraction of the countless beautiful moments 
+                    we've shared over these two years. Each photograph, each memory, is a masterpiece 
+                    in the gallery of our love story.
+                </p>
+                <p class="text-lg leading-relaxed text-gray-300 italic mb-6">
+                    Marie, you are the artist who painted colors into my life. Every day with you 
+                    is a new piece of art, a new treasure for our ever-growing collection.
+                </p>
+                <p class="text-lg leading-relaxed text-gray-300 italic">
+                    Happy 2nd Anniversary, my love. Here's to filling many more galleries together."
+                </p>
+                <p class="text-right mt-6 text-xl">— Kevin 💕</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-[#0a0a0a] text-white py-12 px-6 text-center">
+        <p class="text-3xl mb-4">Happy 2nd Anniversary</p>
+        <p class="text-gray-400 mb-8">May 25, 2024 — Forever</p>
+        <a href="anniversary.html" class="inline-block px-8 py-3 border border-gray-600 text-gray-300 hover:bg-white/10 transition-colors sans text-sm tracking-wider">
+            ← Return to Lobby
+        </a>
+    </footer>
+
+    <script>
+        const music = document.getElementById('music');
+        
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
+                document.getElementById('play-icon').textContent = '⏸';
+            } else {
+                music.pause();
+                document.getElementById('play-icon').textContent = '▶';
+            }
+        }
+        
+        // Auto-play music
+        music.play().then(() => {
+            document.getElementById('play-icon').textContent = '⏸';
+        }).catch(() => {});
+    </script>
+</body>
+</html>

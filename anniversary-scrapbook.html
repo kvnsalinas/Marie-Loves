@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Scrapbook 📔 | 2nd Anniversary</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'handwriting': ['Caveat', 'cursive'],
+                        'sans': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'kraft': '#C4A77D',
+                        'cream': '#F5F0E6',
+                        'coffee': '#6F4E37',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, #F5F0E6 0%, #E8DCC8 100%);
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C4A77D' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        .scrapbook-page {
+            background: #FFFEF9;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1), 0 0 0 1px rgba(196,167,125,0.2);
+        }
+        
+        .tape {
+            background: linear-gradient(135deg, rgba(255,235,180,0.9) 0%, rgba(255,220,150,0.9) 100%);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .photo-tape {
+            position: absolute;
+            width: 60px;
+            height: 20px;
+            transform: rotate(-5deg);
+        }
+        
+        .photo {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+        
+        .photo:hover {
+            transform: scale(1.05) rotate(0deg) !important;
+        }
+        
+        .sticker {
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(var(--rotate, 0deg)); }
+            50% { transform: translateY(-5px) rotate(var(--rotate, 0deg)); }
+        }
+        
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen font-sans text-coffee p-4 md:p-8">
+    
+    <!-- Music Player -->
+    <div class="fixed bottom-4 right-4 z-50 bg-white/90 rounded-full px-4 py-2 shadow-lg flex items-center gap-3">
+        <button id="play-btn" onclick="toggleMusic()" class="w-10 h-10 bg-kraft rounded-full flex items-center justify-center text-white">
+            <span id="play-icon">▶</span>
+        </button>
+        <span class="text-sm text-coffee">Our Song</span>
+    </div>
+    <audio id="music" loop src="2nd anniv/2nd_anniv.mp3"></audio>
+    
+    <!-- Scrapbook -->
+    <div class="max-w-4xl mx-auto">
+        
+        <!-- Cover -->
+        <div class="scrapbook-page rounded-3xl p-8 md:p-12 mb-8 text-center">
+            <div class="text-6xl mb-4">📔</div>
+            <h1 class="font-handwriting text-5xl md:text-7xl text-coffee mb-4">Our Scrapbook</h1>
+            <p class="text-kraft text-xl">2 Years of Beautiful Memories</p>
+            <div class="mt-6 flex justify-center gap-4">
+                <span class="sticker text-3xl animate-float" style="--rotate: -5deg;">💕</span>
+                <span class="sticker text-3xl animate-float" style="--rotate: 5deg; animation-delay: 0.5s;">✨</span>
+                <span class="sticker text-3xl animate-float" style="--rotate: -3deg; animation-delay: 1s;">🌸</span>
+            </div>
+        </div>
+        
+        <!-- Page 1 -->
+        <div class="scrapbook-page rounded-3xl p-6 md:p-10 mb-8">
+            <div class="flex flex-col md:flex-row gap-6 items-center">
+                <div class="relative">
+                    <div class="tape photo-tape -top-3 left-1/2 -translate-x-1/2"></div>
+                    <img src="2nd anniv/vc1.jpg" class="photo w-64 h-48 object-cover transform rotate-2" alt="VC moment">
+                </div>
+                <div class="flex-1 text-center md:text-left">
+                    <p class="font-handwriting text-3xl text-coffee mb-2">Video Calls 💕</p>
+                    <p class="text-kraft">In your eyes, I found my home. Every video call makes my heart skip a beat!</p>
+                    <span class="sticker text-4xl inline-block mt-4">🥰</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Page 2 -->
+        <div class="scrapbook-page rounded-3xl p-6 md:p-10 mb-8">
+            <div class="flex flex-col md:flex-row-reverse gap-6 items-center">
+                <div class="relative">
+                    <div class="tape photo-tape -top-3 left-1/2 -translate-x-1/2 rotate-6"></div>
+                    <img src="2nd anniv/vc2.jpg" class="photo w-64 h-48 object-cover transform -rotate-3" alt="Smile">
+                </div>
+                <div class="flex-1 text-center md:text-right">
+                    <p class="font-handwriting text-3xl text-coffee mb-2">Your Smile 😊</p>
+                    <p class="text-kraft">Distance means nothing when you're everything. Your smile lights up my world!</p>
+                    <span class="sticker text-4xl inline-block mt-4">💫</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Page 3 -->
+        <div class="scrapbook-page rounded-3xl p-6 md:p-10 mb-8">
+            <div class="flex flex-col md:flex-row gap-6 items-center">
+                <div class="relative">
+                    <div class="tape photo-tape -top-3 left-1/2 -translate-x-1/2 -rotate-3"></div>
+                    <img src="2nd anniv/first_sleep.jpg" class="photo w-64 h-48 object-cover transform rotate-1" alt="First sleep">
+                </div>
+                <div class="flex-1 text-center md:text-left">
+                    <p class="font-handwriting text-3xl text-coffee mb-2">First Sleep Together 🌙</p>
+                    <p class="text-kraft">Even in sleep, you're my sweetest dream. A memory I'll treasure forever.</p>
+                    <span class="sticker text-4xl inline-block mt-4">😴💕</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Page 4 -->
+        <div class="scrapbook-page rounded-3xl p-6 md:p-10 mb-8">
+            <div class="flex flex-col md:flex-row-reverse gap-6 items-center">
+                <div class="relative">
+                    <div class="tape photo-tape -top-3 left-1/2 -translate-x-1/2 rotate-2"></div>
+                    <img src="2nd anniv/cutie.jpg" class="photo w-64 h-48 object-cover transform -rotate-2" alt="Cutie">
+                </div>
+                <div class="flex-1 text-center md:text-right">
+                    <p class="font-handwriting text-3xl text-coffee mb-2">My Cutie Pie 😍</p>
+                    <p class="text-kraft">You're the definition of adorable. My heart melts every time I see you!</p>
+                    <span class="sticker text-4xl inline-block mt-4">🧁</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Page 5: Video -->
+        <div class="scrapbook-page rounded-3xl p-6 md:p-10 mb-8 text-center">
+            <p class="font-handwriting text-3xl text-coffee mb-4">Our Moments Together 🎬</p>
+            <div class="relative inline-block">
+                <div class="tape photo-tape -top-3 left-10"></div>
+                <div class="tape photo-tape -top-3 right-10 rotate-6"></div>
+                <video src="2nd anniv/cute_video.mp4" class="photo w-full max-w-md mx-auto" controls muted loop></video>
+            </div>
+            <p class="text-kraft mt-4">Every moment with you is magic ✨</p>
+        </div>
+        
+        <!-- Page 6 -->
+        <div class="scrapbook-page rounded-3xl p-6 md:p-10 mb-8">
+            <div class="grid grid-cols-2 gap-4">
+                <div class="relative">
+                    <div class="tape photo-tape -top-2 left-4 -rotate-6"></div>
+                    <img src="2nd anniv/imissyou.jpg" class="photo w-full h-40 object-cover transform rotate-2" alt="Miss you">
+                </div>
+                <div class="relative">
+                    <div class="tape photo-tape -top-2 right-4 rotate-3"></div>
+                    <img src="2nd anniv/it_led_to_this_moment.jpg" class="photo w-full h-40 object-cover transform -rotate-1" alt="This moment">
+                </div>
+            </div>
+            <p class="font-handwriting text-2xl text-coffee text-center mt-6">Every moment led us here 💕</p>
+        </div>
+        
+        <!-- Final Page -->
+        <div class="scrapbook-page rounded-3xl p-8 md:p-12 mb-8 text-center">
+            <div class="flex justify-center gap-2 mb-6">
+                <span class="sticker text-4xl animate-float">💕</span>
+                <span class="sticker text-4xl animate-float" style="animation-delay: 0.3s;">💕</span>
+                <span class="sticker text-4xl animate-float" style="animation-delay: 0.6s;">💕</span>
+            </div>
+            <h2 class="font-handwriting text-5xl text-coffee mb-4">2 Years & Forever</h2>
+            <p class="text-kraft text-lg max-w-md mx-auto mb-6">
+                Thank you for being my partner, my best friend, my everything.
+                Here's to filling many more pages together!
+            </p>
+            <p class="font-handwriting text-3xl text-kraft">I love you more each day ❤️</p>
+            
+            <div class="mt-8">
+                <a href="anniversary.html" class="inline-block px-6 py-3 bg-kraft text-white rounded-full hover:bg-coffee transition-colors">
+                    ← Choose Another Experience
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isPlaying = false;
+        const music = document.getElementById('music');
+        const playIcon = document.getElementById('play-icon');
+        
+        function toggleMusic() {
+            if (isPlaying) {
+                music.pause();
+                playIcon.textContent = '▶';
+            } else {
+                music.play();
+                playIcon.textContent = '⏸';
+            }
+            isPlaying = !isPlaying;
+        }
+        
+        // Try autoplay
+        music.play().then(() => {
+            isPlaying = true;
+            playIcon.textContent = '⏸';
+        }).catch(() => {});
+    </script>
+</body>
+</html>

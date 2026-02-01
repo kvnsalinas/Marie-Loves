@@ -3,486 +3,429 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Film 🎬 | 2nd Anniversary</title>
+    <title>Our 2nd Anniversary 💕</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Comfortaa:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'warm-brown': '#8B4513',
+                        'cream': '#F5F5DC',
+                        'soft-pink': '#FFB6C1',
+                        'golden': '#DAA520',
+                        'rose-gold': '#B76E79'
+                    },
+                    fontFamily: {
+                        'dancing': ['Dancing Script', 'cursive'],
+                        'comfortaa': ['Comfortaa', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
     
     <style>
-        body {
-            background: #0a0a0a;
-            font-family: 'Playfair Display', serif;
-            overflow: hidden;
-        }
-        
-        .bebas {
-            font-family: 'Bebas Neue', cursive;
-        }
-        
-        .film-grain {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            opacity: 0.04;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-            animation: grain 0.5s steps(1) infinite;
-            z-index: 100;
-        }
-        
-        @keyframes grain {
-            0%, 100% { transform: translate(0, 0); }
-            25% { transform: translate(-5%, -5%); }
-            50% { transform: translate(5%, 5%); }
-            75% { transform: translate(5%, -5%); }
-        }
-        
-        .slide {
-            position: fixed;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
-        }
-        
-        .slide.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .frame {
-            border: 4px solid #333;
+        .paper-texture {
+            background: linear-gradient(45deg, #F5F5DC 25%, transparent 25%), 
+                        linear-gradient(-45deg, #F5F5DC 25%, transparent 25%), 
+                        linear-gradient(45deg, transparent 75%, #F5F5DC 75%), 
+                        linear-gradient(-45deg, transparent 75%, #F5F5DC 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
             position: relative;
         }
         
-        .sepia { filter: sepia(0.3) contrast(1.1) brightness(0.95); }
-        
-        @keyframes flicker {
-            0%, 100% { opacity: 1; }
-            92% { opacity: 1; }
-            93% { opacity: 0.8; }
-            94% { opacity: 1; }
-        }
-        
-        .flicker {
-            animation: flicker 3s infinite;
-        }
-        
-        .clapboard {
-            background: #1a1a1a;
-            border: 4px solid #f5f5f5;
-        }
-        
-        .clapboard-stripes {
-            background: repeating-linear-gradient(
-                -45deg,
-                #f5f5f5,
-                #f5f5f5 20px,
-                #1a1a1a 20px,
-                #1a1a1a 40px
-            );
-        }
-        
-        .film-border {
+        .paper-texture::before {
+            content: '';
             position: absolute;
             top: 0;
+            left: 0;
+            right: 0;
             bottom: 0;
-            width: 60px;
-            background: #111;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            padding: 10px 0;
-        }
-        
-        .film-border.left { left: 0; }
-        .film-border.right { right: 0; }
-        
-        .film-hole {
-            width: 40px;
-            height: 30px;
-            background: #0a0a0a;
-            border-radius: 4px;
-            margin: 0 auto;
-        }
-        
-        .vignette {
-            position: fixed;
-            inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(139, 69, 19, 0.1) 0%, transparent 70%);
             pointer-events: none;
-            background: radial-gradient(ellipse at center, transparent 0%, transparent 60%, rgba(0,0,0,0.7) 100%);
-            z-index: 50;
         }
         
-        .nav-btn {
-            position: fixed;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 200;
-            background: rgba(255,255,255,0.1);
-            border: 2px solid rgba(255,255,255,0.3);
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 24px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .nav-btn:hover {
-            background: rgba(255,255,255,0.2);
-        }
-        
-        .nav-btn.prev { left: 20px; }
-        .nav-btn.next { right: 20px; }
-        
-        .progress-bar {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 12px;
-            z-index: 200;
-        }
-        
-        .progress-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.3);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .progress-dot.active {
-            background: white;
-            transform: scale(1.3);
-        }
-        
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
+        @keyframes gentle-fade-in {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
-        .slide.active .animate-in {
-            animation: fadeInUp 0.8s ease forwards;
+        @keyframes soft-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 182, 193, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(255, 182, 193, 0.6); }
         }
         
-        .slide.active .delay-1 { animation-delay: 0.2s; opacity: 0; }
-        .slide.active .delay-2 { animation-delay: 0.4s; opacity: 0; }
-        .slide.active .delay-3 { animation-delay: 0.6s; opacity: 0; }
-        .slide.active .delay-4 { animation-delay: 0.8s; opacity: 0; }
+        .animate-gentle-fade-in {
+            animation: gentle-fade-in 0.8s ease-out forwards;
+        }
+        
+        .animate-soft-glow {
+            animation: soft-glow 2s ease-in-out infinite;
+        }
+        
+        @keyframes music-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .music-playing {
+            animation: music-pulse 2s ease-in-out infinite;
+        }
+        
+        .photo-frame {
+            box-shadow: 0 4px 20px rgba(139, 69, 19, 0.3);
+            border: 3px solid #DAA520;
+        }
+        
+        .hidden { display: none; }
+        .fade-out { opacity: 0; transition: opacity 0.5s ease-out; }
+        .fade-in { opacity: 1; transition: opacity 0.5s ease-in; }
     </style>
 </head>
 
-<body class="text-white">
-    
-    <!-- Film Grain Overlay -->
-    <div class="film-grain"></div>
-    
-    <!-- Vignette Effect -->
-    <div class="vignette"></div>
-    
-    <!-- Film Borders -->
-    <div class="film-border left hidden md:flex">
-        <div class="film-hole"></div>
-        <div class="film-hole"></div>
-        <div class="film-hole"></div>
-        <div class="film-hole"></div>
-        <div class="film-hole"></div>
-        <div class="film-hole"></div>
-    </div>
-    <div class="film-border right hidden md:flex">
-        <div class="film-hole"></div>
-        <div class="film-hole"></div>
-        <div class="film-hole"></div>
-        <div class="film-hole"></div>
-        <div class="film-hole"></div>
-        <div class="film-hole"></div>
-    </div>
+<body class="min-h-screen paper-texture font-comfortaa">
+    <!-- Background Warm Overlay -->
+    <div class="fixed inset-0 bg-gradient-to-br from-cream via-soft-pink/20 to-golden/20 z-0"></div>
     
     <!-- Music Player -->
-    <div class="fixed top-4 right-4 z-[200] bg-white/10 backdrop-blur rounded-full px-4 py-2 flex items-center gap-3">
-        <button onclick="toggleMusic()" class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-            <span id="play-icon">▶</span>
+    <div class="fixed top-6 right-6 z-20">
+        <div class="flex items-center space-x-3 bg-cream/80 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg border border-rose-gold/30">
+            <button id="play-pause-btn" class="text-rose-gold hover:text-golden transition-colors duration-300">
+                <svg class="play-icon w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+                <svg class="pause-icon w-6 h-6 hidden" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                </svg>
+            </button>
+            <div class="text-sm font-comfortaa text-rose-gold">
+                <span id="music-title">Anniversary Song</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Background Music -->
+    <audio id="background-music" loop autoplay>
+        <source src="2nd anniv/2nd_anniv.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <!-- Main Content Container -->
+    <div class="relative z-10 min-h-screen flex flex-col items-center justify-center p-4">
+        
+        <!-- Title -->
+        <div id="title-container" class="text-center mb-8 animate-gentle-fade-in">
+            <h1 class="font-dancing text-5xl md:text-7xl text-rose-gold font-bold mb-4">
+                Our 2nd Anniversary
+            </h1>
+            <p class="font-comfortaa text-xl md:text-2xl text-warm-brown/80">
+                Two years of love, laughter, and beautiful memories ✨
+            </p>
+        </div>
+        
+        <!-- Photo Display Container -->
+        <div class="relative max-w-lg w-full">
+            <!-- Photo 1: vc1.jpg -->
+            <div id="photo-1" class="photo-container text-center">
+                <div class="photo-frame rounded-2xl overflow-hidden mx-auto mb-6 animate-soft-glow max-w-md">
+                    <img src="2nd anniv/vc1.jpg" alt="Our precious moment" class="w-full h-auto object-cover">
+                </div>
+                <p class="font-dancing text-2xl md:text-3xl text-rose-gold mb-4">
+                    "In your eyes, I found my home"
+                </p>
+                <p class="font-comfortaa text-lg text-warm-brown/70 italic">
+                    Every video call makes my heart skip a beat 💕
+                </p>
+            </div>
+            
+            <!-- Photo 2: vc2.jpg -->
+            <div id="photo-2" class="photo-container text-center hidden">
+                <div class="photo-frame rounded-2xl overflow-hidden mx-auto mb-6 animate-soft-glow max-w-md">
+                    <img src="2nd anniv/vc2.jpg" alt="Another beautiful moment" class="w-full h-auto object-cover">
+                </div>
+                <p class="font-dancing text-2xl md:text-3xl text-rose-gold mb-4">
+                    "Distance means nothing when you're everything"
+                </p>
+                <p class="font-comfortaa text-lg text-warm-brown/70 italic">
+                    Your smile lights up my entire screen and soul ✨
+                </p>
+            </div>
+            
+            <!-- Photo 3: first_sleep.jpg -->
+            <div id="photo-3" class="photo-container text-center hidden">
+                <div class="photo-frame rounded-2xl overflow-hidden mx-auto mb-6 animate-soft-glow max-w-md">
+                    <img src="2nd anniv/first_sleep.jpg" alt="Peaceful dreams together" class="w-full h-auto object-cover">
+                </div>
+                <p class="font-dancing text-2xl md:text-3xl text-rose-gold mb-4">
+                    "Even in sleep, you're my sweetest dream"
+                </p>
+                <p class="font-comfortaa text-lg text-warm-brown/70 italic">
+                    Our first sleep together, a memory I'll treasure forever 🌙
+                </p>
+            </div>
+            
+            <!-- Photo 4: imissyou.jpg -->
+            <div id="photo-4" class="photo-container text-center hidden">
+                <div class="photo-frame rounded-2xl overflow-hidden mx-auto mb-6 animate-soft-glow max-w-md">
+                    <img src="2nd anniv/imissyou.jpg" alt="Missing you always" class="w-full h-auto object-cover">
+                </div>
+                <p class="font-dancing text-2xl md:text-3xl text-rose-gold mb-4">
+                    "I miss you more than words can say"
+                </p>
+                <p class="font-comfortaa text-lg text-warm-brown/70 italic">
+                    Every moment apart feels like an eternity 💔❤️
+                </p>
+            </div>
+            
+            <!-- Photo 5: cutie.jpg -->
+            <div id="photo-5" class="photo-container text-center hidden">
+                <div class="photo-frame rounded-2xl overflow-hidden mx-auto mb-6 animate-soft-glow max-w-md">
+                    <img src="2nd anniv/cutie.jpg" alt="My adorable cutie" class="w-full h-auto object-cover">
+                </div>
+                <p class="font-dancing text-2xl md:text-3xl text-rose-gold mb-4">
+                    "You're the definition of adorable"
+                </p>
+                <p class="font-comfortaa text-lg text-warm-brown/70 italic">
+                    My heart melts every time I see your cute face 🥰
+                </p>
+            </div>
+            
+            <!-- Video: cute_video.mp4 -->
+            <div id="video-container" class="photo-container text-center hidden">
+                <div class="photo-frame rounded-2xl overflow-hidden mx-auto mb-6 animate-soft-glow max-w-md">
+                    <video id="anniversary-video" class="w-full h-auto object-cover" autoplay muted loop>
+                        <source src="2nd anniv/cute_video.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <p class="font-dancing text-2xl md:text-3xl text-rose-gold mb-4">
+                    "You bring motion to my heart"
+                </p>
+                <p class="font-comfortaa text-lg text-warm-brown/70 italic">
+                    Every moment with you is a beautiful movie 🎬
+                </p>
+            </div>
+            
+            <!-- Photo 6: it_led_to_this_moment.jpg -->
+            <div id="photo-6" class="photo-container text-center hidden">
+                <div class="photo-frame rounded-2xl overflow-hidden mx-auto mb-6 animate-soft-glow max-w-md">
+                    <img src="2nd anniv/it_led_to_this_moment.jpg" alt="This beautiful moment" class="w-full h-auto object-cover">
+                </div>
+                <p class="font-dancing text-2xl md:text-3xl text-rose-gold mb-4">
+                    "Everything led to this beautiful moment"
+                </p>
+                <p class="font-comfortaa text-lg text-warm-brown/70 italic">
+                    Our journey together has been perfect 🌸
+                </p>
+            </div>
+            
+            <!-- Photo 7: sandal.jpg -->
+            <div id="photo-7" class="photo-container text-center hidden">
+                <div class="photo-frame rounded-2xl overflow-hidden mx-auto mb-6 animate-soft-glow max-w-md">
+                    <img src="2nd anniv/sandal.jpg" alt="Even the little things" class="w-full h-auto object-cover">
+                </div>
+                <p class="font-dancing text-2xl md:text-3xl text-rose-gold mb-4">
+                    "Every little thing about you is precious"
+                </p>
+                <p class="font-comfortaa text-lg text-warm-brown/70 italic">
+                    From your shoes to your soul, I love every detail 👡💕
+                </p>
+            </div>
+            
+            <!-- Final Message -->
+            <div id="final-message" class="text-center hidden">
+                <div class="bg-gradient-to-r from-soft-pink/20 to-golden/20 rounded-3xl p-8 mb-8 border-2 border-rose-gold/30">
+                    <p class="font-dancing text-3xl md:text-4xl text-rose-gold mb-6">
+                        "Two years of us, and forever to go"
+                    </p>
+                    <p class="font-comfortaa text-lg text-warm-brown/80 leading-relaxed mb-6">
+                        Thank you for being my partner, my best friend, my everything. 
+                        Here's to many more anniversaries filled with love, laughter, and endless memories.
+                    </p>
+                    <p class="font-dancing text-2xl text-rose-gold">
+                        I love you more each day ❤️✨
+                    </p>
+                </div>
+                
+                <!-- Navigation Button -->
+                <button id="go-to-messages" 
+                    class="px-8 py-4 bg-gradient-to-r from-rose-gold to-golden text-white font-bold text-xl rounded-2xl shadow-lg transform transition-all duration-300 hover:scale-110 animate-soft-glow">
+                    Read Our Messages 💌
+                </button>
+            </div>
+        </div>
+        
+        <!-- Skip Button -->
+        <button id="skip-btn" 
+            class="fixed bottom-8 right-8 px-4 py-2 bg-warm-brown/20 text-warm-brown/60 rounded-lg font-comfortaa text-sm transition-all duration-300 hover:bg-warm-brown/30">
+            Skip Animation
         </button>
-        <span class="text-sm text-white/60">Soundtrack</span>
-    </div>
-    <audio id="music" loop src="2nd anniv/2nd_anniv.mp3"></audio>
-    
-    <!-- Navigation -->
-    <button class="nav-btn prev" onclick="prevSlide()">‹</button>
-    <button class="nav-btn next" onclick="nextSlide()">›</button>
-    
-    <!-- Progress Dots -->
-    <div class="progress-bar" id="progress-bar"></div>
-    
-    <!-- SLIDE 0: Clapboard Intro -->
-    <div class="slide active" data-slide="0">
-        <div class="text-center cursor-pointer" onclick="nextSlide()">
-            <div class="clapboard p-8 rounded-lg mb-8 max-w-md mx-auto flicker">
-                <div class="clapboard-stripes h-16 -mx-8 -mt-8 rounded-t"></div>
-                <div class="pt-6 text-left space-y-3 bebas text-2xl md:text-3xl">
-                    <p><span class="text-gray-500">PRODUCTION:</span> Our Love Story</p>
-                    <p><span class="text-gray-500">SCENE:</span> 730 Days Together</p>
-                    <p><span class="text-gray-500">TAKE:</span> 2nd Anniversary</p>
-                    <p><span class="text-gray-500">DATE:</span> May 25, 2024</p>
-                </div>
-            </div>
-            <p class="text-gray-400 text-xl animate-pulse bebas tracking-widest">CLICK TO START THE FILM</p>
-        </div>
-    </div>
-    
-    <!-- SLIDE 1: Title Card -->
-    <div class="slide" data-slide="1">
-        <div class="text-center px-6">
-            <p class="bebas text-2xl text-gray-500 tracking-[0.5em] mb-6 animate-in">A KEVIN PRODUCTION PRESENTS</p>
-            <h1 class="bebas text-6xl md:text-9xl tracking-wider mb-6 animate-in delay-1">KEVIN & MARIE</h1>
-            <p class="text-3xl italic text-gray-300 animate-in delay-2">A Love Story</p>
-            <div class="mt-8 flex justify-center gap-4 animate-in delay-3">
-                <span class="px-4 py-1 border border-gray-500 text-gray-400 bebas text-xl">ROMANCE</span>
-                <span class="px-4 py-1 border border-gray-500 text-gray-400 bebas text-xl">DRAMA</span>
-                <span class="px-4 py-1 border border-gray-500 text-gray-400 bebas text-xl">FOREVER</span>
-            </div>
-        </div>
-    </div>
-    
-    <!-- SLIDE 2: Scene 1 -->
-    <div class="slide" data-slide="2">
-        <div class="px-6 md:px-20 max-w-5xl mx-auto">
-            <div class="grid md:grid-cols-2 gap-8 items-center">
-                <div class="frame animate-in">
-                    <img src="2nd anniv/vc1.jpg" class="w-full max-h-[60vh] object-contain sepia" alt="Scene 1">
-                </div>
-                <div class="text-center md:text-left">
-                    <p class="bebas text-gray-500 text-xl animate-in delay-1">SCENE 001</p>
-                    <h3 class="bebas text-5xl md:text-6xl mb-4 animate-in delay-2">The Beginning</h3>
-                    <p class="text-xl text-gray-300 italic animate-in delay-3">"Every great love story starts with a single moment... Ours started with a video call."</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- SLIDE 3: Scene 2 -->
-    <div class="slide" data-slide="3">
-        <div class="px-6 md:px-20 max-w-5xl mx-auto">
-            <div class="grid md:grid-cols-2 gap-8 items-center">
-                <div class="text-center md:text-right order-2 md:order-1">
-                    <p class="bebas text-gray-500 text-xl animate-in delay-1">SCENE 002</p>
-                    <h3 class="bebas text-5xl md:text-6xl mb-4 animate-in delay-2">Late Night Talks</h3>
-                    <p class="text-xl text-gray-300 italic animate-in delay-3">"The conversations that lasted until sunrise... I never wanted them to end."</p>
-                </div>
-                <div class="frame order-1 md:order-2 animate-in">
-                    <img src="2nd anniv/vc2.jpg" class="w-full max-h-[60vh] object-contain sepia" alt="Scene 2">
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- SLIDE 4: Scene 3 -->
-    <div class="slide" data-slide="4">
-        <div class="px-6 md:px-20 max-w-5xl mx-auto">
-            <div class="grid md:grid-cols-2 gap-8 items-center">
-                <div class="frame animate-in">
-                    <img src="2nd anniv/first_sleep.jpg" class="w-full max-h-[60vh] object-contain sepia" alt="Scene 3">
-                </div>
-                <div class="text-center md:text-left">
-                    <p class="bebas text-gray-500 text-xl animate-in delay-1">SCENE 003</p>
-                    <h3 class="bebas text-5xl md:text-6xl mb-4 animate-in delay-2">Comfort</h3>
-                    <p class="text-xl text-gray-300 italic animate-in delay-3">"Finding peace in each other's presence... You became my home."</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- SLIDE 5: Scene 4 - The Star -->
-    <div class="slide" data-slide="5">
-        <div class="px-6 text-center">
-            <p class="bebas text-gray-500 text-xl mb-2 animate-in">STARRING</p>
-            <div class="frame inline-block animate-in delay-1">
-                <img src="2nd anniv/cutie.jpg" class="max-h-[50vh] object-contain sepia" alt="The Star">
-            </div>
-            <h3 class="bebas text-5xl md:text-7xl mt-6 animate-in delay-2">MARIE</h3>
-            <p class="text-2xl text-gray-300 italic mt-2 animate-in delay-3">"The most beautiful leading lady in the world."</p>
-        </div>
-    </div>
-    
-    <!-- SLIDE 6: Scene 5 -->
-    <div class="slide" data-slide="6">
-        <div class="px-6 md:px-20 max-w-5xl mx-auto">
-            <div class="grid md:grid-cols-2 gap-8 items-center">
-                <div class="text-center md:text-right order-2 md:order-1">
-                    <p class="bebas text-gray-500 text-xl animate-in delay-1">SCENE 004</p>
-                    <h3 class="bebas text-5xl md:text-6xl mb-4 animate-in delay-2">Destiny</h3>
-                    <p class="text-xl text-gray-300 italic animate-in delay-3">"Every moment, every decision, every path — they all led to you."</p>
-                </div>
-                <div class="frame order-1 md:order-2 animate-in">
-                    <img src="2nd anniv/it_led_to_this_moment.jpg" class="w-full max-h-[60vh] object-contain sepia" alt="Scene 5">
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- SLIDE 7: Scene 6 -->
-    <div class="slide" data-slide="7">
-        <div class="px-6 md:px-20 max-w-5xl mx-auto">
-            <div class="grid md:grid-cols-2 gap-8 items-center">
-                <div class="frame animate-in">
-                    <img src="2nd anniv/imissyou.jpg" class="w-full max-h-[60vh] object-contain sepia" alt="Scene 6">
-                </div>
-                <div class="text-center md:text-left">
-                    <p class="bebas text-gray-500 text-xl animate-in delay-1">SCENE 005</p>
-                    <h3 class="bebas text-5xl md:text-6xl mb-4 animate-in delay-2">Longing</h3>
-                    <p class="text-xl text-gray-300 italic animate-in delay-3">"Distance only made my heart grow fonder... Every moment apart was a moment closer to together."</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- SLIDE 8: Video -->
-    <div class="slide" data-slide="8">
-        <div class="px-6 text-center">
-            <p class="bebas text-gray-500 text-xl mb-4 animate-in">BONUS FOOTAGE</p>
-            <h3 class="bebas text-4xl md:text-5xl mb-6 animate-in delay-1">Behind The Scenes</h3>
-            <div class="frame inline-block animate-in delay-2">
-                <video controls class="max-h-[50vh] max-w-full sepia">
-                    <source src="2nd anniv/cute_video.mp4" type="video/mp4">
-                </video>
-            </div>
-            <p class="text-xl text-gray-400 italic mt-6 animate-in delay-3">"Some moments are too precious to freeze in time."</p>
-        </div>
-    </div>
-    
-    <!-- SLIDE 9: Credits / Message -->
-    <div class="slide" data-slide="9">
-        <div class="px-6 max-w-3xl mx-auto text-center">
-            <p class="bebas text-3xl text-gray-500 mb-8 animate-in">FROM THE DIRECTOR</p>
-            
-            <div class="bg-white/5 rounded-lg p-8 text-left animate-in delay-1">
-                <p class="text-lg leading-relaxed text-gray-300 italic mb-6">
-                    "This film represents just a fraction of the countless beautiful moments 
-                    we've shared over these two years. Each scene, each memory, is a masterpiece 
-                    in the story of our love.
-                </p>
-                <p class="text-lg leading-relaxed text-gray-300 italic mb-6">
-                    Marie, you are the star who lights up every frame of my life. Every day with you 
-                    is a new scene, a new adventure worth filming.
-                </p>
-                <p class="text-lg leading-relaxed text-gray-300 italic">
-                    Happy 2nd Anniversary, my love. Here's to many more sequels together."
-                </p>
-                <p class="text-right mt-6 text-xl">— Kevin 💕</p>
-            </div>
-        </div>
-    </div>
-    
-    <!-- SLIDE 10: The End -->
-    <div class="slide" data-slide="10">
-        <div class="text-center px-6">
-            <p class="bebas text-gray-500 text-2xl tracking-[0.5em] mb-6 animate-in">AND THEY LIVED</p>
-            <h1 class="bebas text-6xl md:text-8xl mb-4 animate-in delay-1">HAPPILY EVER AFTER</h1>
-            <p class="bebas text-5xl text-red-500 my-8 animate-in delay-2">❤</p>
-            
-            <div class="space-y-4 animate-in delay-3">
-                <p class="bebas text-3xl">HAPPY 2ND ANNIVERSARY</p>
-                <p class="text-gray-400 italic">May 25, 2024 — Forever</p>
-            </div>
-            
-            <div class="mt-12 animate-in delay-4">
-                <a href="anniversary.html" class="inline-block px-8 py-3 border border-gray-600 text-gray-300 hover:bg-white/10 transition-colors bebas text-xl tracking-wider">
-                    ← Choose Another Experience
-                </a>
-            </div>
-        </div>
     </div>
 
     <script>
-        let currentSlide = 0;
-        const totalSlides = 11;
-        
-        // Create progress dots
-        const progressBar = document.getElementById('progress-bar');
-        for (let i = 0; i < totalSlides; i++) {
-            const dot = document.createElement('div');
-            dot.className = 'progress-dot' + (i === 0 ? ' active' : '');
-            dot.onclick = () => goToSlide(i);
-            progressBar.appendChild(dot);
-        }
-        
-        function updateSlides() {
-            document.querySelectorAll('.slide').forEach((slide, index) => {
-                slide.classList.toggle('active', index === currentSlide);
+        let currentPhotoIndex = 0;
+        const photos = [
+            'photo-1', 'photo-2', 'photo-3', 'photo-4', 
+            'photo-5', 'video-container', 'photo-6', 'photo-7'
+        ];
+        let animationTimer;
+        let isSkipped = false;
+
+        // Music Elements
+        const playPauseBtn = document.getElementById('play-pause-btn');
+        const playIcon = document.querySelector('.play-icon');
+        const pauseIcon = document.querySelector('.pause-icon');
+        const audio = document.getElementById('background-music');
+        let isPlaying = false;
+
+        // Set initial volume
+        audio.volume = 0.7;
+
+        // Try to start music immediately
+        function attemptAutoplay() {
+            audio.play().then(() => {
+                isPlaying = true;
+                playIcon.classList.add('hidden');
+                pauseIcon.classList.remove('hidden');
+                playPauseBtn.classList.add('music-playing');
+                console.log('Music started successfully');
+            }).catch(e => {
+                console.log('Autoplay blocked, waiting for user interaction');
+                isPlaying = false;
+                playIcon.classList.remove('hidden');
+                pauseIcon.classList.add('hidden');
+                playPauseBtn.classList.remove('music-playing');
             });
-            document.querySelectorAll('.progress-dot').forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentSlide);
-            });
         }
-        
-        function nextSlide() {
-            if (currentSlide < totalSlides - 1) {
-                currentSlide++;
-                updateSlides();
-            }
-        }
-        
-        function prevSlide() {
-            if (currentSlide > 0) {
-                currentSlide--;
-                updateSlides();
-            }
-        }
-        
-        function goToSlide(index) {
-            currentSlide = index;
-            updateSlides();
-        }
-        
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
-            if (e.key === 'ArrowLeft') prevSlide();
-        });
-        
-        // Touch/Swipe navigation
-        let touchStartX = 0;
-        document.addEventListener('touchstart', (e) => {
-            touchStartX = e.touches[0].clientX;
-        });
-        document.addEventListener('touchend', (e) => {
-            const diff = touchStartX - e.changedTouches[0].clientX;
-            if (Math.abs(diff) > 50) {
-                if (diff > 0) nextSlide();
-                else prevSlide();
-            }
-        });
-        
-        // Music
-        const music = document.getElementById('music');
-        
+
+        // Music Player Functions
         function toggleMusic() {
-            if (music.paused) {
-                music.play();
-                document.getElementById('play-icon').textContent = '⏸';
+            if (isPlaying) {
+                audio.pause();
+                playIcon.classList.remove('hidden');
+                pauseIcon.classList.add('hidden');
+                playPauseBtn.classList.remove('music-playing');
             } else {
-                music.pause();
-                document.getElementById('play-icon').textContent = '▶';
+                audio.play().catch(e => {
+                    console.log('Audio play failed:', e);
+                });
+                playIcon.classList.add('hidden');
+                pauseIcon.classList.remove('hidden');
+                playPauseBtn.classList.add('music-playing');
+            }
+            isPlaying = !isPlaying;
+        }
+
+        function showNextPhoto() {
+            if (isSkipped) return;
+            
+            // Hide current photo
+            if (currentPhotoIndex > 0) {
+                const currentPhoto = document.getElementById(photos[currentPhotoIndex - 1]);
+                currentPhoto.classList.add('fade-out');
+                setTimeout(() => {
+                    currentPhoto.classList.add('hidden');
+                    currentPhoto.classList.remove('fade-out');
+                }, 500);
+            }
+            
+            // Show next photo
+            if (currentPhotoIndex < photos.length) {
+                const nextPhoto = document.getElementById(photos[currentPhotoIndex]);
+                nextPhoto.classList.remove('hidden');
+                nextPhoto.classList.add('fade-in');
+                
+                // Start video if it's the video container
+                if (photos[currentPhotoIndex] === 'video-container') {
+                    const video = document.getElementById('anniversary-video');
+                    video.play();
+                }
+                
+                currentPhotoIndex++;
+                
+                // Set timer for next photo (longer for video)
+                const delay = photos[currentPhotoIndex - 1] === 'video-container' ? 8000 : 4000;
+                animationTimer = setTimeout(showNextPhoto, delay);
+            } else {
+                // Show final message
+                showFinalMessage();
             }
         }
+
+        function showFinalMessage() {
+            setTimeout(() => {
+                // Hide last photo
+                const lastPhoto = document.getElementById(photos[photos.length - 1]);
+                lastPhoto.classList.add('fade-out');
+                setTimeout(() => {
+                    lastPhoto.classList.add('hidden');
+                    
+                    // Show final message
+                    const finalMessage = document.getElementById('final-message');
+                    finalMessage.classList.remove('hidden');
+                    finalMessage.classList.add('animate-gentle-fade-in');
+                }, 500);
+            }, 3000);
+        }
+
+        function skipAnimation() {
+            isSkipped = true;
+            clearTimeout(animationTimer);
+            
+            // Hide all photos
+            photos.forEach(photoId => {
+                const photo = document.getElementById(photoId);
+                photo.classList.add('hidden');
+                photo.classList.remove('fade-in', 'fade-out');
+            });
+            
+            // Show final message immediately
+            const finalMessage = document.getElementById('final-message');
+            finalMessage.classList.remove('hidden');
+            finalMessage.classList.add('animate-gentle-fade-in');
+        }
+
+        // Event Listeners
+        document.getElementById('skip-btn').addEventListener('click', skipAnimation);
         
-        // Auto-play music on first interaction
-        document.addEventListener('click', () => {
-            if (music.paused) {
-                music.play().then(() => {
-                    document.getElementById('play-icon').textContent = '⏸';
-                }).catch(() => {});
-            }
-        }, { once: true });
+        document.getElementById('go-to-messages').addEventListener('click', () => {
+            window.location.href = 'index.html#messages';
+        });
+
+        // Music Player Event Listeners
+        playPauseBtn.addEventListener('click', toggleMusic);
+
+        // Auto-start music immediately when page loads
+        window.addEventListener('DOMContentLoaded', function() {
+            attemptAutoplay();
+            
+            // Fallback: ensure music starts on any user interaction if autoplay failed
+            document.addEventListener('click', function startMusicFallback() {
+                if (!isPlaying) {
+                    attemptAutoplay();
+                }
+                document.removeEventListener('click', startMusicFallback);
+            }, { once: true });
+            
+            // Also try on scroll, touch, or keypress
+            ['scroll', 'touchstart', 'keydown'].forEach(eventType => {
+                document.addEventListener(eventType, function startMusicFallback() {
+                    if (!isPlaying) {
+                        attemptAutoplay();
+                    }
+                    document.removeEventListener(eventType, startMusicFallback);
+                }, { once: true });
+            });
+        });
+
+        // Start the animation after a brief delay
+        setTimeout(() => {
+            showNextPhoto();
+        }, 2000);
     </script>
 </body>
 </html>

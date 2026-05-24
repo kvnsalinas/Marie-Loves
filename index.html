@@ -1062,12 +1062,13 @@
 
         // ==================== LOVE COUNTER ====================
         function updateLoveCounter() {
-            const startDate = new Date('2024-05-25');
+            // Singapore timezone (UTC+8)
+            const startDate = new Date('2024-05-25T00:00:00+08:00');
             const now = new Date();
             const diff = now - startDate;
             
             const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const months = Math.floor(days / 30.44);
+            const months = 24; // Exactly 2 years from May 25, 2024 to May 25, 2026
             const hours = Math.floor(diff / (1000 * 60 * 60));
             
             document.getElementById('counter-months').textContent = months;
@@ -1145,19 +1146,21 @@
         }
 
         function getNextDate() {
+            // Use Singapore timezone (UTC+8)
             const now = new Date();
+            const sgTime = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Singapore' }));
             
             if (countdownMode === 'anniversary') {
-                let target = new Date(now.getFullYear(), 4, 25, 23, 59, 59); // May 25
-                if (now > target) target.setFullYear(target.getFullYear() + 1);
+                let target = new Date(sgTime.getFullYear(), 4, 25, 23, 59, 59); // May 25
+                if (sgTime > target) target.setFullYear(target.getFullYear() + 1);
                 return target;
             } else {
-                const day = now.getDate();
+                const day = sgTime.getDate();
                 let target;
                 if (day < 25) {
-                    target = new Date(now.getFullYear(), now.getMonth(), 25, 23, 59, 59);
+                    target = new Date(sgTime.getFullYear(), sgTime.getMonth(), 25, 23, 59, 59);
                 } else {
-                    target = new Date(now.getFullYear(), now.getMonth() + 1, 25, 23, 59, 59);
+                    target = new Date(sgTime.getFullYear(), sgTime.getMonth() + 1, 25, 23, 59, 59);
                 }
                 return target;
             }

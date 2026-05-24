@@ -1152,15 +1152,22 @@
             
             if (countdownMode === 'anniversary') {
                 let target = new Date(sgTime.getFullYear(), 4, 25, 23, 59, 59); // May 25
-                if (sgTime > target) target.setFullYear(target.getFullYear() + 1);
+                // If today is May 25 or past it, countdown to next year's anniversary
+                if (sgTime.getDate() >= 25 && sgTime.getMonth() === 4) {
+                    target.setFullYear(target.getFullYear() + 1);
+                } else if (sgTime > target) {
+                    target.setFullYear(target.getFullYear() + 1);
+                }
                 return target;
             } else {
                 const day = sgTime.getDate();
+                const month = sgTime.getMonth();
                 let target;
                 if (day < 25) {
-                    target = new Date(sgTime.getFullYear(), sgTime.getMonth(), 25, 23, 59, 59);
+                    target = new Date(sgTime.getFullYear(), month, 25, 23, 59, 59);
                 } else {
-                    target = new Date(sgTime.getFullYear(), sgTime.getMonth() + 1, 25, 23, 59, 59);
+                    // If today is the 25th or past, countdown to next month's 25th
+                    target = new Date(sgTime.getFullYear(), month + 1, 25, 23, 59, 59);
                 }
                 return target;
             }

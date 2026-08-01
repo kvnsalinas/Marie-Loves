@@ -293,6 +293,100 @@
             -webkit-user-select: none;
             user-select: none;
         }
+
+        /* ===== Girlfriend's Day 2026 Surprise ===== */
+        .gfs-dim-overlay {
+            background: radial-gradient(circle at center, rgba(45, 52, 54, 0.75) 0%, rgba(26, 26, 46, 0.94) 100%);
+            backdrop-filter: blur(6px);
+        }
+
+        .gfs-envelope {
+            animation: gfsEnvelopeFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes gfsEnvelopeFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-8px) scale(1.03); }
+        }
+
+        .gfs-envelope-glow {
+            box-shadow: 0 0 40px rgba(232, 180, 184, 0.55), 0 0 90px rgba(212, 165, 116, 0.3);
+        }
+
+        /* Film strip frame */
+        .gfs-strip-frame {
+            background: #fff;
+            border-radius: 6px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        .gfs-strip-frame::before,
+        .gfs-strip-frame::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 14px;
+            background-image: radial-gradient(circle, rgba(45, 52, 54, 0.85) 2.5px, transparent 2.6px);
+            background-size: 18px 14px;
+            background-repeat: repeat-x;
+            background-position: center;
+        }
+
+        .gfs-strip-frame::before { top: 0; }
+        .gfs-strip-frame::after { bottom: 0; }
+
+        .gfs-flash {
+            animation: gfsFlash 0.5s ease-out;
+        }
+
+        @keyframes gfsFlash {
+            0% { opacity: 0; }
+            15% { opacity: 1; background: #fff; }
+            100% { opacity: 0; }
+        }
+
+        .gfs-frame-photo {
+            animation: gfsDevelop 0.9s ease-out forwards;
+        }
+
+        @keyframes gfsDevelop {
+            0% { opacity: 0; filter: brightness(2) contrast(0.6) saturate(0); transform: scale(0.96); }
+            60% { opacity: 1; filter: brightness(1.1) contrast(0.9) saturate(0.6); }
+            100% { opacity: 1; filter: brightness(1) contrast(1) saturate(1); transform: scale(1); }
+        }
+
+        /* Receipt-style letter scroll */
+        .gfs-receipt {
+            background: #FFFDF8;
+            background-image: repeating-linear-gradient(180deg, transparent, transparent 27px, rgba(0, 0, 0, 0.03) 28px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .gfs-zigzag-top {
+            clip-path: polygon(
+                0% 10px, 4% 0, 8% 10px, 12% 0, 16% 10px, 20% 0, 24% 10px, 28% 0,
+                32% 10px, 36% 0, 40% 10px, 44% 0, 48% 10px, 52% 0, 56% 10px, 60% 0,
+                64% 10px, 68% 0, 72% 10px, 76% 0, 80% 10px, 84% 0, 88% 10px, 92% 0,
+                96% 10px, 100% 0, 100% 100%, 0% 100%
+            );
+        }
+
+        .gfs-letter-line {
+            transform: translateY(12px);
+            transition: opacity 0.9s ease, transform 0.9s ease;
+        }
+
+        .gfs-heart-rise {
+            animation: gfsHeartRise 3.8s ease-in forwards;
+        }
+
+        @keyframes gfsHeartRise {
+            0% { opacity: 0; transform: translateY(0) scale(0.6); }
+            15% { opacity: 1; }
+            100% { opacity: 0; transform: translateY(-240px) scale(1.15); }
+        }
     </style>
 </head>
 <body class="font-sans text-charcoal-800 bg-rose-50 overflow-x-hidden">
@@ -700,6 +794,71 @@
         </footer>
     </main>
 
+    <!-- ===== GIRLFRIEND'S DAY 2026 SURPRISE ===== -->
+    <div id="gfs-dim-overlay" class="fixed inset-0 z-[150] gfs-dim-overlay hidden opacity-0 transition-opacity duration-700 ease-out items-center justify-center"></div>
+
+    <div id="gfs-envelope-teaser" class="fixed inset-0 z-[151] hidden items-center justify-center p-6">
+        <button id="gfs-open-envelope" class="gfs-envelope animate-scale-in flex flex-col items-center gap-4 no-select touch-target" aria-label="Open your surprise">
+            <div class="w-24 h-24 md:w-28 md:h-28 rounded-2xl bg-gradient-to-br from-rose-100 to-warm-100 gfs-envelope-glow flex items-center justify-center text-5xl">
+                💌
+            </div>
+            <p class="font-handwriting text-2xl md:text-3xl text-white text-center px-4">I have something for you...</p>
+        </button>
+    </div>
+
+    <div id="gfs-surprise-modal" class="fixed inset-0 z-[160] hidden">
+        <div class="modal-backdrop absolute inset-0"></div>
+        <div class="relative z-10 h-full flex items-center justify-center p-4 md:p-6 overflow-y-auto">
+
+            <button id="gfs-close" class="fixed top-4 right-4 md:top-6 md:right-6 w-11 h-11 rounded-full bg-white/90 flex items-center justify-center hover:bg-white transition-colors touch-target z-20" aria-label="Close surprise">
+                <svg class="w-5 h-5 text-charcoal-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+
+            <!-- Film strip stage -->
+            <div id="gfs-strip-stage" class="w-full max-w-sm mx-auto py-10">
+                <p class="font-handwriting text-2xl md:text-3xl text-white text-center mb-6 opacity-90">Happy Girlfriend's Day, love 💕</p>
+
+                <div id="gfs-strip-frame" class="gfs-strip-frame max-w-xs mx-auto px-3.5 pt-3.5 pb-1">
+                    <div id="gfs-flash-layer" class="absolute inset-0 pointer-events-none rounded-sm"></div>
+                    <div class="pb-4">
+                        <img id="gfs-frame-photo" src="" alt="" class="gfs-frame-photo w-full aspect-[3/4] object-cover rounded-sm bg-charcoal-800">
+                        <p id="gfs-frame-caption" class="font-handwriting text-lg md:text-xl text-charcoal-800 text-center mt-3 min-h-[3.5rem] px-1"></p>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-center gap-6 mt-8">
+                    <button id="gfs-prev" class="w-11 h-11 rounded-full bg-white/80 flex items-center justify-center hover:bg-white transition-colors touch-target">
+                        <svg class="w-5 h-5 text-charcoal-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                    </button>
+                    <span id="gfs-frame-counter" class="text-white/80 text-sm font-medium">1 / 6</span>
+                    <button id="gfs-next" class="w-11 h-11 rounded-full bg-white/80 flex items-center justify-center hover:bg-white transition-colors touch-target">
+                        <svg class="w-5 h-5 text-charcoal-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+                <p id="gfs-strip-hint" class="text-white/50 text-xs text-center mt-4">tap the arrows or swipe to continue</p>
+            </div>
+
+            <!-- Letter stage -->
+            <div id="gfs-letter-stage" class="w-full max-w-xl mx-auto py-10 hidden">
+                <div class="gfs-receipt gfs-zigzag-top rounded-b-2xl p-8 md:p-12 pt-10">
+                    <p class="font-handwriting text-3xl text-rose-500 mb-6 gfs-letter-line opacity-0">Hi love..</p>
+                    <div class="space-y-4 text-charcoal-700 text-base md:text-lg leading-relaxed" id="gfs-letter-body">
+                        <p class="gfs-letter-line opacity-0">I know it's a bit overdue, I apologize because I was working on this website. It needed some fixing ehh hehe..</p>
+                        <p class="gfs-letter-line opacity-0">Me not saying anything does not mean you're not special to me. Rather, I wanted to do something different, something that would make you see how special you are to me.</p>
+                        <p class="gfs-letter-line opacity-0">You are my source of strength, my sunshine, and my motivation to work harder and push myself so that I can build our future together.</p>
+                        <p class="gfs-letter-line opacity-0">It may be late, but you already know my lines haha. You, Elieza Marie, are special to me, and everyday is your day.</p>
+                    </div>
+                    <p class="font-handwriting text-4xl md:text-5xl text-rose-500 text-center mt-8 gfs-letter-line opacity-0 animate-pulse-soft">Mahal na mahal kita.</p>
+                    <p class="text-right text-charcoal-700 opacity-60 text-sm mt-6 gfs-letter-line opacity-0">— Beanbean 💕</p>
+                </div>
+            </div>
+
+            <div id="gfs-hearts-layer" class="fixed inset-0 pointer-events-none z-30 overflow-hidden"></div>
+        </div>
+    </div>
+
     <!-- ===== MUSIC PLAYER (Fixed) ===== -->
     <div id="music-player" class="fixed bottom-6 right-6 z-50 hidden">
         <div class="bg-white rounded-full shadow-lg p-3 flex items-center gap-3 pr-6">
@@ -983,12 +1142,14 @@
             mainContent.classList.remove('hidden');
             musicPlayer.classList.remove('hidden');
             initializeApp();
-            
+
             // Check if Kevin mode was previously enabled
             if (isKevin()) {
                 document.getElementById('kevin-mode-indicator').classList.remove('hidden');
                 document.getElementById('admin-trigger').classList.add('hidden');
             }
+
+            maybeShowGfsSurprise();
         }
 
         function handleLogin() {
@@ -1482,6 +1643,191 @@
                 }
             }
         });
+
+        // ==================== GIRLFRIEND'S DAY 2026 SURPRISE ====================
+        const GFS_STORAGE_KEY = 'gfsDay2026Seen';
+        const GFS_PHOTOS = [
+            { src: 'images/gfs-day-2026/cute.jpeg', caption: "A special day for the most special woman in my life" },
+            { src: 'images/gfs-day-2026/special.jpeg', caption: "A special day for the most special woman in my life" },
+            { src: 'images/gfs-day-2026/pagupit.jpeg', caption: "An awaited moment haha ( sinamahan moko sa mumurahing barbershop and not Bruno's :P )" },
+            { src: 'images/gfs-day-2026/love.jpeg', caption: "BUT you loved it.. look oh ang cute natin ( I miss you! )" },
+            { src: 'images/gfs-day-2026/kiss.jpeg', caption: "Kiniss mo pa nga ako jejeje" },
+            { src: 'images/gfs-day-2026/from-beanbean.jpeg', caption: "From yours truly..beanbean" },
+        ];
+        let gfsFrameIndex = 0;
+        let gfsTypeTimer = null;
+
+        function maybeShowGfsSurprise() {
+            const params = new URLSearchParams(window.location.search);
+            if (params.has('resetSurprise')) {
+                localStorage.removeItem(GFS_STORAGE_KEY);
+            }
+            if (localStorage.getItem(GFS_STORAGE_KEY) === 'true') return;
+
+            const dimOverlay = document.getElementById('gfs-dim-overlay');
+            const teaser = document.getElementById('gfs-envelope-teaser');
+            if (!dimOverlay || !teaser) return;
+
+            setTimeout(() => {
+                dimOverlay.classList.remove('hidden');
+                dimOverlay.classList.add('flex');
+                requestAnimationFrame(() => {
+                    dimOverlay.classList.remove('opacity-0');
+                    dimOverlay.classList.add('opacity-100');
+                });
+
+                setTimeout(() => {
+                    teaser.classList.remove('hidden');
+                    teaser.classList.add('flex');
+                }, 700);
+            }, 900);
+        }
+
+        function openGfsSurprise() {
+            localStorage.setItem(GFS_STORAGE_KEY, 'true');
+
+            document.getElementById('gfs-envelope-teaser').classList.add('hidden');
+            document.getElementById('gfs-dim-overlay').classList.add('hidden');
+
+            const modal = document.getElementById('gfs-surprise-modal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+
+            gfsFrameIndex = 0;
+            renderGfsFrame();
+        }
+
+        function renderGfsFrame() {
+            const photo = GFS_PHOTOS[gfsFrameIndex];
+            const img = document.getElementById('gfs-frame-photo');
+            const captionEl = document.getElementById('gfs-frame-caption');
+            const counter = document.getElementById('gfs-frame-counter');
+            const flashLayer = document.getElementById('gfs-flash-layer');
+            const hint = document.getElementById('gfs-strip-hint');
+
+            flashLayer.classList.remove('gfs-flash');
+            void flashLayer.offsetWidth;
+            flashLayer.classList.add('gfs-flash');
+
+            img.classList.remove('gfs-frame-photo');
+            void img.offsetWidth;
+            img.src = photo.src;
+            img.alt = photo.caption;
+            img.classList.add('gfs-frame-photo');
+
+            counter.textContent = `${gfsFrameIndex + 1} / ${GFS_PHOTOS.length}`;
+
+            clearInterval(gfsTypeTimer);
+            captionEl.textContent = '';
+            let i = 0;
+            gfsTypeTimer = setInterval(() => {
+                captionEl.textContent = photo.caption.slice(0, i + 1);
+                i++;
+                if (i >= photo.caption.length) clearInterval(gfsTypeTimer);
+            }, 28);
+
+            document.getElementById('gfs-prev').style.visibility = gfsFrameIndex === 0 ? 'hidden' : 'visible';
+            hint.textContent = gfsFrameIndex === GFS_PHOTOS.length - 1
+                ? 'tap → to read your letter 💌'
+                : 'tap the arrows or swipe to continue';
+        }
+
+        function gfsNextFrame() {
+            if (gfsFrameIndex < GFS_PHOTOS.length - 1) {
+                gfsFrameIndex++;
+                renderGfsFrame();
+            } else {
+                showGfsLetter();
+            }
+        }
+
+        function gfsPrevFrame() {
+            if (gfsFrameIndex > 0) {
+                gfsFrameIndex--;
+                renderGfsFrame();
+            }
+        }
+
+        function showGfsLetter() {
+            document.getElementById('gfs-strip-stage').classList.add('hidden');
+            const letterStage = document.getElementById('gfs-letter-stage');
+            letterStage.classList.remove('hidden');
+
+            const lines = letterStage.querySelectorAll('.gfs-letter-line');
+            lines.forEach((line, i) => {
+                setTimeout(() => {
+                    line.style.transform = 'translateY(0)';
+                    line.classList.remove('opacity-0');
+                    line.classList.add('opacity-100');
+                }, i * 500);
+            });
+        }
+
+        function closeGfsSurprise() {
+            spawnGfsHearts();
+            setTimeout(() => {
+                document.getElementById('gfs-surprise-modal').classList.add('hidden');
+                document.body.style.overflow = '';
+
+                // Reset stages in case the surprise is reopened via the dev reset helper
+                document.getElementById('gfs-strip-stage').classList.remove('hidden');
+                document.getElementById('gfs-letter-stage').classList.add('hidden');
+                document.querySelectorAll('.gfs-letter-line').forEach(line => {
+                    line.classList.add('opacity-0');
+                    line.classList.remove('opacity-100');
+                    line.style.transform = 'translateY(12px)';
+                });
+            }, 900);
+        }
+
+        function spawnGfsHearts() {
+            const layer = document.getElementById('gfs-hearts-layer');
+            const hearts = ['💕', '💖', '✨', '💗'];
+            for (let i = 0; i < 12; i++) {
+                const el = document.createElement('span');
+                el.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                el.className = 'gfs-heart-rise absolute text-2xl';
+                el.style.left = `${10 + Math.random() * 80}%`;
+                el.style.bottom = '10%';
+                el.style.animationDelay = `${Math.random() * 0.6}s`;
+                layer.appendChild(el);
+                setTimeout(() => el.remove(), 4200);
+            }
+        }
+
+        (function initGfsSwipe() {
+            const stage = document.getElementById('gfs-strip-frame');
+            if (!stage) return;
+            let touchStartX = 0;
+            stage.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+            stage.addEventListener('touchend', (e) => {
+                const delta = e.changedTouches[0].screenX - touchStartX;
+                if (Math.abs(delta) < 40) return;
+                if (delta < 0) gfsNextFrame(); else gfsPrevFrame();
+            }, { passive: true });
+        })();
+
+        document.getElementById('gfs-open-envelope')?.addEventListener('click', openGfsSurprise);
+        document.getElementById('gfs-next')?.addEventListener('click', gfsNextFrame);
+        document.getElementById('gfs-prev')?.addEventListener('click', gfsPrevFrame);
+        document.getElementById('gfs-close')?.addEventListener('click', closeGfsSurprise);
+        document.addEventListener('keydown', (e) => {
+            const modal = document.getElementById('gfs-surprise-modal');
+            if (!modal || modal.classList.contains('hidden')) return;
+            if (e.key === 'Escape') closeGfsSurprise();
+            if (e.key === 'ArrowRight') gfsNextFrame();
+            if (e.key === 'ArrowLeft') gfsPrevFrame();
+        });
+
+        // Dev helper: run resetGfsDaySurprise() in the browser console,
+        // or load the page with ?resetSurprise to force the popup again.
+        window.resetGfsDaySurprise = function() {
+            localStorage.removeItem(GFS_STORAGE_KEY);
+            console.log('GFS Day 2026 surprise reset. Reloading...');
+            location.reload();
+        };
 
         // ==================== INIT ====================
         document.addEventListener('DOMContentLoaded', checkLoginStatus);

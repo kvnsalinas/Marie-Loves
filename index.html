@@ -337,24 +337,72 @@
         .gfs-strip-frame::before { top: 0; }
         .gfs-strip-frame::after { bottom: 0; }
 
-        .gfs-flash {
-            animation: gfsFlash 0.5s ease-out;
+        /* Printer slot the photo feeds out of */
+        .gfs-printer-slot {
+            height: 10px;
+            border-radius: 6px 6px 2px 2px;
+            background: linear-gradient(180deg, #2D3436 0%, #1a1a2e 60%, #3a3a4e 100%);
+            box-shadow: inset 0 -3px 6px rgba(0, 0, 0, 0.6), 0 2px 8px rgba(0, 0, 0, 0.35);
         }
 
-        @keyframes gfsFlash {
-            0% { opacity: 0; }
-            15% { opacity: 1; background: #fff; }
-            100% { opacity: 0; }
+        /* Paper feeding out of the slot, revealed top-to-bottom */
+        .gfs-printing {
+            animation: gfsPrintFeed 2.1s cubic-bezier(0.33, 0, 0.2, 1) forwards;
         }
 
-        .gfs-frame-photo {
-            animation: gfsDevelop 0.9s ease-out forwards;
+        @keyframes gfsPrintFeed {
+            0%   { clip-path: inset(0 0 100% 0); opacity: 0.35; filter: saturate(0.4) brightness(1.15); }
+            35%  { opacity: 1; }
+            85%  { filter: saturate(0.9) brightness(1.02); }
+            100% { clip-path: inset(0 0 0% 0); opacity: 1; filter: saturate(1) brightness(1); }
         }
 
-        @keyframes gfsDevelop {
-            0% { opacity: 0; filter: brightness(2) contrast(0.6) saturate(0); transform: scale(0.96); }
-            60% { opacity: 1; filter: brightness(1.1) contrast(0.9) saturate(0.6); }
-            100% { opacity: 1; filter: brightness(1) contrast(1) saturate(1); transform: scale(1); }
+        /* Print head travelling down the paper as it feeds */
+        .gfs-print-head {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.95), transparent);
+            box-shadow: 0 0 14px 3px rgba(232, 180, 184, 0.75);
+            animation: gfsPrintHead 2.1s cubic-bezier(0.33, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes gfsPrintHead {
+            0%   { top: 0; opacity: 0; }
+            8%   { opacity: 1; }
+            88%  { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        /* Tiny mechanical shudder while the paper feeds */
+        .gfs-feed-jitter {
+            animation: gfsFeedJitter 2.1s steps(1, end) forwards;
+        }
+
+        @keyframes gfsFeedJitter {
+            0%, 100% { transform: translateY(0); }
+            12% { transform: translateY(0.8px); }
+            26% { transform: translateY(-0.6px); }
+            41% { transform: translateY(0.7px); }
+            57% { transform: translateY(-0.5px); }
+            73% { transform: translateY(0.5px); }
+            88% { transform: translateY(-0.3px); }
+        }
+
+        /* Typewriter cursor for the letter */
+        .gfs-cursor {
+            display: inline-block;
+            width: 2px;
+            margin-left: 2px;
+            background: #C27480;
+            animation: gfsCursorBlink 1s step-end infinite;
+            vertical-align: text-bottom;
+        }
+
+        @keyframes gfsCursorBlink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
         }
 
         /* Receipt-style letter scroll */
@@ -371,11 +419,6 @@
                 64% 10px, 68% 0, 72% 10px, 76% 0, 80% 10px, 84% 0, 88% 10px, 92% 0,
                 96% 10px, 100% 0, 100% 100%, 0% 100%
             );
-        }
-
-        .gfs-letter-line {
-            transform: translateY(12px);
-            transition: opacity 0.9s ease, transform 0.9s ease;
         }
 
         .gfs-heart-rise {
@@ -820,11 +863,19 @@
             <div id="gfs-strip-stage" class="w-full max-w-sm mx-auto py-10">
                 <p class="font-handwriting text-2xl md:text-3xl text-white text-center mb-6 opacity-90">Happy Girlfriend's Day, love 💕</p>
 
-                <div id="gfs-strip-frame" class="gfs-strip-frame max-w-xs mx-auto px-3.5 pt-3.5 pb-1">
-                    <div id="gfs-flash-layer" class="absolute inset-0 pointer-events-none rounded-sm"></div>
+                <!-- Printer slot the photo feeds out of -->
+                <div class="gfs-printer-slot max-w-xs mx-auto"></div>
+
+                <div id="gfs-strip-frame" class="gfs-strip-frame max-w-xs mx-auto px-3.5 pt-3.5 pb-1 -mt-1">
                     <div class="pb-4">
-                        <img id="gfs-frame-photo" src="" alt="" class="gfs-frame-photo w-full aspect-[3/4] object-cover rounded-sm bg-charcoal-800">
-                        <p id="gfs-frame-caption" class="font-handwriting text-lg md:text-xl text-charcoal-800 text-center mt-3 min-h-[3.5rem] px-1"></p>
+                        <div id="gfs-photo-wrap" class="relative overflow-hidden rounded-sm">
+                            <img id="gfs-frame-photo" src="" alt="" class="w-full aspect-[3/4] object-cover bg-charcoal-800">
+                            <div id="gfs-print-head" class="pointer-events-none"></div>
+                        </div>
+                        <div class="min-h-[6.5rem] mt-4">
+                            <p id="gfs-frame-caption" class="font-sans font-medium text-base md:text-lg text-charcoal-800 text-center leading-relaxed px-1"></p>
+                            <p id="gfs-frame-aside" class="font-handwriting italic text-xl md:text-2xl text-rose-500 text-center mt-1.5 px-1"></p>
+                        </div>
                     </div>
                 </div>
 
@@ -843,15 +894,16 @@
             <!-- Letter stage -->
             <div id="gfs-letter-stage" class="w-full max-w-xl mx-auto py-10 hidden">
                 <div class="gfs-receipt gfs-zigzag-top rounded-b-2xl p-8 md:p-12 pt-10">
-                    <p class="font-handwriting text-3xl text-rose-500 mb-6 gfs-letter-line opacity-0">Hi love..</p>
-                    <div class="space-y-4 text-charcoal-700 text-base md:text-lg leading-relaxed" id="gfs-letter-body">
-                        <p class="gfs-letter-line opacity-0">I know it's a bit overdue, I apologize because I was working on this website. It needed some fixing ehh hehe..</p>
-                        <p class="gfs-letter-line opacity-0">Me not saying anything does not mean you're not special to me. Rather, I wanted to do something different, something that would make you see how special you are to me.</p>
-                        <p class="gfs-letter-line opacity-0">You are my source of strength, my sunshine, and my motivation to work harder and push myself so that I can build our future together.</p>
-                        <p class="gfs-letter-line opacity-0">It may be late, but you already know my lines haha. You, Elieza Marie, are special to me, and everyday is your day.</p>
-                    </div>
-                    <p class="font-handwriting text-4xl md:text-5xl text-rose-500 text-center mt-8 gfs-letter-line opacity-0 animate-pulse-soft">Mahal na mahal kita.</p>
-                    <p class="text-right text-charcoal-700 opacity-60 text-sm mt-6 gfs-letter-line opacity-0">— Beanbean 💕</p>
+                    <!-- Typed line by line by JS -->
+                    <div id="gfs-letter-body"></div>
+
+                    <p id="gfs-letter-signature" class="text-right text-charcoal-700 opacity-0 text-sm mt-6 transition-opacity duration-1000">— Beanbean 💕</p>
+                </div>
+
+                <div class="text-center mt-6">
+                    <button id="gfs-skip-typing" class="text-white/60 hover:text-white/90 text-sm underline underline-offset-4 transition-colors touch-target">
+                        show the whole letter
+                    </button>
                 </div>
             </div>
 
@@ -1076,6 +1128,13 @@
 
         // ==================== PHOTO DATA ====================
         const photos = [
+            // Girlfriend's Day 2026
+            { src: 'images/gfs-day-2026/cute.jpeg', caption: 'A special day for the most special woman in my life' },
+            { src: 'images/gfs-day-2026/special.jpeg', caption: 'A special day for the most special woman in my life' },
+            { src: 'images/gfs-day-2026/pagupit.jpeg', caption: 'An awaited moment haha (sinamahan moko sa mumurahing barbershop and not Bruno\'s :P)' },
+            { src: 'images/gfs-day-2026/love.jpeg', caption: 'BUT you loved it.. look oh ang cute natin (I miss you!)' },
+            { src: 'images/gfs-day-2026/kiss.jpeg', caption: 'Kiniss mo pa nga ako jejeje' },
+            { src: 'images/gfs-day-2026/from-beanbean.jpeg', caption: 'From yours truly..beanbean' },
             // New photos - 20th monthsary
             { src: 'images/photo14.jpg', caption: 'oh i know how you love just because flowers <3' },
             { src: 'images/photo15.jpg', caption: 'i love taking pictures of you palagi mahal ko' },
@@ -1646,16 +1705,38 @@
 
         // ==================== GIRLFRIEND'S DAY 2026 SURPRISE ====================
         const GFS_STORAGE_KEY = 'gfsDay2026Seen';
+        // `aside` renders on its own line in the handwriting font, so parentheticals
+        // never orphan a stray "(" at the end of a wrapped line.
         const GFS_PHOTOS = [
-            { src: 'images/gfs-day-2026/cute.jpeg', caption: "A special day for the most special woman in my life" },
-            { src: 'images/gfs-day-2026/special.jpeg', caption: "A special day for the most special woman in my life" },
-            { src: 'images/gfs-day-2026/pagupit.jpeg', caption: "An awaited moment haha ( sinamahan moko sa mumurahing barbershop and not Bruno's :P )" },
-            { src: 'images/gfs-day-2026/love.jpeg', caption: "BUT you loved it.. look oh ang cute natin ( I miss you! )" },
-            { src: 'images/gfs-day-2026/kiss.jpeg', caption: "Kiniss mo pa nga ako jejeje" },
-            { src: 'images/gfs-day-2026/from-beanbean.jpeg', caption: "From yours truly..beanbean" },
+            { src: 'images/gfs-day-2026/cute.jpeg', caption: "A special day for the most special woman in my life", aside: "" },
+            { src: 'images/gfs-day-2026/special.jpeg', caption: "A special day for the most special woman in my life", aside: "" },
+            { src: 'images/gfs-day-2026/pagupit.jpeg', caption: "An awaited moment haha", aside: "sinamahan moko sa mumurahing barbershop and not Bruno's :P" },
+            { src: 'images/gfs-day-2026/love.jpeg', caption: "BUT you loved it.. look oh ang cute natin", aside: "I miss you!" },
+            { src: 'images/gfs-day-2026/kiss.jpeg', caption: "Kiniss mo pa nga ako jejeje", aside: "" },
+            { src: 'images/gfs-day-2026/from-beanbean.jpeg', caption: "From yours truly..beanbean", aside: "" },
         ];
+
+        const GFS_LETTER = [
+            { text: "Hi love..", type: 'greeting' },
+            { text: "I know it's a bit overdue, I apologize because I was working on this website. It needed some fixing ehh hehe..", type: 'body' },
+            { text: "Me not saying anything does not mean you're not special to me. Rather, I wanted to do something different, something that would make you see how special you are to me.", type: 'body' },
+            { text: "You are my source of strength, my sunshine, and my motivation to work harder and push myself so that I can build our future together.", type: 'body' },
+            { text: "It may be late, but you already know my lines haha. You, Elieza Marie, are special to me, and everyday is your day.", type: 'body' },
+            { text: "Mahal na mahal kita.", type: 'finale' },
+        ];
+
+        const GFS_LETTER_CLASSES = {
+            greeting: 'font-handwriting text-3xl md:text-4xl text-rose-500 mb-6',
+            body: 'font-sans text-base md:text-lg text-charcoal-700 leading-relaxed mb-4',
+            finale: 'font-handwriting text-4xl md:text-5xl text-rose-500 text-center mt-8',
+        };
+
+        const GFS_TYPE_SPEED = { greeting: 55, body: 22, finale: 95 };
+
         let gfsFrameIndex = 0;
         let gfsTypeTimer = null;
+        let gfsLetterTimers = [];
+        let gfsLetterDone = false;
 
         function maybeShowGfsSurprise() {
             const params = new URLSearchParams(window.location.search);
@@ -1700,31 +1781,48 @@
         function renderGfsFrame() {
             const photo = GFS_PHOTOS[gfsFrameIndex];
             const img = document.getElementById('gfs-frame-photo');
+            const wrap = document.getElementById('gfs-photo-wrap');
+            const printHead = document.getElementById('gfs-print-head');
+            const frame = document.getElementById('gfs-strip-frame');
             const captionEl = document.getElementById('gfs-frame-caption');
+            const asideEl = document.getElementById('gfs-frame-aside');
             const counter = document.getElementById('gfs-frame-counter');
-            const flashLayer = document.getElementById('gfs-flash-layer');
             const hint = document.getElementById('gfs-strip-hint');
 
-            flashLayer.classList.remove('gfs-flash');
-            void flashLayer.offsetWidth;
-            flashLayer.classList.add('gfs-flash');
-
-            img.classList.remove('gfs-frame-photo');
+            // Restart the "paper feeding out of the printer" animation
+            img.classList.remove('gfs-printing');
+            printHead.classList.remove('gfs-print-head');
+            frame.classList.remove('gfs-feed-jitter');
             void img.offsetWidth;
+
             img.src = photo.src;
             img.alt = photo.caption;
-            img.classList.add('gfs-frame-photo');
+            img.classList.add('gfs-printing');
+            printHead.classList.add('gfs-print-head');
+            frame.classList.add('gfs-feed-jitter');
 
             counter.textContent = `${gfsFrameIndex + 1} / ${GFS_PHOTOS.length}`;
 
+            // Caption prints in after the photo finishes feeding out
             clearInterval(gfsTypeTimer);
             captionEl.textContent = '';
-            let i = 0;
-            gfsTypeTimer = setInterval(() => {
-                captionEl.textContent = photo.caption.slice(0, i + 1);
-                i++;
-                if (i >= photo.caption.length) clearInterval(gfsTypeTimer);
-            }, 28);
+            asideEl.textContent = '';
+
+            gfsTypeTimer = setTimeout(() => {
+                let i = 0;
+                gfsTypeTimer = setInterval(() => {
+                    captionEl.textContent = photo.caption.slice(0, i + 1);
+                    i++;
+                    if (i >= photo.caption.length) {
+                        clearInterval(gfsTypeTimer);
+                        if (photo.aside) {
+                            asideEl.textContent = `( ${photo.aside} )`;
+                            asideEl.classList.add('animate-fade-in-up');
+                            setTimeout(() => asideEl.classList.remove('animate-fade-in-up'), 900);
+                        }
+                    }
+                }, 26);
+            }, 1900);
 
             document.getElementById('gfs-prev').style.visibility = gfsFrameIndex === 0 ? 'hidden' : 'visible';
             hint.textContent = gfsFrameIndex === GFS_PHOTOS.length - 1
@@ -1750,21 +1848,103 @@
 
         function showGfsLetter() {
             document.getElementById('gfs-strip-stage').classList.add('hidden');
-            const letterStage = document.getElementById('gfs-letter-stage');
-            letterStage.classList.remove('hidden');
+            document.getElementById('gfs-letter-stage').classList.remove('hidden');
+            typeGfsLetter();
+        }
 
-            const lines = letterStage.querySelectorAll('.gfs-letter-line');
-            lines.forEach((line, i) => {
-                setTimeout(() => {
-                    line.style.transform = 'translateY(0)';
-                    line.classList.remove('opacity-0');
-                    line.classList.add('opacity-100');
-                }, i * 500);
+        function clearGfsLetterTimers() {
+            gfsLetterTimers.forEach(t => { clearTimeout(t); clearInterval(t); });
+            gfsLetterTimers = [];
+        }
+
+        function buildGfsLetterParagraphs() {
+            const body = document.getElementById('gfs-letter-body');
+            body.innerHTML = '';
+            return GFS_LETTER.map(line => {
+                const p = document.createElement('p');
+                p.className = GFS_LETTER_CLASSES[line.type];
+                body.appendChild(p);
+                return p;
             });
+        }
+
+        function typeGfsLetter() {
+            clearGfsLetterTimers();
+            gfsLetterDone = false;
+
+            const paragraphs = buildGfsLetterParagraphs();
+            const signature = document.getElementById('gfs-letter-signature');
+            signature.classList.add('opacity-0');
+            signature.classList.remove('opacity-60');
+
+            const cursor = document.createElement('span');
+            cursor.className = 'gfs-cursor';
+            cursor.innerHTML = '&nbsp;';
+
+            let lineIndex = 0;
+
+            function typeLine() {
+                if (lineIndex >= GFS_LETTER.length) {
+                    cursor.remove();
+                    gfsLetterDone = true;
+                    signature.classList.remove('opacity-0');
+                    signature.classList.add('opacity-60');
+                    document.getElementById('gfs-skip-typing').classList.add('hidden');
+                    return;
+                }
+
+                const line = GFS_LETTER[lineIndex];
+                const el = paragraphs[lineIndex];
+                const speed = GFS_TYPE_SPEED[line.type];
+                el.appendChild(cursor);
+
+                let charIndex = 0;
+                const timer = setInterval(() => {
+                    charIndex++;
+                    el.textContent = line.text.slice(0, charIndex);
+                    el.appendChild(cursor);
+                    // Keep the newest text in view as the letter grows
+                    el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+
+                    if (charIndex >= line.text.length) {
+                        clearInterval(timer);
+                        lineIndex++;
+                        const pause = setTimeout(typeLine, line.type === 'finale' ? 0 : 550);
+                        gfsLetterTimers.push(pause);
+                    }
+                }, speed);
+                gfsLetterTimers.push(timer);
+            }
+
+            typeLine();
+        }
+
+        function revealWholeGfsLetter() {
+            if (gfsLetterDone) return;
+            clearGfsLetterTimers();
+
+            const body = document.getElementById('gfs-letter-body');
+            body.innerHTML = '';
+            GFS_LETTER.forEach(line => {
+                const p = document.createElement('p');
+                p.className = GFS_LETTER_CLASSES[line.type];
+                p.textContent = line.text;
+                body.appendChild(p);
+            });
+
+            const signature = document.getElementById('gfs-letter-signature');
+            signature.classList.remove('opacity-0');
+            signature.classList.add('opacity-60');
+            document.getElementById('gfs-skip-typing').classList.add('hidden');
+            gfsLetterDone = true;
         }
 
         function closeGfsSurprise() {
             spawnGfsHearts();
+            clearInterval(gfsTypeTimer);
+            clearTimeout(gfsTypeTimer);
+            clearGfsLetterTimers();
+
             setTimeout(() => {
                 document.getElementById('gfs-surprise-modal').classList.add('hidden');
                 document.body.style.overflow = '';
@@ -1772,11 +1952,9 @@
                 // Reset stages in case the surprise is reopened via the dev reset helper
                 document.getElementById('gfs-strip-stage').classList.remove('hidden');
                 document.getElementById('gfs-letter-stage').classList.add('hidden');
-                document.querySelectorAll('.gfs-letter-line').forEach(line => {
-                    line.classList.add('opacity-0');
-                    line.classList.remove('opacity-100');
-                    line.style.transform = 'translateY(12px)';
-                });
+                document.getElementById('gfs-letter-body').innerHTML = '';
+                document.getElementById('gfs-skip-typing').classList.remove('hidden');
+                gfsLetterDone = false;
             }, 900);
         }
 
@@ -1813,10 +1991,17 @@
         document.getElementById('gfs-next')?.addEventListener('click', gfsNextFrame);
         document.getElementById('gfs-prev')?.addEventListener('click', gfsPrevFrame);
         document.getElementById('gfs-close')?.addEventListener('click', closeGfsSurprise);
+        document.getElementById('gfs-skip-typing')?.addEventListener('click', revealWholeGfsLetter);
         document.addEventListener('keydown', (e) => {
             const modal = document.getElementById('gfs-surprise-modal');
             if (!modal || modal.classList.contains('hidden')) return;
+
+            const onLetter = !document.getElementById('gfs-letter-stage').classList.contains('hidden');
             if (e.key === 'Escape') closeGfsSurprise();
+            if (onLetter) {
+                if (e.key === 'Enter' || e.key === ' ') revealWholeGfsLetter();
+                return;
+            }
             if (e.key === 'ArrowRight') gfsNextFrame();
             if (e.key === 'ArrowLeft') gfsPrevFrame();
         });

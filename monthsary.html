@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Monthsary | Marie &amp; Kevin</title>
+
+    <script src="js/auth-guard.js?v=1"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Shared Tailwind theme - MUST stay directly after the CDN tag above -->
+    <script src="js/theme.js?v=1"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/site.css?v=1">
+</head>
+<body class="font-sans text-charcoal-800 bg-rose-50 overflow-x-hidden">
+
+    <!-- ===== HERO ===== -->
+    <section class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0">
+            <img src="images/hero/hero1.jpg" alt="Marie and Kevin"
+                 class="absolute inset-0 w-full h-full object-cover animate-ken-burns"
+                 style="object-position: center 50%;"
+                 onerror="this.style.background='linear-gradient(135deg, #E8B4B8 0%, #D4A574 100%)';">
+            <div class="hero-overlay absolute inset-0"></div>
+        </div>
+
+        <div class="relative z-10 text-center text-white px-6 max-w-4xl mx-auto">
+            <p id="m-kicker" class="font-handwriting text-2xl md:text-3xl mb-4 opacity-90 animate-fade-in-down" style="animation-delay: 0.2s;"></p>
+            <h1 class="font-serif text-5xl md:text-7xl lg:text-8xl font-semibold mb-6 animate-fade-in" style="animation-delay: 0.4s;">
+                Marie &amp; Kevin
+            </h1>
+            <p id="m-subtitle" class="text-lg md:text-xl opacity-90 animate-fade-in-up" style="animation-delay: 0.6s;"></p>
+        </div>
+
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-float z-10">
+            <div class="flex flex-col items-center gap-2 text-white/80">
+                <span class="text-sm font-medium">Scroll</span>
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== MILESTONE ===== -->
+    <section class="py-20 md:py-32 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-3xl mx-auto text-center">
+                <p id="m-daterange" class="font-handwriting text-2xl text-rose-400 mb-4"></p>
+                <h2 id="m-heading" class="font-serif text-4xl md:text-5xl font-semibold text-charcoal-800 mb-8"></h2>
+
+                <div class="grid grid-cols-3 gap-6 md:gap-8 mb-12">
+                    <div>
+                        <div id="m-months" class="font-serif text-4xl md:text-6xl font-semibold text-rose-400"></div>
+                        <div class="text-sm text-charcoal-700 opacity-70 mt-1">Months</div>
+                    </div>
+                    <div>
+                        <div id="m-days" class="font-serif text-4xl md:text-6xl font-semibold text-rose-400"></div>
+                        <div class="text-sm text-charcoal-700 opacity-70 mt-1">Days</div>
+                    </div>
+                    <div>
+                        <div class="font-serif text-4xl md:text-6xl font-semibold text-rose-400">&infin;</div>
+                        <div class="text-sm text-charcoal-700 opacity-70 mt-1">More to come</div>
+                    </div>
+                </div>
+
+                <p class="text-charcoal-700 opacity-80 text-lg leading-relaxed">
+                    Another month with you, and it still feels like the easiest thing in the world.
+                    Thank you for every ordinary day you make feel like something worth remembering.
+                </p>
+                <p class="font-handwriting text-2xl text-rose-400 mt-6">Beanbean loves you very much 💕</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="py-12 bg-charcoal-800 text-white">
+        <div class="container mx-auto px-6 text-center">
+            <a href="index.html" class="inline-block btn-secondary text-white border-white/40 hover:bg-white hover:text-charcoal-800 mb-6">
+                &larr; Back home
+            </a>
+            <p class="font-handwriting text-2xl mb-2">Made with 💕 by Kevin</p>
+            <p class="text-white/60 text-sm">For the love of my life, Marie</p>
+        </div>
+    </footer>
+
+    <script src="js/occasions.js?v=2"></script>
+    <script>
+        // Whatever monthsary is current — the number is computed, never hardcoded,
+        // so this one page serves the 27th, 28th, 29th... forever.
+        // ?date=YYYY-MM-DD previews another month.
+        (function () {
+            const today = MK.param('date') || MK.today();
+            const m = MK.occasions.currentMonthsary(today);
+            if (!m) return;
+
+            const n = parseInt(m.id.split('-')[1], 10);
+            document.getElementById('m-kicker').textContent = m.hero.kicker;
+            document.getElementById('m-subtitle').textContent = m.hero.subtitle;
+            document.getElementById('m-heading').textContent = n + ' months of us';
+            document.getElementById('m-months').textContent = n;
+            document.title = m.label + ' | Marie & Kevin';
+
+            const start = new Date(MK.START_DATE + 'T00:00:00+08:00');
+            const on = new Date(m.start + 'T00:00:00+08:00');
+            document.getElementById('m-days').textContent =
+                Math.round((on - start) / 86400000).toLocaleString();
+
+            const fmt = d => d.toLocaleDateString('en-US',
+                { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'Asia/Singapore' });
+            document.getElementById('m-daterange').textContent = fmt(start) + ' — ' + fmt(on);
+        })();
+    </script>
+</body>
+</html>

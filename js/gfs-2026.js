@@ -40,11 +40,11 @@ const GFS_PHOTOS = [
 
 const GFS_LETTER = [
     { text: "Hi love..", type: 'greeting' },
-    { text: "I know it's a bit overdue, I apologize because I was working on this website. It needed some fixing ehh hehe..", type: 'body' },
-    { text: "Me not saying anything does not mean you're not special to me. Rather, I wanted to do something different, something that would make you see how special you are to me.", type: 'body' },
-    { text: "You are my source of strength, my sunshine, and my motivation to work harder and push myself so that I can build our future together.", type: 'body' },
-    { text: "It may be late, but you already know my lines haha. You, Elieza Marie, are special to me, and everyday is your day.", type: 'body' },
-    { text: "Mahal na mahal kita.", type: 'finale' },
+    { text: "I know this is a bit overdue, and I apologize. I was working on this website and it needed some fixing ehh hehe..", type: 'body' },
+    { text: "But just because I don't say anything or don't always show it doesn't mean you're not special to me. Rather, I wanted to do something different — something that would make you see just how special you are to me.", type: 'body' },
+    { text: "You are my source of strength, my sunshine, and my motivation to work harder and keep pushing myself so I can build our future together.", type: 'body' },
+    { text: "It may be late, but you already know my lines haha. You, Elieza Marie, are special to me, and every day is your day.", type: 'body' },
+    { text: "Mahal na mahal kita. ❤️", type: 'finale' },
 ];
 
 const GFS_LETTER_CLASSES = {

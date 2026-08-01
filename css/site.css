@@ -1,0 +1,226 @@
+/* Shared site styles - extracted verbatim from index.html (was lines 73-295).
+   Loaded by every page. Keep after the Tailwind CDN so these win. */
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Hide scrollbar but keep functionality */
+body::-webkit-scrollbar {
+    width: 8px;
+}
+body::-webkit-scrollbar-track {
+    background: #FDF6F6;
+}
+body::-webkit-scrollbar-thumb {
+    background: #E8B4B8;
+    border-radius: 4px;
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-60px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(60px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes pulseSoft {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+@keyframes kenBurns {
+    0% { transform: scale(1) translate(0, 0); }
+    100% { transform: scale(1.1) translate(-2%, -2%); }
+}
+
+/* Scroll reveal */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hero overlay gradient */
+.hero-overlay {
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(0, 0, 0, 0.1) 40%,
+        rgba(0, 0, 0, 0.4) 100%
+    );
+}
+
+/* Photo frame styles */
+.photo-frame {
+    background: white;
+    padding: 12px 12px 40px 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    transform: rotate(-2deg);
+    transition: transform 0.4s ease;
+}
+
+.photo-frame:hover {
+    transform: rotate(0deg) scale(1.02);
+}
+
+.photo-frame:nth-child(even) {
+    transform: rotate(2deg);
+}
+
+.photo-frame:nth-child(even):hover {
+    transform: rotate(0deg) scale(1.02);
+}
+
+/* Timeline styles */
+.timeline-line {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, #E8B4B8, #D4A574);
+    transform: translateX(-50%);
+}
+
+@media (max-width: 768px) {
+    .timeline-line {
+        left: 20px;
+    }
+}
+
+.timeline-dot {
+    width: 16px;
+    height: 16px;
+    background: #E8B4B8;
+    border: 3px solid white;
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(232, 180, 184, 0.3);
+}
+
+/* Gallery swipe indicator */
+.swipe-hint {
+    animation: swipeHint 2s ease-in-out infinite;
+}
+
+@keyframes swipeHint {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(10px); }
+}
+
+/* Music player styles */
+.music-progress {
+    appearance: none;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.music-progress::-webkit-slider-thumb {
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
+}
+
+/* Button styles */
+.btn-primary {
+    background: linear-gradient(135deg, #E8B4B8 0%, #D4A574 100%);
+    color: white;
+    padding: 16px 32px;
+    border-radius: 50px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(232, 180, 184, 0.4);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(232, 180, 184, 0.5);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: #2D3436;
+    padding: 14px 28px;
+    border: 2px solid #E8B4B8;
+    border-radius: 50px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: #E8B4B8;
+    color: white;
+}
+
+/* Card styles */
+.card {
+    background: white;
+    border-radius: 24px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+}
+
+/* Modal backdrop */
+.modal-backdrop {
+    background: rgba(45, 52, 54, 0.8);
+    backdrop-filter: blur(8px);
+}
+
+/* Touch-friendly sizing for mobile */
+@media (max-width: 768px) {
+    .touch-target {
+        min-height: 48px;
+        min-width: 48px;
+    }
+}
+
+/* Prevent text selection on interactive elements */
+.no-select {
+    -webkit-user-select: none;
+    user-select: none;
+}

@@ -363,6 +363,7 @@
             left: 0;
             right: 0;
             height: 3px;
+            margin-top: -1.5px;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.95), transparent);
             box-shadow: 0 0 14px 3px rgba(232, 180, 184, 0.75);
             animation: gfsPrintHead 2.1s cubic-bezier(0.33, 0, 0.2, 1) forwards;
@@ -388,6 +389,16 @@
             57% { transform: translateY(-0.5px); }
             73% { transform: translateY(0.5px); }
             88% { transform: translateY(-0.3px); }
+        }
+
+        /* Slow drift once the photo has finished printing */
+        .gfs-kenburns {
+            animation: gfsKenBurns 14s ease-in-out infinite alternate;
+        }
+
+        @keyframes gfsKenBurns {
+            0%   { transform: scale(1) translate(0, 0); }
+            100% { transform: scale(1.09) translate(-1.8%, -1.8%); }
         }
 
         /* Typewriter cursor for the letter */
@@ -739,7 +750,7 @@
                     <h2 class="font-serif text-4xl md:text-5xl font-semibold text-charcoal-800">Special Surprises</h2>
                 </div>
                 
-                <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 reveal">
+                <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 reveal">
                     <!-- Messages Card -->
                     <div class="card p-8 text-center cursor-pointer group" id="btn-messages">
                         <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-rose-100 flex items-center justify-center group-hover:bg-rose-200 transition-colors">
@@ -774,6 +785,15 @@
                         </div>
                         <h3 class="font-serif text-xl font-semibold text-charcoal-800 mb-2">20th Surprise</h3>
                         <p class="text-charcoal-700 opacity-70 text-sm">Something special for you</p>
+                    </div>
+
+                    <!-- 2026 Girlfriend's Day Card -->
+                    <div class="card p-8 text-center cursor-pointer group" id="btn-gfs-2026">
+                        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-rose-100 flex items-center justify-center group-hover:bg-rose-200 transition-colors">
+                            <span class="text-2xl">📸</span>
+                        </div>
+                        <h3 class="font-serif text-xl font-semibold text-charcoal-800 mb-2">2026 Girlfriend's Day</h3>
+                        <p class="text-charcoal-700 opacity-70 text-sm">Your photo booth & letter</p>
                     </div>
                 </div>
                 
@@ -859,6 +879,10 @@
                 </svg>
             </button>
 
+            <button id="gfs-mute" class="fixed top-4 left-4 md:top-6 md:left-6 w-11 h-11 rounded-full bg-white/90 flex items-center justify-center hover:bg-white transition-colors touch-target z-20" aria-label="Mute sounds">
+                <span id="gfs-mute-icon" class="text-lg">🔊</span>
+            </button>
+
             <!-- Film strip stage -->
             <div id="gfs-strip-stage" class="w-full max-w-sm mx-auto py-10">
                 <p class="font-handwriting text-2xl md:text-3xl text-white text-center mb-6 opacity-90">Happy Girlfriend's Day, love 💕</p>
@@ -868,8 +892,12 @@
 
                 <div id="gfs-strip-frame" class="gfs-strip-frame max-w-xs mx-auto px-3.5 pt-3.5 pb-1 -mt-1">
                     <div class="pb-4">
-                        <div id="gfs-photo-wrap" class="relative overflow-hidden rounded-sm">
-                            <img id="gfs-frame-photo" src="" alt="" class="w-full aspect-[3/4] object-cover bg-charcoal-800">
+                        <!-- Print head sits outside the clipped wrapper so it isn't clipped away -->
+                        <div class="relative">
+                            <div id="gfs-photo-wrap" class="overflow-hidden rounded-sm">
+                                <!-- Photo(s) injected by JS: one frame can hold 1 or 2 images -->
+                                <div id="gfs-photo-slot" class="flex gap-1.5"></div>
+                            </div>
                             <div id="gfs-print-head" class="pointer-events-none"></div>
                         </div>
                         <div class="min-h-[6.5rem] mt-4">
@@ -1134,7 +1162,7 @@
             { src: 'images/gfs-day-2026/pagupit.jpeg', caption: 'An awaited moment haha (sinamahan moko sa mumurahing barbershop and not Bruno\'s :P)' },
             { src: 'images/gfs-day-2026/love.jpeg', caption: 'BUT you loved it.. look oh ang cute natin (I miss you!)' },
             { src: 'images/gfs-day-2026/kiss.jpeg', caption: 'Kiniss mo pa nga ako jejeje' },
-            { src: 'images/gfs-day-2026/from-beanbean.jpeg', caption: 'From yours truly..beanbean' },
+            { src: 'images/gfs-day-2026/from-beanbean.jpeg', caption: 'Happy Girlfriend\'s Day to you my love.. -From this cute guy (Kinikilig ako pag inii-screenshot mo ako hihi)' },
             // New photos - 20th monthsary
             { src: 'images/photo14.jpg', caption: 'oh i know how you love just because flowers <3' },
             { src: 'images/photo15.jpg', caption: 'i love taking pictures of you palagi mahal ko' },
@@ -1705,15 +1733,34 @@
 
         // ==================== GIRLFRIEND'S DAY 2026 SURPRISE ====================
         const GFS_STORAGE_KEY = 'gfsDay2026Seen';
-        // `aside` renders on its own line in the handwriting font, so parentheticals
-        // never orphan a stray "(" at the end of a wrapped line.
+        // Each frame holds one or two photos. `aside` renders on its own line in the
+        // handwriting font, so parentheticals never orphan a stray "(" on a wrapped line.
         const GFS_PHOTOS = [
-            { src: 'images/gfs-day-2026/cute.jpeg', caption: "A special day for the most special woman in my life", aside: "" },
-            { src: 'images/gfs-day-2026/special.jpeg', caption: "A special day for the most special woman in my life", aside: "" },
-            { src: 'images/gfs-day-2026/pagupit.jpeg', caption: "An awaited moment haha", aside: "sinamahan moko sa mumurahing barbershop and not Bruno's :P" },
-            { src: 'images/gfs-day-2026/love.jpeg', caption: "BUT you loved it.. look oh ang cute natin", aside: "I miss you!" },
-            { src: 'images/gfs-day-2026/kiss.jpeg', caption: "Kiniss mo pa nga ako jejeje", aside: "" },
-            { src: 'images/gfs-day-2026/from-beanbean.jpeg', caption: "From yours truly..beanbean", aside: "" },
+            {
+                srcs: ['images/gfs-day-2026/cute.jpeg', 'images/gfs-day-2026/special.jpeg'],
+                caption: "A special day for the most special woman in my life",
+                aside: ""
+            },
+            {
+                srcs: ['images/gfs-day-2026/pagupit.jpeg'],
+                caption: "An awaited moment haha",
+                aside: "sinamahan moko sa mumurahing barbershop and not Bruno's :P"
+            },
+            {
+                srcs: ['images/gfs-day-2026/love.jpeg'],
+                caption: "BUT you loved it.. look oh ang cute natin",
+                aside: "I miss you!"
+            },
+            {
+                srcs: ['images/gfs-day-2026/kiss.jpeg'],
+                caption: "Kiniss mo pa nga ako jejeje",
+                aside: ""
+            },
+            {
+                srcs: ['images/gfs-day-2026/from-beanbean.jpeg'],
+                caption: "Happy Girlfriend's Day to you my love.. -From this cute guy",
+                aside: "Kinikilig ako pag inii-screenshot mo ako hihi"
+            },
         ];
 
         const GFS_LETTER = [
@@ -1737,6 +1784,136 @@
         let gfsTypeTimer = null;
         let gfsLetterTimers = [];
         let gfsLetterDone = false;
+
+        // ---------- Sound (synthesized, no audio files needed) ----------
+        let gfsAudioCtx = null;
+        let gfsMuted = false;
+        let gfsPrevMusicVolume = null;
+
+        function gfsAudio() {
+            if (gfsMuted) return null;
+            try {
+                if (!gfsAudioCtx) {
+                    const AC = window.AudioContext || window.webkitAudioContext;
+                    if (!AC) return null;
+                    gfsAudioCtx = new AC();
+                }
+                if (gfsAudioCtx.state === 'suspended') gfsAudioCtx.resume();
+                return gfsAudioCtx;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function gfsNoise(ctx, seconds) {
+            const len = Math.max(1, Math.floor(ctx.sampleRate * seconds));
+            const buf = ctx.createBuffer(1, len, ctx.sampleRate);
+            const data = buf.getChannelData(0);
+            for (let i = 0; i < len; i++) data[i] = Math.random() * 2 - 1;
+            return buf;
+        }
+
+        // Mechanical whirr + stepper buzz while the paper feeds out
+        function playGfsPrintSound(duration = 1.9) {
+            const ctx = gfsAudio();
+            if (!ctx) return;
+            const now = ctx.currentTime;
+
+            const src = ctx.createBufferSource();
+            src.buffer = gfsNoise(ctx, duration);
+
+            const band = ctx.createBiquadFilter();
+            band.type = 'bandpass';
+            band.frequency.value = 1250;
+            band.Q.value = 0.9;
+
+            const gain = ctx.createGain();
+            gain.gain.setValueAtTime(0.0001, now);
+            gain.gain.linearRampToValueAtTime(0.045, now + 0.10);
+            gain.gain.setValueAtTime(0.045, now + duration - 0.30);
+            gain.gain.linearRampToValueAtTime(0.0001, now + duration);
+
+            // Stepper-motor pulsing on top of the noise bed
+            const lfo = ctx.createOscillator();
+            lfo.type = 'square';
+            lfo.frequency.value = 46;
+            const lfoGain = ctx.createGain();
+            lfoGain.gain.value = 0.022;
+            lfo.connect(lfoGain);
+            lfoGain.connect(gain.gain);
+
+            src.connect(band);
+            band.connect(gain);
+            gain.connect(ctx.destination);
+
+            src.start(now);
+            lfo.start(now);
+            src.stop(now + duration);
+            lfo.stop(now + duration);
+        }
+
+        // Short key-strike click for the typewriter
+        function playGfsTick(volume = 0.06) {
+            const ctx = gfsAudio();
+            if (!ctx) return;
+            const now = ctx.currentTime;
+
+            const src = ctx.createBufferSource();
+            src.buffer = gfsNoise(ctx, 0.022);
+
+            const hp = ctx.createBiquadFilter();
+            hp.type = 'highpass';
+            hp.frequency.value = 1800;
+
+            const gain = ctx.createGain();
+            gain.gain.setValueAtTime(volume, now);
+            gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.022);
+
+            src.connect(hp);
+            hp.connect(gain);
+            gain.connect(ctx.destination);
+            src.start(now);
+            src.stop(now + 0.03);
+        }
+
+        // Carriage-return bell when the letter finishes
+        function playGfsBell() {
+            const ctx = gfsAudio();
+            if (!ctx) return;
+            const now = ctx.currentTime;
+            [1320, 1980].forEach((freq, i) => {
+                const osc = ctx.createOscillator();
+                osc.type = 'sine';
+                osc.frequency.value = freq;
+                const gain = ctx.createGain();
+                const peak = i === 0 ? 0.10 : 0.04;
+                gain.gain.setValueAtTime(0.0001, now);
+                gain.gain.exponentialRampToValueAtTime(peak, now + 0.01);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + 1.5);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(now);
+                osc.stop(now + 1.5);
+            });
+        }
+
+        function duckGfsMusic(duck) {
+            const bg = document.getElementById('background-music');
+            if (!bg) return;
+            if (duck) {
+                if (gfsPrevMusicVolume === null) gfsPrevMusicVolume = bg.volume;
+                bg.volume = Math.min(bg.volume, 0.18);
+            } else if (gfsPrevMusicVolume !== null) {
+                bg.volume = gfsPrevMusicVolume;
+                gfsPrevMusicVolume = null;
+            }
+        }
+
+        function toggleGfsMute() {
+            gfsMuted = !gfsMuted;
+            document.getElementById('gfs-mute-icon').textContent = gfsMuted ? '🔇' : '🔊';
+            duckGfsMusic(!gfsMuted);
+        }
 
         function maybeShowGfsSurprise() {
             const params = new URLSearchParams(window.location.search);
@@ -1774,14 +1951,22 @@
             modal.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
 
+            // Reset to the film strip in case this is a replay from "Special Surprises"
+            document.getElementById('gfs-strip-stage').classList.remove('hidden');
+            document.getElementById('gfs-letter-stage').classList.add('hidden');
+            document.getElementById('gfs-skip-typing').classList.remove('hidden');
+            gfsLetterDone = false;
+
+            duckGfsMusic(true);
+
             gfsFrameIndex = 0;
             renderGfsFrame();
         }
 
         function renderGfsFrame() {
-            const photo = GFS_PHOTOS[gfsFrameIndex];
-            const img = document.getElementById('gfs-frame-photo');
-            const wrap = document.getElementById('gfs-photo-wrap');
+            const frameData = GFS_PHOTOS[gfsFrameIndex];
+            const slot = document.getElementById('gfs-photo-slot');
+            const photoWrap = document.getElementById('gfs-photo-wrap');
             const printHead = document.getElementById('gfs-print-head');
             const frame = document.getElementById('gfs-strip-frame');
             const captionEl = document.getElementById('gfs-frame-caption');
@@ -1789,34 +1974,50 @@
             const counter = document.getElementById('gfs-frame-counter');
             const hint = document.getElementById('gfs-strip-hint');
 
+            // Build this frame's photo(s) — a frame can hold one or two side by side
+            slot.innerHTML = '';
+            frameData.srcs.forEach(src => {
+                const cell = document.createElement('div');
+                cell.className = 'relative overflow-hidden rounded-sm flex-1 min-w-0';
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = frameData.caption;
+                img.className = 'w-full aspect-[3/4] object-cover bg-charcoal-800';
+                cell.appendChild(img);
+                slot.appendChild(cell);
+            });
+
             // Restart the "paper feeding out of the printer" animation
-            img.classList.remove('gfs-printing');
+            photoWrap.classList.remove('gfs-printing');
             printHead.classList.remove('gfs-print-head');
             frame.classList.remove('gfs-feed-jitter');
-            void img.offsetWidth;
+            void photoWrap.offsetWidth;
 
-            img.src = photo.src;
-            img.alt = photo.caption;
-            img.classList.add('gfs-printing');
+            photoWrap.classList.add('gfs-printing');
             printHead.classList.add('gfs-print-head');
             frame.classList.add('gfs-feed-jitter');
+            playGfsPrintSound(1.9);
 
             counter.textContent = `${gfsFrameIndex + 1} / ${GFS_PHOTOS.length}`;
 
-            // Caption prints in after the photo finishes feeding out
             clearInterval(gfsTypeTimer);
+            clearTimeout(gfsTypeTimer);
             captionEl.textContent = '';
             asideEl.textContent = '';
 
+            // Once printing finishes: start the slow drift, then type the caption
             gfsTypeTimer = setTimeout(() => {
+                slot.querySelectorAll('img').forEach(img => img.classList.add('gfs-kenburns'));
+
                 let i = 0;
                 gfsTypeTimer = setInterval(() => {
-                    captionEl.textContent = photo.caption.slice(0, i + 1);
+                    captionEl.textContent = frameData.caption.slice(0, i + 1);
+                    if (i % 2 === 0) playGfsTick(0.05);
                     i++;
-                    if (i >= photo.caption.length) {
+                    if (i >= frameData.caption.length) {
                         clearInterval(gfsTypeTimer);
-                        if (photo.aside) {
-                            asideEl.textContent = `( ${photo.aside} )`;
+                        if (frameData.aside) {
+                            asideEl.textContent = `( ${frameData.aside} )`;
                             asideEl.classList.add('animate-fade-in-up');
                             setTimeout(() => asideEl.classList.remove('animate-fade-in-up'), 900);
                         }
@@ -1887,6 +2088,7 @@
                 if (lineIndex >= GFS_LETTER.length) {
                     cursor.remove();
                     gfsLetterDone = true;
+                    playGfsBell();
                     signature.classList.remove('opacity-0');
                     signature.classList.add('opacity-60');
                     document.getElementById('gfs-skip-typing').classList.add('hidden');
@@ -1903,6 +2105,9 @@
                     charIndex++;
                     el.textContent = line.text.slice(0, charIndex);
                     el.appendChild(cursor);
+                    if (line.text[charIndex - 1] !== ' ') {
+                        playGfsTick(line.type === 'finale' ? 0.075 : 0.05);
+                    }
                     // Keep the newest text in view as the letter grows
                     el.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
 
@@ -1937,6 +2142,7 @@
             signature.classList.add('opacity-60');
             document.getElementById('gfs-skip-typing').classList.add('hidden');
             gfsLetterDone = true;
+            playGfsBell();
         }
 
         function closeGfsSurprise() {
@@ -1948,11 +2154,13 @@
             setTimeout(() => {
                 document.getElementById('gfs-surprise-modal').classList.add('hidden');
                 document.body.style.overflow = '';
+                duckGfsMusic(false);
 
-                // Reset stages in case the surprise is reopened via the dev reset helper
+                // Reset stages so replaying from "Special Surprises" starts clean
                 document.getElementById('gfs-strip-stage').classList.remove('hidden');
                 document.getElementById('gfs-letter-stage').classList.add('hidden');
                 document.getElementById('gfs-letter-body').innerHTML = '';
+                document.getElementById('gfs-photo-slot').innerHTML = '';
                 document.getElementById('gfs-skip-typing').classList.remove('hidden');
                 gfsLetterDone = false;
             }, 900);
@@ -1992,6 +2200,9 @@
         document.getElementById('gfs-prev')?.addEventListener('click', gfsPrevFrame);
         document.getElementById('gfs-close')?.addEventListener('click', closeGfsSurprise);
         document.getElementById('gfs-skip-typing')?.addEventListener('click', revealWholeGfsLetter);
+        document.getElementById('gfs-mute')?.addEventListener('click', toggleGfsMute);
+        // Replay any time from the "Special Surprises" section
+        document.getElementById('btn-gfs-2026')?.addEventListener('click', openGfsSurprise);
         document.addEventListener('keydown', (e) => {
             const modal = document.getElementById('gfs-surprise-modal');
             if (!modal || modal.classList.contains('hidden')) return;

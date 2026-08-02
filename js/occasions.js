@@ -181,12 +181,16 @@ MK.occasions.resolved = function (today) {
  * in the gaps between celebrations. */
 MK.occasions.fallback = {
     hero: {
-        kicker: 'For my Elieza',
-        title: 'Marie & Kevin',
-        subtitle: 'every ordinary day with you',
+        kicker: 'For Elieza Marie ❤️',
+        title: 'Welcome home, love',
+        subtitle: 'this website shows my love for you — on any day, always',
         images: [
+            { src: 'images/marie/web/marie01.jpg', position: 'center 30%' },
+            { src: 'images/marie/web/marie05.jpg', position: 'center 30%' },
             { src: 'images/hero/hero1.jpg', position: 'center 50%' },
+            { src: 'images/marie/web/marie09.jpg', position: 'center 30%' },
             { src: 'images/hero/hero2.jpg', position: 'center 25%' },
+            { src: 'images/marie/web/marie12.jpg', position: 'center 30%' },
         ],
     },
 };
